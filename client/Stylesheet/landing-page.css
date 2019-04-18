@@ -1,0 +1,25 @@
+QWidget:window {
+	background-color: white;
+	color: rgb(50, 27, 24);
+	font-weight: lighter;
+	/*font-family: Roboto-Light;*/
+}
+
+QTextEdit{
+	background-color: transparent;
+	font-size: 16px;
+	text-align: justify;
+}
+
+QPushButton{
+	background-color: #361A17;
+	color: white;
+	border-radius: 8px;
+	font-size: 18px;
+}
+
+QPushButton:hover{
+	background-color: transparent;
+	border: 1px solid #361A17;
+	color: #361A17;
+}

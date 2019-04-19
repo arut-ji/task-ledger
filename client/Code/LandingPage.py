@@ -1,10 +1,10 @@
 import sys
 
 from PySide2.QtGui import *
-from Code.ui_to_py.landingpage_ui import Ui_TaskLedger
-from Code.stylesheet import *
+from PySide2.QtWidgets import QWidget, QApplication
 
-
+from client.Code.ui_to_py.landingpage_ui import Ui_TaskLedger
+#TODO::refactor code
 class LandingPageUI(QWidget):
     def __init__(self):
         QWidget.__init__(self, None)

@@ -3,8 +3,8 @@
 # Form implementation generated from reading ui file 'login.ui',
 # licensing of 'login.ui' applies.
 #
-# Created: Thu Apr 18 15:45:02 2019
-#      by: pyside2-uic  running on PySide2 5.12.2
+# Created: Fri Apr 19 13:58:39 2019
+#      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -15,12 +15,7 @@ class Ui_Form(object):
         Form.setObjectName("Form")
         Form.resize(1000, 600)
         Form.setMouseTracking(False)
-        Form.setAutoFillBackground(False)
-        Form.setStyleSheet("QWidget{\n"
-"    background-image: url(:/login-bg/login.png);\n"
-"}\n"
-"\n"
-"QPushButton{\n"
+        Form.setStyleSheet("QPushButton{\n"
 "    border-radius: 8px;\n"
 "    color: rgb(255, 255, 255);\n"
 "    background-color: rgb(40, 19, 18);\n"
@@ -31,10 +26,17 @@ class Ui_Form(object):
 "    color: #361A17;\n"
 "}\n"
 "QLabel{\n"
+"    background-color: transparent;\n"
 "    color: black;\n"
 "}\n"
 "QLabel:hover#reg_label{\n"
 "    color: rgb(201, 50, 41)\n"
+"}\n"
+"QLineEdit{\n"
+"    background-color: transparent;\n"
+"    border-bottom: 1px solid black;\n"
+"    border-top: 0px;\n"
+"    padding: 2px;\n"
 "}")
         self.login_label = QtWidgets.QLabel(Form)
         self.login_label.setGeometry(QtCore.QRect(440, 150, 101, 51))
@@ -43,7 +45,7 @@ class Ui_Form(object):
         font.setPointSize(34)
         self.login_label.setFont(font)
         self.login_label.setAutoFillBackground(False)
-        self.login_label.setStyleSheet("background-color: transparent;")
+        self.login_label.setStyleSheet("")
         self.login_label.setObjectName("login_label")
         self.username_lineEdit = QtWidgets.QLineEdit(Form)
         self.username_lineEdit.setGeometry(QtCore.QRect(360, 230, 261, 31))
@@ -52,10 +54,8 @@ class Ui_Form(object):
         font.setPointSize(21)
         self.username_lineEdit.setFont(font)
         self.username_lineEdit.setAutoFillBackground(False)
-        self.username_lineEdit.setStyleSheet("background-color: rgba(0,0,0,0%);\n"
-"border-bottom: 1px solid black;\n"
-"border-top: 0px;\n"
-"padding: 2px;")
+        self.username_lineEdit.setStyleSheet("\n"
+"")
         self.username_lineEdit.setObjectName("username_lineEdit")
         self.pw_lineEdit = QtWidgets.QLineEdit(Form)
         self.pw_lineEdit.setGeometry(QtCore.QRect(360, 290, 261, 31))
@@ -64,10 +64,7 @@ class Ui_Form(object):
         font.setPointSize(21)
         self.pw_lineEdit.setFont(font)
         self.pw_lineEdit.setAutoFillBackground(False)
-        self.pw_lineEdit.setStyleSheet("background-color: transparent;\n"
-"border-bottom: 1px solid black;\n"
-"border-top: 0px;\n"
-"padding: 2px;")
+        self.pw_lineEdit.setStyleSheet("")
         self.pw_lineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
         self.pw_lineEdit.setClearButtonEnabled(False)
         self.pw_lineEdit.setObjectName("pw_lineEdit")

@@ -2,8 +2,8 @@ import sys
 
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
-from Code.ui_to_py.register_ui import Ui_Form
-
+from client.Code.ui_to_py.register_ui import Ui_Form
+#TODO::refactor code
 class RegisterUI(QWidget):
     def __init__(self):
         QWidget.__init__(self, None)

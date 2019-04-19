@@ -16,15 +16,8 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <property name="autoFillBackground">
-   <bool>false</bool>
-  </property>
   <property name="styleSheet">
-   <string notr="true">QWidget{
-	background-image: url(:/login-bg/login.png);
-}
-
-QPushButton{
+   <string notr="true">QPushButton{
 	border-radius: 8px;
 	color: rgb(255, 255, 255);
 	background-color: rgb(40, 19, 18);
@@ -35,10 +28,17 @@ QPushButton:hover{
 	color: #361A17;
 }
 QLabel{
+	background-color: transparent;
 	color: black;
 }
 QLabel:hover#reg_label{
 	color: rgb(201, 50, 41)
+}
+QLineEdit{
+	background-color: transparent;
+	border-bottom: 1px solid black;
+	border-top: 0px;
+	padding: 2px;
 }</string>
   </property>
   <widget class="QLabel" name="login_label">
@@ -60,7 +60,7 @@ QLabel:hover#reg_label{
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: transparent;</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>LOGIN</string>
@@ -85,10 +85,8 @@ QLabel:hover#reg_label{
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgba(0,0,0,0%);
-border-bottom: 1px solid black;
-border-top: 0px;
-padding: 2px;</string>
+    <string notr="true">
+</string>
    </property>
    <property name="placeholderText">
     <string>Username</string>
@@ -113,10 +111,7 @@ padding: 2px;</string>
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: transparent;
-border-bottom: 1px solid black;
-border-top: 0px;
-padding: 2px;</string>
+    <string notr="true"/>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>

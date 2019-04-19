@@ -2,7 +2,7 @@ import sys
 
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
-from Code.ui_to_py.login_ui import Ui_Form
+from client.Code.ui_to_py.login_ui import Ui_Form
 
 #TODO::Error
 class LoginUI(QWidget):
@@ -12,6 +12,7 @@ class LoginUI(QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
 
+        #set background
         palette = QPalette()
         palette.setBrush(QPalette.Background, QPixmap('../Assets/login.png'))
         self.setPalette(palette)

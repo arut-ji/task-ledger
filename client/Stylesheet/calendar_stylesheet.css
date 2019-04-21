@@ -1,0 +1,101 @@
+QCalendarWidget QToolButton{
+  	icon-size: 56px, 56px;
+  	border-top-color: transparent;
+	alternate-background-color: transparent;
+	gridline-color: transparent;
+	border-color: transparent;
+	font-size: 40px;
+  }
+
+ QCalendarWidget QMenu {
+  	background-color: white;
+	border-top-color: transparent;
+	border-color: transparent;
+	selection-background-color: black;
+ }
+
+
+ QCalendarWidget QSpinBox {
+  	background-color: transparent;
+  	selection-background-color: transparent;
+  	selection-color: black;
+ }
+
+  /* header row */
+  QCalendarWidget QWidget { alternate-background-color: transparent; }
+
+  /* normal days */
+  QCalendarWidget QAbstractItemView:enabled
+  {
+  	font-size:18px;
+  	color: black;
+  	/*selection-background-color: transparent;*/
+	selection-color: rgb(231, 119, 32);
+  }
+QCalendarWidget QAbstractItemView
+{
+    selection-background-color: transparent;
+    selection-color: white;
+}
+  /* days in other months */
+  /* navigation bar */
+QCalendarWidget QWidget#qt_calendar_navigationbar
+{
+	background-color: transparent;
+	/*color: black;*/
+	/*selection-background-color: transparent;*/
+	/*selection-color: rgb(231, 119, 32);*/
+
+}
+
+QToolButton#qt_calendar_nextmonth {
+    width: 41px;
+	margin: 10px;
+    qproperty-icon: url(../Assets/arrow_right.png);
+}
+
+QToolButton:hover {
+	/*width: 31px;*/
+	/*margin: 10px;*/
+    background-color: transparent;
+	border-radius: 20px;
+}
+
+QToolButton#qt_calendar_prevmonth {
+	width: 41px;
+	margin: 10px;
+    /*width: 20px;*/
+    qproperty-icon: url(../Assets/arrow_left.png);
+}
+
+QWidget{
+	background-color: white;
+}
+
+QLabel{
+	background-color: transparent;
+}
+
+QLabel:hover#schedule,:hover#calendar,:hover#history,:hover#statistic,:hover#notification{
+	color: rgb(231, 119, 32);
+	border-bottom: 1px solid rgb(224, 144, 66);
+
+}
+
+QLabel:pressed#schedule,:pressed#calendar,:pressed#history,:pressed#statistic,:pressed#notification{
+	color: rgb(231, 119, 32);
+	border-bottom: 1px solid rgb(224, 144, 66);
+
+}
+
+QPushButton{
+	border-radius: 20px;
+	background-color: rgb(40, 19, 18);
+	color: white;
+}
+
+QPushButton:hover{
+	background-color: transparent;
+	border: 1px solid #361A17;
+	color: #361A17;
+}

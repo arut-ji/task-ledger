@@ -30,10 +30,7 @@ QLabel{
 QLabel#today_label{
 	color: rgb(231, 119, 32);
 }
-QLabel:hover#left_arrow, :hover#right_arrow{
-	background-color: rgb(244,244,244);
-	border-radius: 20px;
-}
+
 QLabel:hover#schedule,:hover#calendar,:hover#history,:hover#statistic,:hover#notification{
 	color: rgb(231, 119, 32);
 	border-bottom: 1px solid rgb(224, 144, 66);
@@ -56,68 +53,15 @@ QPushButton:hover#create_button{
 	color: #361A17;
 }
 
-QCheckBox {
-    background-color:transparent;
-    color: black;
-    spacing: 4px;
-    outline: none;
-    padding-top: 4px;
-    padding-bottom: 4px;
+QPushButton:hover, :pressed{
+	color: rgb(231, 119, 32);
 }
-
-QCheckBox:focus {
-    border: none;
+QFrame#frame{
+	background-color: transparent;
+	border: 1px solid rgb(251, 166, 0);
+	border-radius: 8px;
 }
-
-QCheckBox QWidget:disabled {
-    background-color: transparent;
-    color: #9B9B9B;
-}
-
-QCheckBox::indicator {
-    margin-left: 4px;
-	margin-right: 10px;
-    width: 30px;
-    height: 30px;
-}
-
-QCheckBox::indicator:unchecked {
-	image: url(../Assets/checkbox_unchecked.png)
-}
-
-QCheckBox::indicator:unchecked:hover,
-QCheckBox::indicator:unchecked:focus,
-QCheckBox::indicator:unchecked:pressed {
-    border: none;
-    image: url(../Assets/checkbox_checked_active.png)
-}
-
-QCheckBox::indicator:unchecked:disabled {
-    image: url(../Assets/checkbox_checked.png)
-}
-
-QCheckBox::indicator:checked {
-    image: url(../Assets/checkbox_checked.png)
-}
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:checked:focus,
-QCheckBox::indicator:checked:pressed {
-    border: none;
-    image: url(../Assets/checkbox_unchecked_active.png);
-}
-QCheckBox::indicator:checked:disabled{
-    image: url(../Assets/checkbox_checked.png)
-}
-Line{
-	color: rgb(201, 50, 41);
-}
-
-QFrame[frameShape=&quot;4&quot;],
-QFrame[frameShape=&quot;5&quot;]
-{
-    border: none;
-    background: rgb(40, 19, 18);
-}</string>
+</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -283,53 +227,12 @@ QFrame[frameShape=&quot;5&quot;]
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="left_arrow">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>60</y>
-     <width>41</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>../Assets/arrow_left.png</pixmap>
-   </property>
-   <property name="scaledContents">
-    <bool>true</bool>
-   </property>
-   <property name="margin">
-    <number>10</number>
-   </property>
-  </widget>
-  <widget class="QLabel" name="today_label">
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>25</y>
-     <width>91</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Helvetica Neue</family>
-     <pointsize>32</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Today</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>65</y>
-     <width>291</width>
+     <x>560</x>
+     <y>50</y>
+     <width>131</width>
      <height>51</height>
     </rect>
    </property>
@@ -340,103 +243,143 @@ QFrame[frameShape=&quot;5&quot;]
     </font>
    </property>
    <property name="text">
-    <string> Mon 15 April</string>
+    <string>History</string>
    </property>
   </widget>
-  <widget class="QLabel" name="right_arrow">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>60</y>
-     <width>41</width>
-     <height>41</height>
+     <x>390</x>
+     <y>110</y>
+     <width>471</width>
+     <height>31</height>
     </rect>
    </property>
-   <property name="text">
-    <string/>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
-   <property name="pixmap">
-    <pixmap>../Assets/arrow_right.png</pixmap>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
    </property>
-   <property name="scaledContents">
-    <bool>true</bool>
-   </property>
-   <property name="margin">
-    <number>10</number>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>460</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_2">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>510</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="complete_label">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>270</y>
-     <width>251</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Helvetica</family>
-     <pointsize>20</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Completed </string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_3">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>180</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_4">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>130</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>0</y>
+      <width>51</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Label</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroup</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>0</y>
+      <width>81</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Date created</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroup</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>0</y>
+      <width>71</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Completed</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroup</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>0</y>
+      <width>81</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Incompleted</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroup</string>
+    </attribute>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>filter by: </string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

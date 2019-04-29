@@ -30,10 +30,7 @@ QLabel{
 QLabel#today_label{
 	color: rgb(231, 119, 32);
 }
-QLabel:hover#left_arrow, :hover#right_arrow{
-	background-color: rgb(244,244,244);
-	border-radius: 20px;
-}
+
 QLabel:hover#schedule,:hover#calendar,:hover#history,:hover#statistic,:hover#notification{
 	color: rgb(231, 119, 32);
 	border-bottom: 1px solid rgb(224, 144, 66);
@@ -56,68 +53,56 @@ QPushButton:hover#create_button{
 	color: #361A17;
 }
 
-QCheckBox {
-    background-color:transparent;
-    color: black;
-    spacing: 4px;
-    outline: none;
-    padding-top: 4px;
-    padding-bottom: 4px;
+QTabWidget{
+	font-size: 20px;
 }
 
-QCheckBox:focus {
-    border: none;
+
+QTabWidget::pane{
+	padding: 5px 10px 5px 10px;   
+	border: 1px solid rgb(40, 19, 18);
+	border-radius: 10px;
+	position: absolute;
+     top: -1em;
 }
 
-QCheckBox QWidget:disabled {
-    background-color: transparent;
-    color: #9B9B9B;
+
+QTabBar::tab{
+	padding: 5px 20px 5px 20px;  
+	border: 1px solid rgb(251, 166, 0); 
+	min-width: 100px
 }
 
-QCheckBox::indicator {
-    margin-left: 4px;
-	margin-right: 10px;
-    width: 30px;
-    height: 30px;
+QTabBar::tab:selected {
+    background: white;
+	color: rgb(231, 119, 32);
 }
 
-QCheckBox::indicator:unchecked {
-	image: url(../Assets/checkbox_unchecked.png)
+
+QTabBar::tab:!selected {
+    background: white;
 }
 
-QCheckBox::indicator:unchecked:hover,
-QCheckBox::indicator:unchecked:focus,
-QCheckBox::indicator:unchecked:pressed {
-    border: none;
-    image: url(../Assets/checkbox_checked_active.png)
+
+
+QTabBar::tab:!selected:hover {
+    background: rgb(242, 247, 247);
 }
 
-QCheckBox::indicator:unchecked:disabled {
-    image: url(../Assets/checkbox_checked.png)
+QTabBar::tab:first{
+	border-top-left-radius: 11px;
+	border-bottom-left-radius: 11px;
 }
 
-QCheckBox::indicator:checked {
-    image: url(../Assets/checkbox_checked.png)
-}
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:checked:focus,
-QCheckBox::indicator:checked:pressed {
-    border: none;
-    image: url(../Assets/checkbox_unchecked_active.png);
-}
-QCheckBox::indicator:checked:disabled{
-    image: url(../Assets/checkbox_checked.png)
-}
-Line{
-	color: rgb(201, 50, 41);
+QTabBar::tab:last{
+	border-top-right-radius: 11px;
+	border-bottom-right-radius: 11px;
 }
 
-QFrame[frameShape=&quot;4&quot;],
-QFrame[frameShape=&quot;5&quot;]
-{
-    border: none;
-    background: rgb(40, 19, 18);
-}</string>
+
+
+
+</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -283,53 +268,12 @@ QFrame[frameShape=&quot;5&quot;]
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="left_arrow">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>60</y>
-     <width>41</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>../Assets/arrow_left.png</pixmap>
-   </property>
-   <property name="scaledContents">
-    <bool>true</bool>
-   </property>
-   <property name="margin">
-    <number>10</number>
-   </property>
-  </widget>
-  <widget class="QLabel" name="today_label">
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>25</y>
-     <width>91</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Helvetica Neue</family>
-     <pointsize>32</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Today</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>65</y>
-     <width>291</width>
+     <x>550</x>
+     <y>50</y>
+     <width>151</width>
      <height>51</height>
     </rect>
    </property>
@@ -340,101 +284,31 @@ QFrame[frameShape=&quot;5&quot;]
     </font>
    </property>
    <property name="text">
-    <string> Mon 15 April</string>
+    <string>Statistic</string>
    </property>
   </widget>
-  <widget class="QLabel" name="right_arrow">
+  <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>60</y>
-     <width>41</width>
-     <height>41</height>
+     <x>300</x>
+     <y>110</y>
+     <width>671</width>
+     <height>451</height>
     </rect>
    </property>
-   <property name="text">
-    <string/>
+   <property name="currentIndex">
+    <number>0</number>
    </property>
-   <property name="pixmap">
-    <pixmap>../Assets/arrow_right.png</pixmap>
-   </property>
-   <property name="scaledContents">
-    <bool>true</bool>
-   </property>
-   <property name="margin">
-    <number>10</number>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>460</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_2">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>510</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="complete_label">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>270</y>
-     <width>251</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Helvetica</family>
-     <pointsize>20</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Completed </string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_3">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>180</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_4">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>130</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Weekly</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Monthly</string>
+    </attribute>
+   </widget>
   </widget>
  </widget>
  <resources/>

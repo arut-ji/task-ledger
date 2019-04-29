@@ -42,7 +42,8 @@ QLineEdit{
 	border-bottom: 1px solid black;
 	border-top: 0px;
 	padding: 2px;
-}</string>
+}
+</string>
   </property>
   <widget class="QLabel" name="login_label">
    <property name="geometry">
@@ -88,8 +89,7 @@ QLineEdit{
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-</string>
+    <string notr="true"/>
    </property>
    <property name="placeholderText">
     <string>Username</string>

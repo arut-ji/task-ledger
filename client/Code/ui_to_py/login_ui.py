@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'login.ui',
 # licensing of 'login.ui' applies.
 #
-# Created: Fri Apr 19 13:58:39 2019
+# Created: Thu Apr 25 15:25:08 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,7 +15,10 @@ class Ui_Form(object):
         Form.setObjectName("Form")
         Form.resize(1000, 600)
         Form.setMouseTracking(False)
-        Form.setStyleSheet("QPushButton{\n"
+        Form.setStyleSheet("QWidget{\n"
+"    background-image: url(:/login.png);\n"
+"}\n"
+"QPushButton{\n"
 "    border-radius: 8px;\n"
 "    color: rgb(255, 255, 255);\n"
 "    background-color: rgb(40, 19, 18);\n"
@@ -37,7 +40,8 @@ class Ui_Form(object):
 "    border-bottom: 1px solid black;\n"
 "    border-top: 0px;\n"
 "    padding: 2px;\n"
-"}")
+"}\n"
+"")
         self.login_label = QtWidgets.QLabel(Form)
         self.login_label.setGeometry(QtCore.QRect(440, 150, 101, 51))
         font = QtGui.QFont()
@@ -54,8 +58,7 @@ class Ui_Form(object):
         font.setPointSize(21)
         self.username_lineEdit.setFont(font)
         self.username_lineEdit.setAutoFillBackground(False)
-        self.username_lineEdit.setStyleSheet("\n"
-"")
+        self.username_lineEdit.setStyleSheet("")
         self.username_lineEdit.setObjectName("username_lineEdit")
         self.pw_lineEdit = QtWidgets.QLineEdit(Form)
         self.pw_lineEdit.setGeometry(QtCore.QRect(360, 290, 261, 31))

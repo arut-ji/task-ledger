@@ -90,6 +90,24 @@ QLineEdit#location, QTextEdit{
 	border-style: none;
 }
 
+QRadioButton::indicator{
+ 	background-image: white;
+	width: 20px; height: 20px; 
+	margin-left: 5px; margin-right: 5px;
+}
+
+QRadioButton::indicator::unchecked{ image: url(../Assets/checkbox_unchecked.png); }
+
+QRadioButton::indicator:unchecked:hover{ image: url(../Assets/checkbox_checked_active.png);}
+
+QRadioButton::indicator:unchecked:pressed
+{ image: url(../Assets/checkbox_checked_active.png);}
+
+QRadioButton::indicator::checked{ image: url(../Assets/checkbox_checked.png); }
+
+QRadioButton::indicator:checked:hover{ image: url(../Assets/checkbox_unchecked_active.png);}
+
+QRadioButton::indicator:checked:pressed{ image: url(../Assets/checkbox_unchecked_active.png);}
 </string>
   </property>
   <widget class="QLineEdit" name="title">
@@ -373,6 +391,22 @@ QLineEdit#location, QTextEdit{
    </property>
    <property name="placeholderText">
     <string>Add Description</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>130</y>
+     <width>100</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>All day</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
    </property>
   </widget>
  </widget>

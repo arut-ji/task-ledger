@@ -12,6 +12,8 @@ class LoginUI(QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
 
+        self.setStyleSheet("QLineEdit:focus{border: none; outline: none;}")
+
         #set background
         palette = QPalette()
         palette.setBrush(QPalette.Background, QPixmap('../Assets/login.png'))

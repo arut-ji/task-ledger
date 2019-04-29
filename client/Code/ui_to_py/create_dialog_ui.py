@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'create_dialog.ui',
 # licensing of 'create_dialog.ui' applies.
 #
-# Created: Fri Apr 19 10:02:33 2019
+# Created: Mon Apr 29 15:51:01 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -90,6 +90,24 @@ class Ui_Form(object):
 "    border-style: none;\n"
 "}\n"
 "\n"
+"QRadioButton::indicator{\n"
+"     background-image: white;\n"
+"    width: 20px; height: 20px; \n"
+"    margin-left: 5px; margin-right: 5px;\n"
+"}\n"
+"\n"
+"QRadioButton::indicator::unchecked{ image: url(../Assets/checkbox_unchecked.png); }\n"
+"\n"
+"QRadioButton::indicator:unchecked:hover{ image: url(../Assets/checkbox_checked_active.png);}\n"
+"\n"
+"QRadioButton::indicator:unchecked:pressed\n"
+"{ image: url(../Assets/checkbox_checked_active.png);}\n"
+"\n"
+"QRadioButton::indicator::checked{ image: url(../Assets/checkbox_checked.png); }\n"
+"\n"
+"QRadioButton::indicator:checked:hover{ image: url(../Assets/checkbox_unchecked_active.png);}\n"
+"\n"
+"QRadioButton::indicator:checked:pressed{ image: url(../Assets/checkbox_unchecked_active.png);}\n"
 "")
         self.title = QtWidgets.QLineEdit(Form)
         self.title.setGeometry(QtCore.QRect(30, 30, 281, 31))
@@ -183,6 +201,10 @@ class Ui_Form(object):
         self.textEdit = QtWidgets.QTextEdit(Form)
         self.textEdit.setGeometry(QtCore.QRect(30, 350, 401, 114))
         self.textEdit.setObjectName("textEdit")
+        self.radioButton = QtWidgets.QRadioButton(Form)
+        self.radioButton.setGeometry(QtCore.QRect(210, 130, 100, 28))
+        self.radioButton.setChecked(False)
+        self.radioButton.setObjectName("radioButton")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -198,5 +220,6 @@ class Ui_Form(object):
         self.label_4.setText(QtWidgets.QApplication.translate("Form", "Notifications", None, -1))
         self.label_5.setText(QtWidgets.QApplication.translate("Form", "Descriptions", None, -1))
         self.textEdit.setPlaceholderText(QtWidgets.QApplication.translate("Form", "Add Description", None, -1))
+        self.radioButton.setText(QtWidgets.QApplication.translate("Form", "All day", None, -1))
 
 

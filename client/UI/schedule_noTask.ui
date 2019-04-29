@@ -365,75 +365,41 @@ QFrame[frameShape=&quot;5&quot;]
     <number>10</number>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox">
+  <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>460</y>
-     <width>271</width>
-     <height>41</height>
+     <x>510</x>
+     <y>190</y>
+     <width>252</width>
+     <height>211</height>
     </rect>
    </property>
    <property name="text">
-    <string>CheckBox</string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../Assets/no_task.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox_2">
+  <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>510</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="complete_label">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>270</y>
-     <width>251</width>
-     <height>25</height>
+     <x>530</x>
+     <y>390</y>
+     <width>221</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <family>Helvetica</family>
      <pointsize>20</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>Completed </string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_3">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>180</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_4">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>130</y>
-     <width>271</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
+    <string>You are free on this day !</string>
    </property>
   </widget>
  </widget>

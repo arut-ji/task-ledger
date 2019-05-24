@@ -4,7 +4,7 @@ from PySide2.QtGui import *
 from PySide2.QtWidgets import QWidget, QApplication
 
 from client.Code.ui_to_py.landingpage_ui import Ui_TaskLedger
-#TODO::refactor code
+
 class LandingPageUI(QWidget):
     def __init__(self):
         QWidget.__init__(self, None)
@@ -12,6 +12,7 @@ class LandingPageUI(QWidget):
         self.ui = Ui_TaskLedger()
         self.ui.setupUi(self)
 
+        #set graphics
         self.ui.landing_graphic.setPixmap(QPixmap("../Assets/graphic_landing.png"))
         self.ui.logo.setPixmap(QPixmap('../Assets/logo.png'))
 

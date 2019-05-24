@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'create_dialog.ui',
 # licensing of 'create_dialog.ui' applies.
 #
-# Created: Mon Apr 29 15:51:01 2019
+# Created: Wed May  1 20:50:36 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,13 +24,19 @@ class Ui_Form(object):
 "    border-top: 0px;\n"
 "    padding: 1px;\n"
 "}\n"
+"\n"
+"QLineEdit:focus{\n"
+"    outline: none;\n"
+"    border: none;\n"
+"}\n"
+"\n"
 "QPushButton#save_btn{\n"
-"    background-color: rgb(242, 183, 54);\n"
+"    background-color: rgba(242, 183, 54, 95);\n"
 "    color: rgb(40, 19, 18);\n"
 "    border-radius: 10px\n"
 "}\n"
 "QPushButton:hover#save_btn{\n"
-"    background-color: rgba(242, 183, 54, 95);\n"
+"    background-color: rgb(242, 183, 54);\n"
 "    color: rgb(40, 19, 18);\n"
 "    border-radius: 10px\n"
 "}\n"
@@ -108,6 +114,8 @@ class Ui_Form(object):
 "QRadioButton::indicator:checked:hover{ image: url(../Assets/checkbox_unchecked_active.png);}\n"
 "\n"
 "QRadioButton::indicator:checked:pressed{ image: url(../Assets/checkbox_unchecked_active.png);}\n"
+"\n"
+"\n"
 "")
         self.title = QtWidgets.QLineEdit(Form)
         self.title.setGeometry(QtCore.QRect(30, 30, 281, 31))

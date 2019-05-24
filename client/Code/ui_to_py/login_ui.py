@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'login.ui',
 # licensing of 'login.ui' applies.
 #
-# Created: Thu Apr 25 15:25:08 2019
+# Created: Tue May 21 21:30:02 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -41,6 +41,7 @@ class Ui_Form(object):
 "    border-top: 0px;\n"
 "    padding: 2px;\n"
 "}\n"
+"\n"
 "")
         self.login_label = QtWidgets.QLabel(Form)
         self.login_label.setGeometry(QtCore.QRect(440, 150, 101, 51))

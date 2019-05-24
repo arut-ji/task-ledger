@@ -1,7 +1,9 @@
 import sys
 
+from PySide2 import QtCore
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
+
 from client.Code.ui_to_py.login_ui import Ui_Form
 
 #TODO::Error
@@ -12,7 +14,8 @@ class LoginUI(QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
 
-        self.setStyleSheet("QLineEdit:focus{border: none; outline: none;}")
+
+        # QWidget.setFocusPolicy(QtCore.Qt.NoFocus)
 
         #set background
         palette = QPalette()

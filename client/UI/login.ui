@@ -43,6 +43,7 @@ QLineEdit{
 	border-top: 0px;
 	padding: 2px;
 }
+
 </string>
   </property>
   <widget class="QLabel" name="login_label">

@@ -1,10 +1,10 @@
 import sys
 
 from PySide2.QtWidgets import *
-from client.Code.ui_to_py.schedule_ui import Ui_Form
+from client.Code.ui_to_py.main_ui import Ui_Form
 
-#TODO::setting icon
-class scheduleUI(QWidget):
+
+class mainUI(QWidget):
     def __init__(self):
         QWidget.__init__(self, None)
 
@@ -16,6 +16,6 @@ class scheduleUI(QWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    w = scheduleUI()
+    w = mainUI()
     sys.exit(app.exec_())
 

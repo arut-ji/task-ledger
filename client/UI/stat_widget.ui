@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>721</width>
+    <height>601</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+	background-color: white;
+}
+
+QTabWidget{
+	font-size: 20px;
+}
+
+
+QTabWidget::pane{
+	padding: 5px 10px 5px 10px;   
+	border: 1px solid rgb(40, 19, 18);
+	border-radius: 10px;
+	position: absolute;
+     top: -1em;
+}
+
+
+QTabBar::tab{
+	padding: 5px 20px 5px 20px;  
+	border: 1px solid rgb(251, 166, 0); 
+	min-width: 100px
+}
+
+QTabBar::tab:selected {
+    background: white;
+	color: rgb(231, 119, 32);
+}
+
+
+QTabBar::tab:!selected {
+    background: white;
+}
+
+
+
+QTabBar::tab:!selected:hover {
+    background: rgb(242, 247, 247);
+}
+
+QTabBar::tab:first{
+	border-top-left-radius: 11px;
+	border-bottom-left-radius: 11px;
+}
+
+QTabBar::tab:last{
+	border-top-right-radius: 11px;
+	border-bottom-right-radius: 11px;
+}
+
+
+
+
+</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>110</y>
+     <width>671</width>
+     <height>451</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Weekly</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Monthly</string>
+    </attribute>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>40</y>
+     <width>151</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>42</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Statistic</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

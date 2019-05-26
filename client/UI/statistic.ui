@@ -159,7 +159,7 @@ QTabBar::tab:last{
     <string>+ Create</string>
    </property>
   </widget>
-  <widget class="QLabel" name="schedule">
+  <widget class="QLabel_changed" name="schedule">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -268,49 +268,66 @@ QTabBar::tab:last{
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>550</x>
-     <y>50</y>
-     <width>151</width>
-     <height>51</height>
+     <x>280</x>
+     <y>0</y>
+     <width>721</width>
+     <height>601</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <family>Helvetica</family>
-     <pointsize>42</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Statistic</string>
-   </property>
-  </widget>
-  <widget class="QTabWidget" name="tabWidget">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>110</y>
-     <width>671</width>
-     <height>451</height>
-    </rect>
-   </property>
-   <property name="currentIndex">
-    <number>0</number>
-   </property>
-   <widget class="QWidget" name="tab">
-    <attribute name="title">
-     <string>Weekly</string>
-    </attribute>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>671</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Weekly</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Monthly</string>
+     </attribute>
+    </widget>
    </widget>
-   <widget class="QWidget" name="tab_2">
-    <attribute name="title">
-     <string>Monthly</string>
-    </attribute>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>40</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Helvetica</family>
+      <pointsize>42</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Statistic</string>
+    </property>
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QLabel_changed</class>
+   <extends>QLabel</extends>
+   <header>qlabel_changed.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

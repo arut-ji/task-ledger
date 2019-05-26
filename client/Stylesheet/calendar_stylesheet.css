@@ -1,3 +1,4 @@
+/*Calendar*/
 QCalendarWidget QToolButton{
   	icon-size: 56px, 56px;
   	border-top-color: transparent;
@@ -5,47 +6,39 @@ QCalendarWidget QToolButton{
 	gridline-color: transparent;
 	border-color: transparent;
 	font-size: 40px;
-  }
+}
 
- QCalendarWidget QMenu {
-  	background-color: white;
+QCalendarWidget QMenu {
+	background-color: white;
 	border-top-color: transparent;
 	border-color: transparent;
 	selection-background-color: black;
- }
+}
 
+QCalendarWidget QSpinBox {
+	background-color: transparent;
+	selection-background-color: transparent;
+	selection-color: black;
+}
 
- QCalendarWidget QSpinBox {
-  	background-color: transparent;
-  	selection-background-color: transparent;
-  	selection-color: black;
- }
+QCalendarWidget QWidget { alternate-background-color: transparent; }
 
-  /* header row */
-  QCalendarWidget QWidget { alternate-background-color: transparent; }
-
-  /* normal days */
-  QCalendarWidget QAbstractItemView:enabled
-  {
-  	font-size:18px;
-  	color: black;
-  	/*selection-background-color: transparent;*/
+QCalendarWidget QAbstractItemView:enabled
+{
+	font-size:18px;
+	color: black;
 	selection-color: rgb(231, 119, 32);
-  }
+}
+
 QCalendarWidget QAbstractItemView
 {
     selection-background-color: transparent;
     selection-color: white;
 }
-  /* days in other months */
-  /* navigation bar */
+
 QCalendarWidget QWidget#qt_calendar_navigationbar
 {
 	background-color: transparent;
-	/*color: black;*/
-	/*selection-background-color: transparent;*/
-	/*selection-color: rgb(231, 119, 32);*/
-
 }
 
 QToolButton#qt_calendar_nextmonth {
@@ -55,8 +48,6 @@ QToolButton#qt_calendar_nextmonth {
 }
 
 QToolButton:hover {
-	/*width: 31px;*/
-	/*margin: 10px;*/
     background-color: transparent;
 	border-radius: 20px;
 }
@@ -64,38 +55,168 @@ QToolButton:hover {
 QToolButton#qt_calendar_prevmonth {
 	width: 41px;
 	margin: 10px;
-    /*width: 20px;*/
     qproperty-icon: url(../Assets/arrow_left.png);
 }
 
+/*main Window*/
 QWidget{
 	background-color: white;
 }
 
 QLabel{
 	background-color: transparent;
+	color: rgb(40, 19, 18)
+}
+QLabel#today_label{
+	color: rgb(231, 119, 32);
 }
 
-QLabel:hover#schedule,:hover#calendar,:hover#history,:hover#statistic,:hover#notification{
+QPushButton#schedule,#calendar,#history,#statistic,#notification{
+	border: none;
+	background-color: transparent;
+	text-align: left;
+}
+
+QPushButton:hover#schedule,:hover#calendar,:hover#history,:hover#statistic,:hover#notification{
 	color: rgb(231, 119, 32);
 	border-bottom: 1px solid rgb(224, 144, 66);
-
 }
 
-QLabel:pressed#schedule,:pressed#calendar,:pressed#history,:pressed#statistic,:pressed#notification{
+QPushButton:pressed#schedule,:pressed#calendar,:pressed#history,:pressed#statistic,:pressed#notification{
 	color: rgb(231, 119, 32);
 	border-bottom: 1px solid rgb(224, 144, 66);
-
 }
 
-QPushButton{
+QPushButton#create_button{
 	border-radius: 20px;
 	background-color: rgb(40, 19, 18);
 	color: white;
 }
 
-QPushButton:hover{
+QPushButton:hover#create_button{
 	background-color: transparent;
 	border: 1px solid #361A17;
 	color: #361A17;
+}
+
+/*Tab*/
+QTabWidget{
+	font-size: 20px;
+}
+
+QTabWidget::pane{
+	padding: 5px 10px 5px 10px;
+	border: 1px solid rgb(40, 19, 18);
+	border-radius: 10px;
+	position: absolute;
+	top: -1em;
+}
+
+QTabBar::tab{
+	padding: 5px 20px 5px 20px;
+	border: 1px solid rgb(251, 166, 0);
+	min-width: 100px
+}
+
+QTabBar::tab:selected {
+    background: white;
+	color: rgb(231, 119, 32);
+}
+
+QTabBar::tab:!selected {
+    background: white;
+}
+
+QTabBar::tab:!selected:hover {
+    background: rgb(242, 247, 247);
+}
+
+QTabBar::tab:first{
+	border-top-left-radius: 11px;
+	border-bottom-left-radius: 11px;
+}
+
+QTabBar::tab:last{
+	border-top-right-radius: 11px;
+	border-bottom-right-radius: 11px;
+}
+
+QFrame#frame{
+	background-color: transparent;
+	border: 1px solid rgb(251, 166, 0);
+	border-radius: 8px;
+}
+QPushButton:hover, :pressed{
+	color: rgb(231, 119, 32);
+}
+QLabel#today_label{
+	color: rgb(231, 119, 32);
+}
+QLabel:hover#left_arrow, :hover#right_arrow{
+	background-color: rgb(244,244,244);
+	border-radius: 20px;
+}
+
+QCheckBox {
+    background-color:transparent;
+    color: black;
+    spacing: 4px;
+    outline: none;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+QCheckBox:focus {
+    border: none;
+}
+
+QCheckBox QWidget:disabled {
+    background-color: transparent;
+    color: #9B9B9B;
+}
+
+QCheckBox::indicator {
+    margin-left: 4px;
+	margin-right: 10px;
+    width: 30px;
+    height: 30px;
+}
+
+QCheckBox::indicator:unchecked {
+	image: url(../Assets/checkbox_unchecked.png)
+}
+
+QCheckBox::indicator:unchecked:hover,
+QCheckBox::indicator:unchecked:focus,
+QCheckBox::indicator:unchecked:pressed {
+    border: none;
+    image: url(../Assets/checkbox_checked_active.png)
+}
+
+QCheckBox::indicator:unchecked:disabled {
+    image: url(../Assets/checkbox_checked.png)
+}
+
+QCheckBox::indicator:checked {
+    image: url(../Assets/checkbox_checked.png)
+}
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:checked:focus,
+QCheckBox::indicator:checked:pressed {
+    border: none;
+    image: url(../Assets/checkbox_unchecked_active.png);
+}
+QCheckBox::indicator:checked:disabled{
+    image: url(../Assets/checkbox_checked.png)
+}
+
+Line{
+	color: rgb(201, 50, 41);
+}
+
+QFrame[frameShape="4"],
+QFrame[frameShape="5"]
+{
+    border: none;
+    background: rgb(40, 19, 18);
 }

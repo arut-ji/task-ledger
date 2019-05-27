@@ -10,6 +10,7 @@ class TaskListObserver(metaclass=abc.ABCMeta):
     def __init__(self):
         self._subject = None
         self._observer_state = None
+        self.task_list = []
 
     @abc.abstractmethod
     def update(self):
@@ -22,6 +23,12 @@ class TaskListObserver(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def update_display(self, arg):
         pass
+
+    def add_task(self, arg):
+        self.task_list.append(arg)
+
+    def delete_task(self, arg):
+        self.task_list.remove(arg)
 
 
 class ActiveTasksList(TaskListObserver):

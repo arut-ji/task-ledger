@@ -78,6 +78,7 @@ class Task_ledger(QWidget):
         self.dialog.setupUi(self)
         self.show()
 
+
 class LoginUI(QWidget):
     def __init__(self):
         QWidget.__init__(self, None)
@@ -87,6 +88,9 @@ class LoginUI(QWidget):
 
         self.ui = Task_ledger()
         self.ui.setupUi(self)
+
+        self.ui.login.button_login.clicked.connect(self.login_event)
+        self.ui.reg.reg_button.clicked.connect(self.register_event)
 
         self.show()
 
@@ -102,9 +106,6 @@ class LoginUI(QWidget):
         username = self.ui.reg.username_lineEdit.text()
         password1 = self.ui.reg.pw_lineEdit.text()
         password2 = self.ui.reg.re_pw_lineEdit.text()
-        print(username)
-        print(password1)
-        print(password2)
 
         success = self.user_auth.registration(username, password1, password2)
         if success:

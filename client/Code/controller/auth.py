@@ -39,6 +39,8 @@ class UserAuth:
         }
 
         res = requests.post(self.login_url, data=payload)
+        # res_data = json.loads(res.text)
+        # print(res_data)
 
         if res.status_code == 200:
             res_data = json.loads(res.text)
@@ -53,10 +55,6 @@ class UserAuth:
             Return True if user created succesfully
             Return False if created successfully
         """
-        if len(password1) < 8:
-            return False
-        elif password1 != password2:
-            return False
 
         payload = {
             "username": username,
@@ -65,6 +63,10 @@ class UserAuth:
         }
 
         res = requests.post(self.registration_url, data=payload)
+
+        res_data = json.loads(res.text)
+        print(res_data)
+
         if res.status_code == 201:
             res_data = json.loads(res.text)
             self.__token = res_data["key"]

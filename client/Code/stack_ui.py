@@ -84,8 +84,6 @@ class LoginUI(QWidget):
         self.ui = Task_ledger()
         self.ui.setupUi(self)
 
-
-
         self.show()
 
 if __name__ == '__main__':

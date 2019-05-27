@@ -1,0 +1,40 @@
+QPushButton#button_login, #reg_button{
+	border-radius: 8px;
+	color: rgb(255, 255, 255);
+	background-color: rgb(40, 19, 18);
+}
+QPushButton:hover#button_login, :hover#reg_button{
+	background-color: transparent;
+	border: 1px solid #361A17;
+	color: #361A17;
+}
+
+QLineEdit{
+    background-color: transparent;
+    border-bottom: 1px solid black;
+    border-top: 0px;
+    padding: 2px;
+}
+
+QLabel{
+    background-color: transparent;
+}
+
+QPushButton#reg_label{
+	background-color: transparent;
+	border: none;
+	color: black;
+}
+
+QPushButton:hover#reg_label{
+	color: rgb(201, 50, 41)
+}
+
+QWidget#Form{
+	background-image: url("../Assets/login.png");
+}
+
+QPushButton#back{
+	background-color: transparent;
+	border: none;
+}

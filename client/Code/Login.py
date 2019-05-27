@@ -14,10 +14,7 @@ class LoginUI(QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
 
-
-        # QWidget.setFocusPolicy(QtCore.Qt.NoFocus)
-
-        #set background
+        # set background
         palette = QPalette()
         palette.setBrush(QPalette.Background, QPixmap('../Assets/login.png'))
         self.setPalette(palette)

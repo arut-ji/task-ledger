@@ -4,33 +4,20 @@ from PySide2.QtWidgets import QWidget
 
 class Ui_TaskLedger(QWidget):
     def setupUi(self, TaskLedger):
+
         TaskLedger.setObjectName("TaskLedger")
         TaskLedger.resize(1000, 600)
-        TaskLedger.setMinimumSize(QtCore.QSize(1000, 600))
-        TaskLedger.setMaximumSize(QtCore.QSize(1000, 600))
-        TaskLedger.setBaseSize(QtCore.QSize(1000, 600))
-        TaskLedger.setStyleSheet("QWidget{\n"
-"    background-color: white;\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-color: transparent;\n"
-"    border: 1px solid #361A17;\n"
-"    color: #361A17;\n"
-"}\n"
-"\n"
-"QPushButton{\n"
-"    background-color: rgb(40, 19, 18);\n"
-"    color: rgb(255, 255, 255);\n"
-"    border-radius: 8px;\n"
-"}")
+
+        css_file = open('../Stylesheet/landing-page.css').read()
+        TaskLedger.setStyleSheet(css_file)
+
         self.landing_graphic = QtWidgets.QLabel(TaskLedger)
         self.landing_graphic.setGeometry(QtCore.QRect(90, 170, 359, 264))
         self.landing_graphic.setMinimumSize(QtCore.QSize(359, 264))
         self.landing_graphic.setMaximumSize(QtCore.QSize(359, 264))
         self.landing_graphic.setStyleSheet("")
         self.landing_graphic.setText("")
-        self.landing_graphic.setPixmap(QtGui.QPixmap(":/graphic/graphic_landing.png"))
+        self.landing_graphic.setPixmap(QtGui.QPixmap("../Assets/graphic_landing.png"))
         self.landing_graphic.setScaledContents(True)
         self.landing_graphic.setWordWrap(False)
         self.landing_graphic.setObjectName("landing_graphic")
@@ -39,22 +26,18 @@ class Ui_TaskLedger(QWidget):
         self.bg.setMinimumSize(QtCore.QSize(435, 300))
         self.bg.setMaximumSize(QtCore.QSize(435, 500))
         self.bg.setAutoFillBackground(False)
-        self.bg.setStyleSheet("background-color: rgb(242, 247, 247);")
         self.bg.setText("")
         self.bg.setObjectName("bg")
         self.logo = QtWidgets.QLabel(TaskLedger)
         self.logo.setGeometry(QtCore.QRect(520, 150, 220, 50))
         self.logo.setMinimumSize(QtCore.QSize(220, 50))
         self.logo.setMaximumSize(QtCore.QSize(220, 50))
-        self.logo.setStyleSheet("background-color: transparent;")
         self.logo.setText("")
-        self.logo.setPixmap(QtGui.QPixmap(":/logo/TaskLedger_logoText-03.png"))
+        self.logo.setPixmap(QtGui.QPixmap("../Assets/logo.png"))
         self.logo.setScaledContents(True)
         self.logo.setObjectName("logo")
         self.textEdit = QtWidgets.QTextEdit(TaskLedger)
         self.textEdit.setGeometry(QtCore.QRect(520, 230, 351, 151))
-        self.textEdit.setStyleSheet("background-color: transparent;\n"
-"color: rgb(40, 19, 18);")
         self.textEdit.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
         self.textEdit.setReadOnly(True)
         self.textEdit.setCursorWidth(0)

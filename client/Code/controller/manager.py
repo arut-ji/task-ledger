@@ -4,7 +4,7 @@ class TaskLedgerSystem:
         The TaskLedgerSystem is the the subject to be observed
     """
 
-    def __init__(self, user_auth):
+    def __init__(self, user_auth=None):
         self.user_auth = user_auth
         self._observers = set()
         self._subject_state = None

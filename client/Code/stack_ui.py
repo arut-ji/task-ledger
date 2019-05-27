@@ -9,6 +9,9 @@ import client.Code.ui_to_py.register_ui as reg
 import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
 
+import client.Code.controller.auth as task_auth
+import client.Code.controller.manager as task_manager
+
 class Task_ledger(QWidget):
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -34,7 +37,6 @@ class Task_ledger(QWidget):
         self.login.setupUi(self.stackedWidgetPage2)
         self.login.setGeometry(0, 0, 1000, 60)
         self.login.reg_label.clicked.connect(self.goto_reg)
-        self.login.button_login.clicked.connect(self.goto_main)
         self.login.back.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage2)
 
@@ -44,7 +46,6 @@ class Task_ledger(QWidget):
         self.reg = reg.Ui_Form(self.stackedWidgetPage3)
         self.reg.setupUi(self.stackedWidgetPage3)
         self.reg.setGeometry(0, 0, 1000, 600)
-        self.reg.reg_button.clicked.connect(self.goto_login)
         self.reg.back.clicked.connect(self.goto_login)
         self.stackedWidget.addWidget(self.stackedWidgetPage3)
 
@@ -81,10 +82,34 @@ class LoginUI(QWidget):
     def __init__(self):
         QWidget.__init__(self, None)
 
+        self.manager = task_manager.TaskLedgerSystem()
+        self.user_auth = task_auth.UserAuth()
+
         self.ui = Task_ledger()
         self.ui.setupUi(self)
 
         self.show()
+
+    def login_event(self):
+        username = self.ui.login.username_lineEdit.text()
+        password = self.ui.login.pw_lineEdit.text()
+
+        success = self.user_auth.login(username, password)
+        if success:
+            self.ui.goto_main()
+
+    def register_event(self):
+        username = self.ui.reg.username_lineEdit.text()
+        password1 = self.ui.reg.pw_lineEdit.text()
+        password2 = self.ui.reg.re_pw_lineEdit.text()
+        print(username)
+        print(password1)
+        print(password2)
+
+        success = self.user_auth.registration(username, password1, password2)
+        if success:
+            self.ui.goto_main()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

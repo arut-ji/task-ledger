@@ -3,9 +3,8 @@ from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QWidget
 
 from client.Code.ui_to_py.calendar_ui import CalendarWidget
-import client.Code.ui_to_py.dialog_ui as dialog
-from PySide2 import QtCore, QtGui, QtWidgets
 
+from PySide2 import QtCore, QtGui, QtWidgets
 
 class Ui_Form(QWidget):
     def setupUi(self, Form):
@@ -33,13 +32,15 @@ class Ui_Form(QWidget):
         font.setPointSize(18)
         self.create_button.setFont(font)
         self.create_button.setObjectName("create_button")
-        self.create_button.clicked.connect(self.create_dialog)
-        self.label_2 = QtWidgets.QLabel(Form)
-        self.label_2.setGeometry(QtCore.QRect(20, 550, 31, 31))
-        self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("../Assets/settings.png"))
-        self.label_2.setScaledContents(True)
-        self.label_2.setObjectName("label_2")
+
+        self.log_out = QtWidgets.QPushButton(Form)
+        self.log_out.setGeometry(QtCore.QRect(15, 545, 51, 51))
+        self.log_out.setText("")
+        self.log_out.setIcon(QtGui.QIcon("../Assets/logout.png"))
+        self.log_out.setIconSize(QtCore.QSize(31, 31))
+        # self.log_out.setPixmap(QtGui.QPixmap("../Assets/logout.png"))
+        # self.log_out.setScaledContents(True)
+        self.log_out.setObjectName("logout")
         self.stackedWidget = QtWidgets.QStackedWidget(Form)
         self.stackedWidget.setGeometry(QtCore.QRect(280, 0, 721, 601))
         self.stackedWidget.setObjectName("stackedWidget")
@@ -51,8 +52,6 @@ class Ui_Form(QWidget):
         self.left_arrow.setIcon(QIcon("../Assets/arrow_left.png"))
         self.left_arrow.setFlat(True)
         self.left_arrow.setIconSize(QSize(21, 21))
-        # self.left_arrow.setScaledContents(True)
-        # self.left_arrow.setMargin(10)
         self.left_arrow.setObjectName("left_arrow")
         self.checkBox_4 = QtWidgets.QCheckBox(self.stackedWidgetPage1)
         self.checkBox_4.setGeometry(QtCore.QRect(100, 120, 271, 41))
@@ -244,18 +243,19 @@ class Ui_Form(QWidget):
 
     def display_cal(self):
         self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.removeWidget(self)
 
     def display_his(self):
         self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.removeWidget(self)
 
     def display_stat(self):
         self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.removeWidget(self)
 
     def display_noti(self):
         self.stackedWidget.setCurrentIndex(4)
+        self.stackedWidget.removeWidget(self)
 
-    def create_dialog(self):
-        self.dialog = dialog.Ui_Dialog()
-        self.dialog.setupUi(self)
-        self.show()
+
 

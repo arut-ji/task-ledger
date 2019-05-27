@@ -152,7 +152,7 @@ QPushButton:hover, :pressed{
 QLabel#today_label{
 	color: rgb(231, 119, 32);
 }
-QLabel:hover#left_arrow, :hover#right_arrow{
+QPushButton:hover#left_arrow, :hover#right_arrow{
 	background-color: rgb(244,244,244);
 	border-radius: 20px;
 }
@@ -186,9 +186,12 @@ QCheckBox::indicator:unchecked {
 	image: url(../Assets/checkbox_unchecked.png)
 }
 
-QCheckBox::indicator:unchecked:hover,
-QCheckBox::indicator:unchecked:focus,
-QCheckBox::indicator:unchecked:pressed {
+QCheckBox::indicator:unchecked:hover{
+    border: none;
+    image: url(../Assets/checkbox_unchecked_active.png)
+}
+
+QCheckBox::indicator:unchecked:pressed{
     border: none;
     image: url(../Assets/checkbox_checked_active.png)
 }
@@ -200,12 +203,16 @@ QCheckBox::indicator:unchecked:disabled {
 QCheckBox::indicator:checked {
     image: url(../Assets/checkbox_checked.png)
 }
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:checked:focus,
-QCheckBox::indicator:checked:pressed {
+QCheckBox::indicator:checked:hover{
+    border: none;
+    image: url(../Assets/checkbox_checked_active.png);
+}
+
+QCheckBox::indicator:checked:pressed{
     border: none;
     image: url(../Assets/checkbox_unchecked_active.png);
 }
+
 QCheckBox::indicator:checked:disabled{
     image: url(../Assets/checkbox_checked.png)
 }

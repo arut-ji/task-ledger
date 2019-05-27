@@ -1,7 +1,9 @@
+from PySide2.QtCore import QSize, QObject
+from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QWidget
 
 from client.Code.ui_to_py.calendar_ui import CalendarWidget
-import client.Code.dialog_ui as dialog
+import client.Code.ui_to_py.dialog_ui as dialog
 from PySide2 import QtCore, QtGui, QtWidgets
 
 
@@ -10,7 +12,7 @@ class Ui_Form(QWidget):
         Form.setObjectName("Form")
         Form.resize(1000, 600)
         font = QtGui.QFont()
-        css_file = open('../Stylesheet/calendar_stylesheet.css').read()
+        css_file = open('../Stylesheet/main_stylesheet.css').read()
         Form.setStyleSheet(css_file)
         font.setFamily("Helvetica")
         Form.setFont(font)
@@ -32,7 +34,6 @@ class Ui_Form(QWidget):
         self.create_button.setFont(font)
         self.create_button.setObjectName("create_button")
         self.create_button.clicked.connect(self.create_dialog)
-
         self.label_2 = QtWidgets.QLabel(Form)
         self.label_2.setGeometry(QtCore.QRect(20, 550, 31, 31))
         self.label_2.setText("")
@@ -44,53 +45,49 @@ class Ui_Form(QWidget):
         self.stackedWidget.setObjectName("stackedWidget")
         self.stackedWidgetPage1 = QtWidgets.QWidget()
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
-        self.left_arrow = QtWidgets.QLabel(self.stackedWidgetPage1)
-        self.left_arrow.setGeometry(QtCore.QRect(30, 50, 41, 41))
+        self.left_arrow = QtWidgets.QPushButton(self.stackedWidgetPage1)
+        self.left_arrow.setGeometry(QtCore.QRect(30, 55, 41, 41))
         self.left_arrow.setText("")
-        self.left_arrow.setPixmap(QtGui.QPixmap("../Assets/arrow_left.png"))
-        self.left_arrow.setScaledContents(True)
-        self.left_arrow.setMargin(10)
+        self.left_arrow.setIcon(QIcon("../Assets/arrow_left.png"))
+        self.left_arrow.setFlat(True)
+        self.left_arrow.setIconSize(QSize(21, 21))
+        # self.left_arrow.setScaledContents(True)
+        # self.left_arrow.setMargin(10)
         self.left_arrow.setObjectName("left_arrow")
         self.checkBox_4 = QtWidgets.QCheckBox(self.stackedWidgetPage1)
         self.checkBox_4.setGeometry(QtCore.QRect(100, 120, 271, 41))
         self.checkBox_4.setObjectName("checkBox_4")
         self.today_label = QtWidgets.QLabel(self.stackedWidgetPage1)
-        self.today_label.setGeometry(QtCore.QRect(130, 15, 91, 51))
+        self.today_label.setGeometry(QtCore.QRect(130, 20, 91, 51))
         font = QtGui.QFont()
         font.setFamily("Helvetica Neue")
         font.setPointSize(32)
         self.today_label.setFont(font)
         self.today_label.setObjectName("today_label")
         self.label_3 = QtWidgets.QLabel(self.stackedWidgetPage1)
-        self.label_3.setGeometry(QtCore.QRect(120, 55, 291, 51))
+        self.label_3.setGeometry(QtCore.QRect(120, 60, 291, 51))
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         font.setPointSize(42)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
-        self.right_arrow = QtWidgets.QLabel(self.stackedWidgetPage1)
-        self.right_arrow.setGeometry(QtCore.QRect(80, 50, 41, 41))
+        self.right_arrow = QtWidgets.QPushButton(self.stackedWidgetPage1)
+        self.right_arrow.setGeometry(QtCore.QRect(80, 55, 41, 41))
         self.right_arrow.setText("")
-        self.right_arrow.setPixmap(QtGui.QPixmap("../Assets/arrow_right.png"))
-        self.right_arrow.setScaledContents(True)
-        self.right_arrow.setMargin(10)
+        self.right_arrow.setIcon(QIcon("../Assets/arrow_right.png"))
+        self.right_arrow.setFlat(True)
+        self.right_arrow.setIconSize(QSize(21, 21))
+        # self.right_arrow.setScaledContents(True)
+        # self.right_arrow.setMargin(10)
         self.right_arrow.setObjectName("right_arrow")
         self.checkBox_3 = QtWidgets.QCheckBox(self.stackedWidgetPage1)
         self.checkBox_3.setGeometry(QtCore.QRect(100, 170, 271, 41))
         self.checkBox_3.setObjectName("checkBox_3")
-        self.complete_label = QtWidgets.QLabel(self.stackedWidgetPage1)
-        self.complete_label.setGeometry(QtCore.QRect(330, 260, 251, 25))
+
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         font.setPointSize(20)
-        self.complete_label.setFont(font)
-        self.complete_label.setObjectName("complete_label")
-        self.checkBox = QtWidgets.QCheckBox(self.stackedWidgetPage1)
-        self.checkBox.setGeometry(QtCore.QRect(90, 450, 271, 41))
-        self.checkBox.setObjectName("checkBox")
-        self.checkBox_2 = QtWidgets.QCheckBox(self.stackedWidgetPage1)
-        self.checkBox_2.setGeometry(QtCore.QRect(90, 500, 271, 41))
-        self.checkBox_2.setObjectName("checkBox_2")
+
         self.stackedWidget.addWidget(self.stackedWidgetPage1)
         self.page = QtWidgets.QWidget()
         self.page.setObjectName("page")
@@ -110,7 +107,7 @@ class Ui_Form(QWidget):
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.frame = QtWidgets.QFrame(self.page_2)
-        self.frame.setGeometry(QtCore.QRect(110, 90, 471, 31))
+        self.frame.setGeometry(QtCore.QRect(110, 100, 471, 31))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -159,7 +156,7 @@ class Ui_Form(QWidget):
         self.stat_label.setFont(font)
         self.stat_label.setObjectName("stat_label")
         self.tabWidget = QtWidgets.QTabWidget(self.page_4)
-        self.tabWidget.setGeometry(QtCore.QRect(20, 110, 671, 451))
+        self.tabWidget.setGeometry(QtCore.QRect(20, 100, 671, 451))
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
@@ -226,9 +223,6 @@ class Ui_Form(QWidget):
         self.today_label.setText(QtWidgets.QApplication.translate("Form", "Today", None, -1))
         self.label_3.setText(QtWidgets.QApplication.translate("Form", " Mon 15 April", None, -1))
         self.checkBox_3.setText(QtWidgets.QApplication.translate("Form", "CheckBox", None, -1))
-        self.complete_label.setText(QtWidgets.QApplication.translate("Form", "Completed ", None, -1))
-        self.checkBox.setText(QtWidgets.QApplication.translate("Form", "CheckBox", None, -1))
-        self.checkBox_2.setText(QtWidgets.QApplication.translate("Form", "CheckBox", None, -1))
         self.label_4.setText(QtWidgets.QApplication.translate("Form", "History", None, -1))
         self.pushButton.setText(QtWidgets.QApplication.translate("Form", "Label", None, -1))
         self.pushButton_2.setText(QtWidgets.QApplication.translate("Form", "Date created", None, -1))
@@ -264,9 +258,4 @@ class Ui_Form(QWidget):
         self.dialog = dialog.Ui_Dialog()
         self.dialog.setupUi(self)
         self.show()
-
-
-
-
-
 

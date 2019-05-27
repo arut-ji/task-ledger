@@ -8,6 +8,13 @@ class CalendarWidget(QtWidgets.QCalendarWidget):
             verticalHeaderFormat=QtWidgets.QCalendarWidget.NoVerticalHeader,
             gridVisible=False)
 
+        self.cur_day = QtGui.QTextCharFormat()
+        self.brush = QtGui.QBrush()
+        # self.brush.setColor(self, QtGui.QColor(212, 175, 55))
+        # self.cur_day.setBackground(QtGui.QBrush.setColor())
+        self.today = QtCore.QDate.currentDate()
+        # print(self.today)
+        self.setDateTextFormat(self.today, self.cur_day)
 
         for d in (QtCore.Qt.Saturday, QtCore.Qt.Sunday,):
             fmt = self.weekdayTextFormat(d)
@@ -26,6 +33,16 @@ class CalendarWidget(QtWidgets.QCalendarWidget):
         return switcher.get(color)
 
     def paintCell(self, painter, rect, date):
+        # if date == self.today.day():
+        #     painter.setBrush(QtGui.QColor("black"))
+        #     h = QtCore.QRect(QtCore.QPoint(), min(rect.width()/4, rect.height()/4)*QtCore.QSize(1, 1))
+        #     h.moveRight(rect.right())
+        #     # painter.drawEllipse(h, )
+        # # painter.setPen(QtGui.QPen(QtGui.QColor("black")))
+        # # print(str(self.today), str(date.day()))
+        # painter.drawText(rect )
+        #     # painter.restore()
+
         if date == self.selectedDate():
             painter.save()
             painter.fillRect(rect, QtGui.QColor("white"))
@@ -51,7 +68,7 @@ class Ui_Form(object):
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         Form.setFont(font)
-        css_file = open('../Stylesheet/calendar_stylesheet.css').read()
+        css_file = open('../Stylesheet/main_stylesheet.css').read()
         Form.setStyleSheet(css_file)
         self.label = QtWidgets.QLabel(Form)
         self.label.setGeometry(QtCore.QRect(0, 0, 274, 600))

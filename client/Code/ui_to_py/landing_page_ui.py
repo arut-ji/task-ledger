@@ -1,16 +1,8 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'Landing-page.ui',
-# licensing of 'Landing-page.ui' applies.
-#
-# Created: Thu Apr 18 14:03:40 2019
-#      by: pyside2-uic  running on PySide2 5.12.2
-#
-# WARNING! All changes made in this file will be lost!
-
 from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtWidgets import QWidget
 
-class Ui_TaskLedger(object):
+
+class Ui_TaskLedger(QWidget):
     def setupUi(self, TaskLedger):
         TaskLedger.setObjectName("TaskLedger")
         TaskLedger.resize(1000, 600)
@@ -79,6 +71,7 @@ class Ui_TaskLedger(object):
 
         self.retranslateUi(TaskLedger)
         QtCore.QMetaObject.connectSlotsByName(TaskLedger)
+        self.hide()
 
     def retranslateUi(self, TaskLedger):
         TaskLedger.setWindowTitle(QtWidgets.QApplication.translate("TaskLedger", "Task Ledger", None, -1))

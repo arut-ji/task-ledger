@@ -1,121 +1,11 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'dialog_1.ui',
-# licensing of 'dialog_1.ui' applies.
-#
-# Created: Sun May 26 14:44:05 2019
-#      by: pyside2-uic  running on PySide2 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PySide2 import QtCore, QtGui, QtWidgets
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(463, 500)
-        Dialog.setStyleSheet("QWidget{\n"
-"    background-color: rgb(242, 247, 247);\n"
-"    color: rgb(40, 19, 18);\n"
-"}\n"
-"QLineEdit#title{\n"
-"    background-color: rgba(0,0,0,0%);\n"
-"    border-bottom: 1px solid black;\n"
-"    border-top: 0px;\n"
-"    padding: 1px;\n"
-"}\n"
-"\n"
-"QLineEdit:focus{\n"
-"    outline: none;\n"
-"    border: none;\n"
-"}\n"
-"\n"
-"QPushButton#save_btn{\n"
-"    background-color: rgba(242, 183, 54, 95);\n"
-"    color: rgb(40, 19, 18);\n"
-"    border-radius: 10px\n"
-"}\n"
-"QPushButton:hover#save_btn{\n"
-"    background-color: rgb(242, 183, 54);\n"
-"    color: rgb(40, 19, 18);\n"
-"    border-radius: 10px\n"
-"}\n"
-"QPushButton#delete_btn{\n"
-"    background-color: transparent;\n"
-"    color: rgb(40, 19, 18);\n"
-"    border: 1px solid #361A17;\n"
-"    border-radius: 10px\n"
-"}\n"
-"QPushButton:hover#delete_btn{\n"
-"    background-color: transparent;\n"
-"    border: 1px solid  rgb(40, 19, 18);\n"
-"    color: rgb(201, 50, 41);\n"
-"}\n"
-"QDateEdit{\n"
-"    background-color: rgb(242, 247, 247);\n"
-"    padding: 5px;\n"
-"    border-color: transparent;\n"
-"}\n"
-"\n"
-"QDateEdit, QComboBox{\n"
-"    background-color: white;\n"
-"    border-style: none;\n"
-"    spacing: 5px; \n"
-"}\n"
-"\n"
-"QDateEdit:drop-down, QComboBox:drop-down {\n"
-"    image: url(../Assets/arrow_down.png);\n"
-"    width: 25px;\n"
-"    height: 10px;\n"
-"    subcontrol-position: right center;\n"
-"    subcontrol-origin: margin;\n"
-"    background-color: white;\n"
-"    border-style: none;\n"
-"    spacing: 5px; \n"
-"}\n"
-"\n"
-"QTimeEdit{\n"
-"    background-color: white;\n"
-"    border-style: none;\n"
-"    spacing: 5px; \n"
-"}\n"
-"\n"
-"QtimeEdit:drop-down {\n"
-"    width: 25px;\n"
-"    height: 10px;\n"
-"    subcontrol-position: right;\n"
-"    subcontrol-origin: margin;\n"
-"    background-color: white;\n"
-"    border-style: none;\n"
-"    spacing: 5px; \n"
-"}\n"
-"\n"
-"QLineEdit#location, QTextEdit{\n"
-"    background-color: white;\n"
-"    padding: 5px;\n"
-"    border-style: none;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator{\n"
-"     background-image: white;\n"
-"    width: 20px; height: 20px; \n"
-"    margin-left: 5px; margin-right: 5px;\n"
-"}\n"
-"\n"
-"QRadioButton::indicator::unchecked{ image: url(../Assets/checkbox_unchecked.png); }\n"
-"\n"
-"QRadioButton::indicator:unchecked:hover{ image: url(../Assets/checkbox_checked_active.png);}\n"
-"\n"
-"QRadioButton::indicator:unchecked:pressed\n"
-"{ image: url(../Assets/checkbox_checked_active.png);}\n"
-"\n"
-"QRadioButton::indicator::checked{ image: url(../Assets/checkbox_checked.png); }\n"
-"\n"
-"QRadioButton::indicator:checked:hover{ image: url(../Assets/checkbox_unchecked_active.png);}\n"
-"\n"
-"QRadioButton::indicator:checked:pressed{ image: url(../Assets/checkbox_unchecked_active.png);}\n"
-"\n"
-"")
+        css_file = open('../Stylesheet/dialog_stylesheet.css').read()
+        Dialog.setStyleSheet(css_file)
         self.clock_icon = QtWidgets.QLabel(Dialog)
         self.clock_icon.setGeometry(QtCore.QRect(30, 120, 30, 30))
         self.clock_icon.setText("")
@@ -132,7 +22,7 @@ class Ui_Dialog(object):
         self.location.setGeometry(QtCore.QRect(70, 210, 359, 28))
         self.location.setObjectName("location")
         self.from_dateEdit = QtWidgets.QDateEdit(Dialog)
-        self.from_dateEdit.setGeometry(QtCore.QRect(30, 70, 101, 31))
+        self.from_dateEdit.setGeometry(QtCore.QRect(30, 70, 110, 31))
         self.from_dateEdit.setAcceptDrops(False)
         self.from_dateEdit.setAutoFillBackground(False)
         self.from_dateEdit.setFrame(False)
@@ -147,7 +37,7 @@ class Ui_Dialog(object):
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(140, 80, 21, 16))
+        self.label.setGeometry(QtCore.QRect(150, 80, 60, 16))
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         font.setPointSize(18)
@@ -164,15 +54,21 @@ class Ui_Dialog(object):
         font.setPointSize(18)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
+        self.label_to_time = QtWidgets.QLabel(Dialog)
+        self.label_to_time.setGeometry(QtCore.QRect(200, 125, 21, 16))
+        self.to_timeEdit = QtWidgets.QTimeEdit(Dialog)
+        self.to_timeEdit.setGeometry(QtCore.QRect(220, 120, 61, 28))
+        self.to_timeEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
+        self.to_timeEdit.setObjectName("to_timeEdit")
         self.radioButton = QtWidgets.QRadioButton(Dialog)
-        self.radioButton.setGeometry(QtCore.QRect(210, 120, 100, 28))
+        self.radioButton.setGeometry(QtCore.QRect(300, 120, 100, 28))
         self.radioButton.setChecked(False)
         self.radioButton.setObjectName("radioButton")
         self.textEdit = QtWidgets.QTextEdit(Dialog)
         self.textEdit.setGeometry(QtCore.QRect(30, 340, 401, 114))
         self.textEdit.setObjectName("textEdit")
         self.to_dateEdit = QtWidgets.QDateEdit(Dialog)
-        self.to_dateEdit.setGeometry(QtCore.QRect(170, 70, 101, 31))
+        self.to_dateEdit.setGeometry(QtCore.QRect(210, 70, 110, 31))
         self.to_dateEdit.setAcceptDrops(False)
         self.to_dateEdit.setAutoFillBackground(False)
         self.to_dateEdit.setFrame(False)
@@ -220,12 +116,13 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(QtWidgets.QApplication.translate("Dialog", "Dialog", None, -1))
         self.location.setPlaceholderText(QtWidgets.QApplication.translate("Dialog", "Add Location", None, -1))
         self.label_4.setText(QtWidgets.QApplication.translate("Dialog", "Notifications", None, -1))
-        self.label.setText(QtWidgets.QApplication.translate("Dialog", "to", None, -1))
+        self.label.setText(QtWidgets.QApplication.translate("Dialog", "due to", None, -1))
         self.label_3.setText(QtWidgets.QApplication.translate("Dialog", "Location", None, -1))
         self.radioButton.setText(QtWidgets.QApplication.translate("Dialog", "All day", None, -1))
         self.textEdit.setPlaceholderText(QtWidgets.QApplication.translate("Dialog", "Add Description", None, -1))
         self.label_5.setText(QtWidgets.QApplication.translate("Dialog", "Descriptions", None, -1))
-        self.save_btn.setText(QtWidgets.QApplication.translate("Dialog", "SAVE", None, -1))
+        self.label_to_time.setText(QtWidgets.QApplication.translate("Dialog", "-", None, -1))
+        self.save_btn.setText(QtWidgets.QApplication.translate("Dialog", "CREATE", None, -1))
         self.title.setPlaceholderText(QtWidgets.QApplication.translate("Dialog", "Title", None, -1))
         self.label_2.setText(QtWidgets.QApplication.translate("Dialog", "Time", None, -1))
 

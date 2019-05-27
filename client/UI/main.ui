@@ -279,7 +279,7 @@ QFrame[frameShape=&quot;5&quot;]
    <property name="currentIndex">
     <number>1</number>
    </property>
-   <widget class="QWidget" name="stackedWidgetPage1" native="true">
+   <widget class="QWidget" name="stackedWidgetPage1">
     <widget class="QLabel" name="left_arrow">
      <property name="geometry">
       <rect>

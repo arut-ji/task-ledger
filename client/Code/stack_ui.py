@@ -57,7 +57,6 @@ class Task_ledger(QWidget):
         self.main = main.Ui_Form(self.stackedWidgetPage4)
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
-        self.main.create_button.clicked.connect(self.create_dialog)
         self.main.log_out.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage4)
 
@@ -74,11 +73,6 @@ class Task_ledger(QWidget):
 
     def goto_main(self):
         self.stackedWidget.setCurrentIndex(3)
-
-    def create_dialog(self):
-        self.dialog = dialog.Ui_Dialog()
-        self.dialog.setupUi(self)
-        self.show()
 
 
 class LoginUI(QWidget):
@@ -100,6 +94,7 @@ class LoginUI(QWidget):
 
         self.ui.login.button_login.clicked.connect(self.login_event)
         self.ui.reg.reg_button.clicked.connect(self.register_event)
+        self.ui.main.create_button.clicked.connect(self.create_dialog)
 
         self.show()
 
@@ -122,8 +117,27 @@ class LoginUI(QWidget):
             self.ui.goto_main()
             self.manager.set_subject_state("Initialize")
 
+    def create_dialog(self):
+        self.dialog = dialog.Ui_Dialog()
+        self.dialog.setupUi(self.ui)
+
+        self.dialog.save_btn.clicked.connect(self.create_event)
+
+        self.ui.show()
+
     def create_event(self):
-        pass
+        topic = self.dialog.title.text()
+        description = self.dialog.textEdit.toPlainText()
+        start_date = self.dialog.from_dateEdit.text()
+        end_date = self.dialog.to_dateEdit.text()
+        start_time = self.dialog.timeEdit.text()
+        end_time = self.dialog.to_timeEdit.text()
+        status = False
+        location = self.dialog.location.text()
+
+        start_at = "{}{}".format(start_date, start_time)
+        end_at = "{}{}".format(end_date, end_time)
+
 
 
 if __name__ == '__main__':

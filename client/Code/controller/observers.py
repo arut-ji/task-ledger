@@ -57,6 +57,11 @@ class ActiveTasksList(TaskListObserver):
 
         if state == "Initialize":
             self.init_list(False)
+        if state == "Created Task":
+            self.created_new_task(arg)
+
+    def created_new_task(self, arg):
+        self.task_list.append(arg)
 
     def update_display(self, arg):
         pass

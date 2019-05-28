@@ -128,16 +128,17 @@ class LoginUI(QWidget):
     def create_event(self):
         topic = self.dialog.title.text()
         description = self.dialog.textEdit.toPlainText()
-        start_date = self.dialog.from_dateEdit.text()
-        end_date = self.dialog.to_dateEdit.text()
+        start_date = self.dialog.from_dateEdit.date().toString("yyyy-MM-dd")
+        end_date = self.dialog.to_dateEdit.date().toString("yyyy-MM-dd")
         start_time = self.dialog.timeEdit.text()
         end_time = self.dialog.to_timeEdit.text()
         status = False
         location = self.dialog.location.text()
 
-        start_at = "{}{}".format(start_date, start_time)
-        end_at = "{}{}".format(end_date, end_time)
+        start_at = "{}T{}:00+0700".format(start_date, start_time)
+        end_at = "{}T{}:00+0700".format(end_date, end_time)
 
+        self.manager.create_task(topic, description, start_at, end_at, status, location)
 
 
 if __name__ == '__main__':

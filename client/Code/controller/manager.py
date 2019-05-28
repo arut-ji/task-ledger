@@ -1,5 +1,6 @@
 import requests
-import json
+import client.Code.controller.task as task_definition
+
 
 class TaskLedgerSystem:
     """
@@ -51,8 +52,25 @@ class TaskLedgerSystem:
         self._subject_state = state
         self._notify(arg)
 
-    def create_task(self, topic, start, location, desc):
-        pass
+    def create_task(self, topic, description, start_at, end_at, status, location):
+        data = {
+            "topic": topic,
+            "description": description,
+            "start_at": start_at,
+            "end_at": end_at,
+            "status": status,
+            "location": location,
+            "user": self.user_auth.get_user_id()
+        }
+
+        t = task_definition.Task(None, None, topic, description, start_at, end_at, status, location, data["user"])
+
+        res = requests.post(self.user_auth.all_tasks_url, data=data)
+        if res.status_code == 201:
+            t.update(res.json())
+            self.set_subject_state("Created Task", t)
+            return True
+        return False
 
     def delete_task(self):
         pass

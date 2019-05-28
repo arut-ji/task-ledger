@@ -15,20 +15,20 @@ class Task:
         self.location = location
         self.user = user
 
-    def update(self, task_id, topic, desc, created_at, start_at, end_at, status, location, user):
+    def update(self, data):
         """
             Is used when refreshing data from the database
         """
 
-        self.id = task_id
-        self.topic = topic
-        self.desc = desc
-        self.created_at = created_at
-        self.start_at = start_at
-        self.end_at = end_at
-        self.status = status
-        self.location = location
-        self.user = user
+        self.id = data["id"]
+        self.topic = data["topic"]
+        self.desc = data["description"]
+        self.created_at = data["created_at"]
+        self.start_at = data["start_at"]
+        self.end_at = data["end_at"]
+        self.status = data["status"]
+        self.location = data["location"]
+        self.user = data["user"]
 
     def __str__(self):
         return str({

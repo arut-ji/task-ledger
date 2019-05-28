@@ -18,6 +18,7 @@ class AuthService:
         self.login_url = "http://task-ledger.appspot.com/rest-auth/login/"
         self.registration_url = "http://task-ledger.appspot.com/rest-auth/registration/"
         self.task_url = "http://task-ledger.appspot.com/api/users/"
+        self.all_tasks_url = "http://task-ledger.appspot.com/api/tasks/"
 
     def get_token(self):
         return self.__token

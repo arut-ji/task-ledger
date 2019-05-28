@@ -25,13 +25,13 @@ class TaskLedgerSystem:
         observer._subject = None
         self._observers.discard(observer)
 
-    def _notify(self):
+    def _notify(self, arg=None):
         """
         Notify all the Observers of the change in Subject state
         """
 
         for observer in self._observers:
-            observer.update(self._subject_state)
+            observer.update(arg)
 
     def get_subject_state(self):
         """
@@ -40,13 +40,13 @@ class TaskLedgerSystem:
 
         return self._subject_state
 
-    def set_subject_state(self, state):
+    def set_subject_state(self, state, arg=None):
         """
             Set the Subject's current state
         """
 
         self._subject_state = state
-        self._notify()
+        self._notify(arg)
 
     def create_task(self):
         pass

@@ -5,14 +5,17 @@ import json
 class UserAuth:
     def __init__(self):
         """
-        Represents the user and manages its API calls to authenticate user
-        Verify the credentials
-        Update credentials
+            Represents the user and manages its API calls to authenticate user
+            Verify the credentials
+            Update credentials
+            Get user information through JWT
         """
         self.__username = None
         self.__token = None
+
         self.login_url = "http://task-ledger.appspot.com/rest-authlogin/"
         self.registration_url = "http://task-ledger.appspot.com/rest-auth/registration/"
+        self.task_url = "http://task-ledger.appspot.com/api/tasks/"
 
     def get_token(self):
         return self.__token
@@ -39,8 +42,6 @@ class UserAuth:
         }
 
         res = requests.post(self.login_url, data=payload)
-        # res_data = json.loads(res.text)
-        # print(res_data)
 
         if res.status_code == 200:
             res_data = json.loads(res.text)
@@ -74,6 +75,12 @@ class UserAuth:
             return True
         return False
 
+    def get_task_list(self):
+        res = requests.get(self.task_url, headers={"Authorization": self.__token})
+        res_data = json.loads(res.text)
+        return res_data
 
-u = UserAuth()
-print(u.login("admin", "admin"))
+
+# u = UserAuth()
+# u.login("admin", "admin")
+# u.get_user_task()

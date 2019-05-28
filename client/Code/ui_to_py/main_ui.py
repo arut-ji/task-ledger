@@ -201,15 +201,6 @@ class Ui_Form(QWidget):
         self.stat_graph = TableWidget(self.stat_frame)
         self.stat_graph.setGeometry(0, 0, 671, 451)
         self.stat_graph.show()
-        # self.tabWidget = QtWidgets.QTabWidget(self.page_4)
-        # self.tabWidget.setGeometry(QtCore.QRect(20, 100, 671, 451))
-        # self.tabWidget.setObjectName("tabWidget")
-        # self.tab = QtWidgets.QWidget()
-        # self.tab.setObjectName("tab")
-        # self.tabWidget.addTab(self.tab, "")
-        # self.tab_2 = QtWidgets.QWidget()
-        # self.tab_2.setObjectName("tab_2")
-        # self.tabWidget.addTab(self.tab_2, "")
         self.stackedWidget.addWidget(self.page_4)
 
         # notification
@@ -226,7 +217,6 @@ class Ui_Form(QWidget):
 
         self.retranslateUi(Form)
         self.stackedWidget.setCurrentIndex(0)
-        # self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -243,8 +233,6 @@ class Ui_Form(QWidget):
         self.pushButton_3.setText(QtWidgets.QApplication.translate("Form", "Incompleted", None, -1))
         self.label_5.setText(QtWidgets.QApplication.translate("Form", "filter by: ", None, -1))
         self.stat_label.setText(QtWidgets.QApplication.translate("Form", "Statistic", None, -1))
-        # self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtWidgets.QApplication.translate("Form", "Weekly", None, -1))
-        # self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtWidgets.QApplication.translate("Form", "Monthly", None, -1))
         self.stat_label_2.setText(QtWidgets.QApplication.translate("Form", "Notification", None, -1))
         self.schedule.setText(QtWidgets.QApplication.translate("Form", "Schedule", None, -1))
         self.calendar.setText(QtWidgets.QApplication.translate("Form", "Calendar", None, -1))

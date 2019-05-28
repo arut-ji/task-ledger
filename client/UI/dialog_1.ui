@@ -215,7 +215,7 @@ QRadioButton::indicator:checked:pressed{ image: url(../Assets/checkbox_unchecked
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>150</x>
      <y>80</y>
      <width>21</width>
      <height>16</height>
@@ -266,7 +266,7 @@ QRadioButton::indicator:checked:pressed{ image: url(../Assets/checkbox_unchecked
   <widget class="QRadioButton" name="radioButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>300</x>
      <y>120</y>
      <width>100</width>
      <height>28</height>
@@ -414,6 +414,38 @@ QRadioButton::indicator:checked:pressed{ image: url(../Assets/checkbox_unchecked
      <width>161</width>
      <height>26</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QTimeEdit" name="timeEdit_2">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>120</y>
+     <width>61</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="buttonSymbols">
+    <enum>QAbstractSpinBox::NoButtons</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>130</y>
+     <width>21</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>-</string>
    </property>
   </widget>
  </widget>

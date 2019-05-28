@@ -1,5 +1,5 @@
 import abc
-import client.Code.controller.task as task
+import client.Code.controller.task as task_definition
 
 
 class TaskListObserver(metaclass=abc.ABCMeta):
@@ -18,16 +18,24 @@ class TaskListObserver(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def init_list(self, arg):
-        pass
-
-    @abc.abstractmethod
     def update_display(self, arg):
         pass
 
     @abc.abstractmethod
     def get_list(self, arg):
         pass
+
+    def init_list(self, status):
+        """
+            Initialize the active list
+        """
+
+        tasks = self._subject.get_tasks(status)
+
+        for item in tasks:
+            t = task_definition.Task(item["id"], item["topic"], item["description"], item["created_at"],
+                                     item["start_at"], item["end_at"], item["status"], item["location"], item["user"])
+            self.add_task(t)
 
     def add_task(self, arg):
         self.task_list.append(arg)
@@ -48,18 +56,7 @@ class ActiveTasksList(TaskListObserver):
         state = self._subject.get_subject_state()
 
         if state == "Initialize":
-            self.init_list(arg)
-
-    def init_list(self, arg):
-        """
-            Initialize the active list
-        """
-
-        for item in arg:
-            if item["status"]:
-                t = task.Task(item["id"], item["user"], item["topic"], item["description"], item["created_at"],
-                              item["start_at"], item["status"])
-                self.add_task(t)
+            self.init_list(False)
 
     def update_display(self, arg):
         pass
@@ -86,18 +83,7 @@ class CompletedTasksList(TaskListObserver):
         state = self._subject.get_subject_state()
 
         if state == "Initialize":
-            self.init_list(arg)
-
-    def init_list(self, arg):
-        """
-        Initialize the completed list
-        """
-
-        for item in arg:
-            if item["status"] is False:
-                t = task.Task(item["id"], item["user"], item["topic"], item["description"], item["created_at"],
-                              item["start_at"], item["status"])
-                self.add_task(t)
+            self.init_list(True)
 
     def update_display(self, arg):
         pass

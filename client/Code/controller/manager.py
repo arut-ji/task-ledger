@@ -1,3 +1,6 @@
+import requests
+import json
+
 class TaskLedgerSystem:
     """
         Acts as the manager of the tasks instances of the respective user instance
@@ -48,9 +51,15 @@ class TaskLedgerSystem:
         self._subject_state = state
         self._notify(arg)
 
-    def create_task(self):
+    def create_task(self, topic, start, location, desc):
         pass
 
     def delete_task(self):
         pass
 
+    def get_tasks(self, status=False):
+        params = {"status": status}
+        res = requests.get(self.user_auth.task_url, params=params)
+        if res.status_code == 200:
+            return res.json()
+        return False

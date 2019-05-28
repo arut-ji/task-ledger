@@ -86,7 +86,7 @@ class LoginUI(QWidget):
         QWidget.__init__(self, None)
 
         # Initializing the managers, subject, observers
-        self.user_auth = task_auth.UserAuth()
+        self.user_auth = task_auth.AuthService()
         self.manager = task_manager.TaskLedgerSystem(self.user_auth)
         self.active_tasks = task_observers.ActiveTasksList()
         self.completed_tasks = task_observers.CompletedTasksList()
@@ -110,7 +110,7 @@ class LoginUI(QWidget):
         success = self.user_auth.login(username, password)
         if success:
             self.ui.goto_main()
-            self.manager.set_subject_state("Initialize", self.user_auth.get_task_list())
+            self.manager.set_subject_state("Initialize")
 
     def register_event(self):
         username = self.ui.reg.username_lineEdit.text()
@@ -120,7 +120,10 @@ class LoginUI(QWidget):
         success = self.user_auth.registration(username, password1, password2)
         if success:
             self.ui.goto_main()
-            self.manager.set_subject_state("Initialize", self.user_auth.get_task_list())
+            self.manager.set_subject_state("Initialize")
+
+    def create_event(self):
+        pass
 
 
 if __name__ == '__main__':

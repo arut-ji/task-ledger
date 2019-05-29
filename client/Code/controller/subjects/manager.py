@@ -1,5 +1,5 @@
 import requests
-import client.Code.controller.task as task_definition
+from client.Code.controller.models.task import Task
 
 class TaskLedgerSystem:
     """
@@ -63,7 +63,7 @@ class TaskLedgerSystem:
             "user": self.user_auth.get_user_id()
         }
 
-        t = task_definition.Task(None, None, topic, description, start_at, end_at, status, location, data["user"])
+        t = Task(None, None, topic, description, start_at, end_at, status, location, data["user"])
         t.set_date_time_object(sdate, edate, stime, etime)
 
         if t.check_format():

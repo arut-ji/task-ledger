@@ -53,7 +53,7 @@ class TaskLedgerSystem:
         self._subject_state = state
         self._notify(arg)
 
-    def create_task(self, topic, description, start_at, end_at, status, location):
+    def create_task(self, topic, description, start_at, end_at, status, location, sdate, edate, stime, etime):
         data = {
             "topic": topic,
             "description": description,
@@ -65,12 +65,15 @@ class TaskLedgerSystem:
         }
 
         t = task_definition.Task(None, None, topic, description, start_at, end_at, status, location, data["user"])
+        t.set_date_time_object(sdate, edate, stime, etime)
 
-        res = requests.post(self.user_auth.all_tasks_url, data=data)
-        if res.status_code == 201:
-            t.update(res.json())
-            self.set_subject_state("Created Task", t)
-            return True
+        if t.check_format():
+            res = requests.post(self.user_auth.all_tasks_url, data=data)
+            print(res.text)
+            if res.status_code == 201:
+                t.update(res.json())
+                self.set_subject_state("Created Task", t)
+                return True
         return False
 
     def delete_task(self):

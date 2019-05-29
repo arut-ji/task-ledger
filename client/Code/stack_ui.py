@@ -118,7 +118,6 @@ class TaskLedger(QWidget):
             self.ui.goto_main()
             self.manager.set_subject_state("Initialize")
 
-
     def register_event(self):
         username = self.ui.reg.username_lineEdit.text()
         password1 = self.ui.reg.pw_lineEdit.text()
@@ -138,19 +137,29 @@ class TaskLedger(QWidget):
         self.ui.show()
 
     def create_event(self):
+        stime = self.dialog.timeEdit.time()
+        sdate = self.dialog.from_dateEdit.date()
+
+        etime = self.dialog.to_timeEdit.time()
+        edate = self.dialog.to_dateEdit.date()
+
         topic = self.dialog.title.text()
         description = self.dialog.textEdit.toPlainText()
-        start_date = self.dialog.from_dateEdit.date().toString("yyyy-MM-dd")
-        end_date = self.dialog.to_dateEdit.date().toString("yyyy-MM-dd")
-        start_time = self.dialog.timeEdit.text()
-        end_time = self.dialog.to_timeEdit.text()
+        start_date = sdate.toString("yyyy-MM-dd")
+        end_date = edate.toString("yyyy-MM-dd")
+        start_time = stime.toString()
+        end_time = etime.toString()
         status = False
         location = self.dialog.location.text()
 
-        start_at = "{}T{}:00+0700".format(start_date, start_time)
-        end_at = "{}T{}:00+0700".format(end_date, end_time)
+        start_at = "{}T{}Z".format(start_date, start_time)
+        end_at = "{}T{}Z".format(end_date, end_time)
 
-        self.manager.create_task(topic, description, start_at, end_at, status, location)
+        print(start_at)
+        print(end_at)
+
+        self.manager.create_task(topic, description, start_at, end_at, status, location,
+                                 sdate, edate, stime, etime)
 
 
 if __name__ == '__main__':

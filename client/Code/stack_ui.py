@@ -1,20 +1,15 @@
 import sys
 
 from PySide2.QtCore import QRect
-from PySide2.QtGui import QMovie
 from PySide2.QtWidgets import QWidget, QStackedWidget, QApplication
-
-import client.Code.ui_to_py.schedule_ui as schedule
 import client.Code.ui_to_py.landing_page_ui as landing
 import client.Code.ui_to_py.login_ui as login
 import client.Code.ui_to_py.register_ui as reg
 import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
 
-import client.Code.ui_to_py.splashScreen as splash
-
-import client.Code.controller.auth as task_auth
-import client.Code.controller.manager as task_manager
+# import client.Code.controller.auth as task_auth
+# import client.Code.controller.manager as task_manager
 import client.Code.controller.observers as task_observers
 
 
@@ -79,16 +74,15 @@ class Task_ledger(QWidget):
         self.stackedWidget.setCurrentIndex(3)
 
 
-
 class TaskLedgerUI(QWidget):
     def __init__(self, application, parent=None):
         QWidget.__init__(self, parent)
 
         # Initializing the managers, subject, observers
-        self.user_auth = task_auth.AuthService()
-        self.manager = task_manager.TaskLedgerSystem(self.user_auth)
-        self.active_tasks = task_observers.ActiveTasksList()
-        self.completed_tasks = task_observers.CompletedTasksList()
+        # self.user_auth = task_auth.AuthService()
+        # self.manager = task_manager.TaskLedgerSystem(self.user_auth)
+        # self.active_tasks = task_observers.ActiveTasksList()
+        # self.completed_tasks = task_observers.CompletedTasksList()
         self.app = application
         self.manager.attach(self.active_tasks)
         self.manager.attach(self.completed_tasks)
@@ -110,22 +104,22 @@ class TaskLedgerUI(QWidget):
         # Set system manager loading state
         self.manager.set_loading(True)
 
-        success = self.manager.user_auth.login(username, password)
+        # success = self.manager.user_auth.login(username, password)
 
-        if success:
-            self.manager.set_loading(False)
-            self.ui.goto_main()
-            self.manager.set_subject_state("Initialize")
+        # if success:
+        #     self.manager.set_loading(False)
+        self.ui.goto_main()
+        # self.manager.set_subject_state("Initialize")
 
     def register_event(self):
         username = self.ui.reg.username_lineEdit.text()
         password1 = self.ui.reg.pw_lineEdit.text()
         password2 = self.ui.reg.re_pw_lineEdit.text()
 
-        success = self.user_auth.registration(username, password1, password2)
-        if success:
-            self.ui.goto_main()
-            self.manager.set_subject_state("Initialize")
+        # success = self.user_auth.registration(username, password1, password2)
+        # if success:
+        self.ui.goto_main()
+        # self.manager.set_subject_state("Initialize")
 
     def create_dialog(self):
         self.dialog = dialog.Create_dialog()
@@ -160,6 +154,7 @@ class TaskLedgerUI(QWidget):
 
         self.manager.create_task(topic, description, start_at, end_at, status, location,
                                  sdate, edate, stime, etime)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

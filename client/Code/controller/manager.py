@@ -77,7 +77,6 @@ class TaskLedgerSystem:
         pass
 
     def get_tasks(self, status=False):
-        params = {"status": status}
         params = {
             "status": status
         }

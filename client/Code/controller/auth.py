@@ -13,11 +13,11 @@ class AuthService:
         self.__username = None
         self.__token = None
         self.__user_id = 1  # For testing
-        # self.__user_id = None
+        self.__user_id = None
 
         self.login_url = "http://task-ledger.appspot.com/rest-auth/login/"
         self.registration_url = "http://task-ledger.appspot.com/rest-auth/registration/"
-        self.task_url = "http://task-ledger.appspot.com/api/users/"
+        self.task_url = None
         self.all_tasks_url = "http://task-ledger.appspot.com/api/tasks/"
 
     def get_token(self):
@@ -56,8 +56,8 @@ class AuthService:
             res_data = json.loads(res.text)
             self.__token = res_data["key"]
             self.__username = username
-            # self.__user_id = res_data["id"]
-            self.task_url = self.task_url + str(self.__user_id) + "/tasks"
+            self.__user_id = res_data["user"]["id"]
+            self.task_url = "http://task-ledger.appspot.com/api/users/{}/tasks/".format(self.__user_id)
             return True
         # print("hello")
         return False
@@ -84,8 +84,8 @@ class AuthService:
             res_data = json.loads(res.text)
             self.__token = res_data["key"]
             self.__username = username
-            self.__user_id = res_data["id"]
-            self.task_url = self.task_url + str(self.__user_id) + "/tasks"
+            self.__user_id = res_data["user"]["id"]
+            self.task_url = "http://task-ledger.appspot.com/api/users/{}/tasks/".format(self.__user_id)
             return True
         return False
 

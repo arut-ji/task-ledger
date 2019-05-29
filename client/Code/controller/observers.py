@@ -37,6 +37,9 @@ class TaskListObserver(metaclass=abc.ABCMeta):
                                      item["start_at"], item["end_at"], item["status"], item["location"], item["user"])
             self.add_task(t)
 
+        # for item in self.task_list:
+        #     print(item)
+
     def add_task(self, arg):
         self.task_list.append(arg)
 

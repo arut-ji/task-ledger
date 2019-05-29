@@ -1,43 +1,29 @@
 import requests
+from typing import Dict, List
+from client.Code.controller.models.models import Task, TaskList
 import json
 
+# Base API endpoints
+BASE_API = "http://task-ledger.appspot.com/"
 
-class AuthService:
-    def __init__(self):
-        """
-            Represents the user and manages its API calls to authenticate user
-            Verify the credentials
-            Update credentials
-            Get user information through Token
-        """
-        self.__username = None
-        self.__token = None
-        self.__user_id = 1  # For testing
+# REST Authentication API endpoints
+AUTHENTICATION_API = BASE_API + "rest-auth/"
+LOGIN_API = AUTHENTICATION_API + "login/"
+REGISTRATION_API = AUTHENTICATION_API + "registration/"
 
-        self.login_url = "http://task-ledger.appspot.com/rest-auth/login/"
-        self.registration_url = "http://task-ledger.appspot.com/rest-auth/registration/"
-        self.task_url = None
-        self.all_tasks_url = "http://task-ledger.appspot.com/api/tasks/"
+# Tasks API endpoint
+TASKS_API = BASE_API + 'api/tasks/'
+USER_TASKS_API = BASE_API + "api/users/{}/tasks/"
 
-    def get_token(self):
-        return self.__token
 
-    def set_token(self, token):
-        self.__token = token
+class BaseService:
+    pass
 
-    def get_name(self):
-        return self.__username
 
-    def set_name(self, username):
-        self.__username = username
+class AuthService(BaseService):
 
-    def set_user_id(self, user_id):
-        self.__user_id = user_id
-
-    def get_user_id(self):
-        return self.__user_id
-
-    def login(self, username, password):
+    @staticmethod
+    def login(username, password):
         """
             Request to API endpoint to verify user credentials
             Return True if successful
@@ -49,19 +35,15 @@ class AuthService:
             "password": password
         }
 
-        res = requests.post(self.login_url, data=payload)
+        response = requests.post(LOGIN_API, data=payload)
 
-        if res.status_code == 200:
-            res_data = json.loads(res.text)
-            self.__token = res_data["key"]
-            self.__username = username
-            self.__user_id = res_data["user"]["id"]
-            self.task_url = "http://task-ledger.appspot.com/api/users/{}/tasks/".format(self.__user_id)
-            return True
-        # print("hello")
-        return False
+        if response.status_code == 200:
+            return response.json()
 
-    def registration(self, username, password1, password2):
+        return None
+
+    @staticmethod
+    def register(username, password1, password2):
         """
             Request to to API endpoint to create new user
             Return True if user created succesfully
@@ -74,31 +56,71 @@ class AuthService:
             "password2": password2
         }
 
-        res = requests.post(self.registration_url, data=payload)
+        response = requests.post(REGISTRATION_API, data=payload)
 
-        res_data = json.loads(res.text)
-        print(res_data)
+        if response.status_code == 201:
+            return response.json()
 
-        if res.status_code == 201:
-            res_data = json.loads(res.text)
-            self.__token = res_data["key"]
-            self.__username = username
-            self.__user_id = res_data["user"]["id"]
-            self.task_url = "http://task-ledger.appspot.com/api/users/{}/tasks/".format(self.__user_id)
+        return None
+
+
+class TaskService(BaseService):
+
+    @staticmethod
+    def create_task(payload: Dict):
+        response = requests.post(
+            url=TASKS_API,
+            data=payload
+        )
+
+        if response.status_code == 201:
+            return Task(response.json())
+        else:
+            return None
+
+    @staticmethod
+    def update_task(task_id, payload):
+        update_task_endpoint = TASKS_API + str(task_id) + '/'
+
+        response = requests.put(
+            url=update_task_endpoint,
+            data=payload
+        )
+
+        if response.status_code == 200:
+            return Task(response.json())
+        return None
+
+    @staticmethod
+    def retrieve_task(task_id):
+        retrieve_task_endpoint = TASKS_API + str(task_id) + '/'
+        response = requests.get(
+            url=retrieve_task_endpoint,
+        )
+
+        if response.status_code == 200:
+            return Task(response.json())
+        return None
+
+    @staticmethod
+    def delete_task(task_id):
+        delete_task_endpoint = TASKS_API + str(task_id) + '/'
+        response = requests.delete(
+            url=delete_task_endpoint
+        )
+
+        if response.status_code == 204:
             return True
-        return False
+        else:
+            return False
 
-    # def get_user_details(self):
-    #     res = requests.get(self.user_url, headers={"Authorization": "Token {}".format(self.__token)})
-    #     res_data = json.loads(res.text())
-    #     self.__user_id = res_data["id"]
+    @staticmethod
+    def list_task(user_id):
+        api_endpoint = USER_TASKS_API.format(str(user_id))
+        response = requests.get(
+            url=api_endpoint
+        )
+        if response.status_code == 200:
+            return TaskList(response.json())
+        return None
 
-
-# u = UserAuth()
-# u.login("admin", "admin")
-# u.get_user_task()
-
-# params = {"status": False}
-# res = requests.get("http://task-ledger.appspot.com/api/users/10/tasks", params=params)
-# print(res.status_code)
-# print(res.json())

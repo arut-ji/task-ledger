@@ -102,10 +102,15 @@ class LoginUI(QWidget):
         username = self.ui.login.username_lineEdit.text()
         password = self.ui.login.pw_lineEdit.text()
 
-        success = self.user_auth.login(username, password)
+        # Set system manager loading state
+        self.manager.set_loading(True)
+        success = self.manager.user_auth.login(username, password)
+
         if success:
+            self.manager.set_loading(False)
             self.ui.goto_main()
             self.manager.set_subject_state("Initialize")
+
 
     def register_event(self):
         username = self.ui.reg.username_lineEdit.text()

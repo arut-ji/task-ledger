@@ -4,6 +4,7 @@ from client.Code.ui_to_py.calendar_ui import CalendarWidget
 from client.Code.ui_to_py.line_graph import TableWidget
 import client.Code.ui_to_py.schedule_ui as schedule
 import client.Code.controller.observers as task_observers
+import client.Code.ui_to_py.history_ui as history
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
@@ -101,6 +102,8 @@ class Ui_Form(QWidget):
         # history
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setObjectName("page_2")
+        self.history_ui = history.History_ui(self.page_2)
+        self.history_ui.setupUi(self.page_2)
 
         self.stackedWidget.addWidget(self.page_2)
 

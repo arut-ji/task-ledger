@@ -238,3 +238,49 @@ QFrame#stat_frame{
 	border: 1px solid rgb(40, 19, 18);
 	border-radius: 8px;
 }
+
+QHeaderView::section {
+    background-color: transparent;
+    padding: 3px;
+    height: 40px;
+    font-size: 12px;
+    color: rgb(40, 19, 18);
+}
+
+QTableWidgetItem{
+	 color: rgb(40, 19, 18);
+}
+QTableWidget{
+    color: rgb(40, 19, 18);
+	selection-background-color: transparent;
+	selection-color: rgb(40, 19, 18);
+}
+
+QScrollBar:vertical {
+	border: none;
+	background:white;
+	width: 8px;
+	margin: 0px 0px 0px 0px;
+
+}
+QScrollBar::handle:vertical {
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+		stop: 0 rgb(179, 179, 179), stop: 0.5 rgb(179, 179, 179), stop:1 rgb(179, 179, 179));
+	min-height: 0px;
+	border-radius: 4px;
+}
+QScrollBar::add-line:vertical {
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+	stop: 0 rgb(179, 179, 179), stop: 0.5 rgb(179, 179, 179),  stop:1 rgb(179, 179, 179));
+	 height: 0px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+
+}
+QScrollBar::sub-line:vertical {
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+	stop: 0  rgb(179, 179, 179), stop: 0.5 rgb(179, 179, 179),  stop:1 rgb(179, 179, 179));
+	height: 0 px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+}

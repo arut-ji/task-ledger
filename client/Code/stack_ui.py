@@ -8,9 +8,8 @@ import client.Code.ui_to_py.register_ui as reg
 import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
 
-# import client.Code.controller.auth as task_auth
-# import client.Code.controller.manager as task_manager
-import client.Code.controller.observers as task_observers
+import client.Code.controller.subjects.manager as manager
+import client.Code.controller.observers.observers as observers
 
 
 class Task_ledger(QWidget):
@@ -78,14 +77,14 @@ class TaskLedgerUI(QWidget):
     def __init__(self, application, parent=None):
         QWidget.__init__(self, parent)
 
-        # Initializing the managers, subject, observers
-        # self.user_auth = task_auth.AuthService()
-        # self.manager = task_manager.TaskLedgerSystem(self.user_auth)
-        # self.active_tasks = task_observers.ActiveTasksList()
-        # self.completed_tasks = task_observers.CompletedTasksList()
         self.app = application
-        self.manager.attach(self.active_tasks)
-        self.manager.attach(self.completed_tasks)
+
+        self.system = manager.TaskLedgerSystem()
+        self.incomplete_observers = observers.IncompleteTasks()
+        self.completed_observers = observers.CompletedTasks()
+
+        self.system.attach(self.incomplete_observers)
+        self.system.attach(self.completed_observers)
 
         # Set up the UI and mapping the buttons
         self.ui = Task_ledger()
@@ -101,25 +100,28 @@ class TaskLedgerUI(QWidget):
         username = self.ui.login.username_lineEdit.text()
         password = self.ui.login.pw_lineEdit.text()
 
-        # Set system manager loading state
-        self.manager.set_loading(True)
+        # Set system loading state
+        self.system.set_loading(True)
 
-        # success = self.manager.user_auth.login(username, password)
-
-        # if success:
-        #     self.manager.set_loading(False)
-        self.ui.goto_main()
-        # self.manager.set_subject_state("Initialize")
+        if self.system.login(username, password):
+            self.system.set_subject_state("Initialize")
+            self.system.set_loading(False)
+            self.ui.goto_main()
+        self.system.set_loading(False)
 
     def register_event(self):
         username = self.ui.reg.username_lineEdit.text()
         password1 = self.ui.reg.pw_lineEdit.text()
         password2 = self.ui.reg.re_pw_lineEdit.text()
 
-        # success = self.user_auth.registration(username, password1, password2)
-        # if success:
-        self.ui.goto_main()
-        # self.manager.set_subject_state("Initialize")
+        # Set system loading state
+        self.system.set_loading(True)
+
+        if self.system.register(username, password1, password2):
+            self.system.set_subject_state("Initialize")
+            self.system.set_loading(False)
+            self.ui.goto_main()
+        self.system.set_loading(False)
 
     def create_dialog(self):
         self.dialog = dialog.Create_dialog()
@@ -130,30 +132,43 @@ class TaskLedgerUI(QWidget):
         self.ui.show()
 
     def create_event(self):
-        stime = self.dialog.timeEdit.time()
-        sdate = self.dialog.from_dateEdit.date()
+        s_time = self.dialog.timeEdit.time()
+        s_date = self.dialog.from_dateEdit.date()
 
-        etime = self.dialog.to_timeEdit.time()
-        edate = self.dialog.to_dateEdit.date()
+        e_time = self.dialog.to_timeEdit.time()
+        e_date = self.dialog.to_dateEdit.date()
 
         topic = self.dialog.title.text()
 
         description = self.dialog.textEdit_desc.toPlainText()
-        start_date = sdate.toString("yyyy-MM-dd")
-        end_date = edate.toString("yyyy-MM-dd")
-        start_time = stime.toString()
-        end_time = etime.toString()
+        start_date = s_date.toString("yyyy-MM-dd")
+        end_date = e_date.toString("yyyy-MM-dd")
+        start_time = s_time.toString()
+        end_time = e_time.toString()
         status = False
         location = self.dialog.location.text()
 
         start_at = "{}T{}Z".format(start_date, start_time)
         end_at = "{}T{}Z".format(end_date, end_time)
 
-        print(start_at)
-        print(end_at)
+        task_data = {
+            "topic": topic,
+            "description": description,
+            "start_at": start_at,
+            "end_at": end_at,
+            "status": status,
+            "location": location,
+            "user": self.system.auth_service.get_user_id()
+        }
 
-        self.manager.create_task(topic, description, start_at, end_at, status, location,
-                                 sdate, edate, stime, etime)
+        time_object = {
+            "s_date": s_date,
+            "e_date": e_date,
+            "s_time": s_time,
+            "e_time": e_time
+        }
+
+        self.system.create_task(task_data, time_object)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,9 @@
-import requests
+from client.Code.controller.models.models import TaskList
 from client.Code.controller.models.models import Task
+
+from client.Code.controller.services.services import AuthService
+from client.Code.controller.services.services import TaskService
+
 
 class TaskLedgerSystem:
     """
@@ -7,11 +11,17 @@ class TaskLedgerSystem:
         The TaskLedgerSystem is the the subject to be observed
     """
 
-    def __init__(self, user_auth=None):
-        self.user_auth = user_auth
+    def __init__(self):
+        self.auth_service = AuthService()
+        self.task_service = TaskService()
+
+        self.task_list = TaskList()
+
         self._observers = set()
         self._subject_state = None
         self.loading = False
+
+        self.user = None
 
     def attach(self, observer):
         """
@@ -52,43 +62,67 @@ class TaskLedgerSystem:
         self._subject_state = state
         self._notify(arg)
 
-    def create_task(self, topic, description, start_at, end_at, status, location, sdate, edate, stime, etime):
-        data = {
-            "topic": topic,
-            "description": description,
-            "start_at": start_at,
-            "end_at": end_at,
-            "status": status,
-            "location": location,
-            "user": self.user_auth.get_user_id()
-        }
+    def login(self, username, password):
+        """
+            Login - Authenticate using the AuthService class
+            Returns True if success
+            Returns False if error occurs
 
-        t = Task(None, None, topic, description, start_at, end_at, status, location, data["user"])
-        t.set_date_time_object(sdate, edate, stime, etime)
+            Make request to load tasks then notify observers if success
+        """
 
-        if t.check_format():
-            res = requests.post(self.user_auth.all_tasks_url, data=data)
-            print(res.text)
-            if res.status_code == 201:
-                t.update(res.json())
-                self.set_subject_state("Created Task", t)
+        res = self.auth_service.login(username, password)
+
+        if res:
+            self.user = res["user"]
+            self.task_list = self.task_service.list_task(self.user["id"])
+            self.set_subject_state("Initialize")
+            return True
+        return False
+
+    def register(self, username, pw1, pw2):
+        """
+            Register - Authenticate using the AuthService class
+            Returns True if success
+            Returns False if error occurs
+
+            Make request to load tasks then notify observers if success
+        """
+
+        res = self.auth_service.register(username, pw1, pw2)
+
+        if res:
+            self.user = res["user"]
+            self.task_list = self.task_service.list_task(self.user["id"])
+            self.set_subject_state("Initialize")
+            return True
+        return False
+
+    def create_task(self, task_data, time_object=None):
+        """
+            Create Task - Create Task Object and make POST request
+            Return True if success
+            Return False if error occurs
+
+            Make request creates new task, loads it into task list then notify observers of the change
+        """
+
+        task = Task(task_data)
+        task.set_date_time_object(time_object)
+
+        if task.check_format():
+            if self.task_service.create_task(task_data):
+                self.task_list.add_task(task_data)
+                self.set_subject_state("Created Task")
                 return True
         return False
 
-    def delete_task(self):
-        pass
-
-    def get_tasks(self, status=False):
-        params = {
-            "status": status
-        }
-
-        res = requests.get(self.user_auth.task_url, params=params)
-
-        if res.status_code == 200:
-            return res.json()
-        return False
+    def update_task(self, task_id, task_data):
+        res = self.task_service.update_task(task_id, task_data)
+        if res:
+            self.task_list.update_task(task_id, task_data)
+            self.set_subject_state("Updated Task")
+            return True
 
     def set_loading(self, loading_status):
         self.loading = loading_status
-

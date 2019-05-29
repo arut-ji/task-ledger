@@ -28,11 +28,11 @@ class Task:
         self.start_time_object = None
         self.end_time_object = None
 
-    def set_date_time_object(self, sdate, edate, stime, etime):
-        self.start_date_object = sdate
-        self.end_date_object = edate
-        self.start_time_object = stime
-        self.end_time_object = etime
+    def set_date_time_object(self, time_object):
+        self.start_date_object = time_object["s_date"]
+        self.end_date_object = time_object["e_date"]
+        self.start_time_object = time_object["s_time"]
+        self.end_time_object = time_object["e_time"]
 
     def check_format(self):
         if self.start_date_object <= self.end_date_object:

@@ -57,7 +57,6 @@ class Task_ledger(QWidget):
         self.main = main.Ui_Form(self.stackedWidgetPage4)
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
-        self.main.create_button.clicked.connect(self.create_dialog)
         self.main.log_out.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage4)
 
@@ -75,18 +74,13 @@ class Task_ledger(QWidget):
     def goto_main(self):
         self.stackedWidget.setCurrentIndex(3)
 
-    def create_dialog(self):
-        self.dialog = dialog.Ui_Dialog()
-        self.dialog.setupUi(self)
-        self.show()
-
 
 class LoginUI(QWidget):
     def __init__(self):
         QWidget.__init__(self, None)
 
         # Initializing the managers, subject, observers
-        self.user_auth = task_auth.UserAuth()
+        self.user_auth = task_auth.AuthService()
         self.manager = task_manager.TaskLedgerSystem(self.user_auth)
         self.active_tasks = task_observers.ActiveTasksList()
         self.completed_tasks = task_observers.CompletedTasksList()
@@ -100,6 +94,7 @@ class LoginUI(QWidget):
 
         self.ui.login.button_login.clicked.connect(self.login_event)
         self.ui.reg.reg_button.clicked.connect(self.register_event)
+        self.ui.main.create_button.clicked.connect(self.create_dialog)
 
         self.show()
 
@@ -110,7 +105,7 @@ class LoginUI(QWidget):
         success = self.user_auth.login(username, password)
         if success:
             self.ui.goto_main()
-            self.manager.set_subject_state("Initialize", self.user_auth.get_task_list())
+            self.manager.set_subject_state("Initialize")
 
     def register_event(self):
         username = self.ui.reg.username_lineEdit.text()
@@ -120,7 +115,30 @@ class LoginUI(QWidget):
         success = self.user_auth.registration(username, password1, password2)
         if success:
             self.ui.goto_main()
-            self.manager.set_subject_state("Initialize", self.user_auth.get_task_list())
+            self.manager.set_subject_state("Initialize")
+
+    def create_dialog(self):
+        self.dialog = dialog.Ui_Dialog()
+        self.dialog.setupUi(self.ui)
+
+        self.dialog.save_btn.clicked.connect(self.create_event)
+
+        self.ui.show()
+
+    def create_event(self):
+        topic = self.dialog.title.text()
+        description = self.dialog.textEdit.toPlainText()
+        start_date = self.dialog.from_dateEdit.date().toString("yyyy-MM-dd")
+        end_date = self.dialog.to_dateEdit.date().toString("yyyy-MM-dd")
+        start_time = self.dialog.timeEdit.text()
+        end_time = self.dialog.to_timeEdit.text()
+        status = False
+        location = self.dialog.location.text()
+
+        start_at = "{}T{}:00+0700".format(start_date, start_time)
+        end_at = "{}T{}:00+0700".format(end_date, end_time)
+
+        self.manager.create_task(topic, description, start_at, end_at, status, location)
 
 
 if __name__ == '__main__':

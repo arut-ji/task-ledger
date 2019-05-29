@@ -2,7 +2,7 @@ import requests
 import json
 
 
-class UserAuth:
+class AuthService:
     def __init__(self):
         """
             Represents the user and manages its API calls to authenticate user
@@ -12,10 +12,13 @@ class UserAuth:
         """
         self.__username = None
         self.__token = None
+        self.__user_id = 1  # For testing
+        # self.__user_id = None
 
         self.login_url = "http://task-ledger.appspot.com/rest-auth/login/"
         self.registration_url = "http://task-ledger.appspot.com/rest-auth/registration/"
-        self.task_url = "http://task-ledger.appspot.com/api/tasks/"
+        self.task_url = "http://task-ledger.appspot.com/api/users/"
+        self.all_tasks_url = "http://task-ledger.appspot.com/api/tasks/"
 
     def get_token(self):
         return self.__token
@@ -28,6 +31,12 @@ class UserAuth:
 
     def set_name(self, username):
         self.__username = username
+
+    def set_user_id(self, user_id):
+        self.__user_id = user_id
+
+    def get_user_id(self):
+        return self.__user_id
 
     def login(self, username, password):
         """
@@ -47,7 +56,10 @@ class UserAuth:
             res_data = json.loads(res.text)
             self.__token = res_data["key"]
             self.__username = username
+            # self.__user_id = res_data["id"]
+            self.task_url = self.task_url + str(self.__user_id) + "/tasks"
             return True
+        # print("hello")
         return False
 
     def registration(self, username, password1, password2):
@@ -72,15 +84,22 @@ class UserAuth:
             res_data = json.loads(res.text)
             self.__token = res_data["key"]
             self.__username = username
+            self.__user_id = res_data["id"]
+            self.task_url = self.task_url + str(self.__user_id) + "/tasks"
             return True
         return False
 
-    def get_task_list(self):
-        res = requests.get(self.task_url, headers={"Authorization": self.__token})
-        res_data = json.loads(res.text)
-        return res_data
+    # def get_user_details(self):
+    #     res = requests.get(self.user_url, headers={"Authorization": "Token {}".format(self.__token)})
+    #     res_data = json.loads(res.text())
+    #     self.__user_id = res_data["id"]
 
 
 # u = UserAuth()
 # u.login("admin", "admin")
 # u.get_user_task()
+
+# params = {"status": False}
+# res = requests.get("http://task-ledger.appspot.com/api/users/10/tasks", params=params)
+# print(res.status_code)
+# print(res.json())

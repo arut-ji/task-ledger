@@ -1,3 +1,7 @@
+import requests
+import client.Code.controller.task as task_definition
+
+
 class TaskLedgerSystem:
     """
         Acts as the manager of the tasks instances of the respective user instance
@@ -48,9 +52,32 @@ class TaskLedgerSystem:
         self._subject_state = state
         self._notify(arg)
 
-    def create_task(self):
-        pass
+    def create_task(self, topic, description, start_at, end_at, status, location):
+        data = {
+            "topic": topic,
+            "description": description,
+            "start_at": start_at,
+            "end_at": end_at,
+            "status": status,
+            "location": location,
+            "user": self.user_auth.get_user_id()
+        }
+
+        t = task_definition.Task(None, None, topic, description, start_at, end_at, status, location, data["user"])
+
+        res = requests.post(self.user_auth.all_tasks_url, data=data)
+        if res.status_code == 201:
+            t.update(res.json())
+            self.set_subject_state("Created Task", t)
+            return True
+        return False
 
     def delete_task(self):
         pass
 
+    def get_tasks(self, status=False):
+        params = {"status": status}
+        res = requests.get(self.user_auth.task_url, params=params)
+        if res.status_code == 200:
+            return res.json()
+        return False

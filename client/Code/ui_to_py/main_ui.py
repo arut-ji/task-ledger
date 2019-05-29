@@ -4,6 +4,7 @@ from PySide2.QtWidgets import QWidget
 
 from client.Code.ui_to_py.calendar_ui import CalendarWidget
 from client.Code.ui_to_py.line_graph import TableWidget
+import client.Code.ui_to_py.schedule_ui as schedule
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
@@ -85,44 +86,8 @@ class Ui_Form(QWidget):
         # schedule
         self.stackedWidgetPage1 = QtWidgets.QWidget()
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
-        self.left_arrow = QtWidgets.QPushButton(self.stackedWidgetPage1)
-        self.left_arrow.setGeometry(QtCore.QRect(30, 55, 41, 41))
-        self.left_arrow.setText("")
-        self.left_arrow.setIcon(QIcon("../Assets/arrow_left.png"))
-        self.left_arrow.setFlat(True)
-        self.left_arrow.setIconSize(QSize(21, 21))
-        self.left_arrow.setObjectName("left_arrow")
-        self.checkBox_4 = QtWidgets.QCheckBox(self.stackedWidgetPage1)
-        self.checkBox_4.setGeometry(QtCore.QRect(100, 120, 271, 41))
-        self.checkBox_4.setObjectName("checkBox_4")
-        self.today_label = QtWidgets.QLabel(self.stackedWidgetPage1)
-        self.today_label.setGeometry(QtCore.QRect(130, 20, 91, 51))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica Neue")
-        font.setPointSize(32)
-        self.today_label.setFont(font)
-        self.today_label.setObjectName("today_label")
-        self.label_3 = QtWidgets.QLabel(self.stackedWidgetPage1)
-        self.label_3.setGeometry(QtCore.QRect(120, 60, 291, 51))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(42)
-        self.label_3.setFont(font)
-        self.label_3.setObjectName("label_3")
-        self.right_arrow = QtWidgets.QPushButton(self.stackedWidgetPage1)
-        self.right_arrow.setGeometry(QtCore.QRect(80, 55, 41, 41))
-        self.right_arrow.setText("")
-        self.right_arrow.setIcon(QIcon("../Assets/arrow_right.png"))
-        self.right_arrow.setFlat(True)
-        self.right_arrow.setIconSize(QSize(21, 21))
-        self.right_arrow.setObjectName("right_arrow")
-        self.checkBox_3 = QtWidgets.QCheckBox(self.stackedWidgetPage1)
-        self.checkBox_3.setGeometry(QtCore.QRect(100, 170, 271, 41))
-        self.checkBox_3.setObjectName("checkBox_3")
-
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(20)
+        self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
+        self.schedule_ui.setupUi(self.stackedWidgetPage1)
         self.stackedWidget.addWidget(self.stackedWidgetPage1)
 
         # calendar
@@ -222,10 +187,10 @@ class Ui_Form(QWidget):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtWidgets.QApplication.translate("Form", "Form", None, -1))
         self.create_button.setText(QtWidgets.QApplication.translate("Form", "+ Create", None, -1))
-        self.checkBox_4.setText(QtWidgets.QApplication.translate("Form", "CheckBox", None, -1))
-        self.today_label.setText(QtWidgets.QApplication.translate("Form", "Today", None, -1))
-        self.label_3.setText(QtWidgets.QApplication.translate("Form", " Mon 15 April", None, -1))
-        self.checkBox_3.setText(QtWidgets.QApplication.translate("Form", "CheckBox", None, -1))
+        # self.checkBox_4.setText(QtWidgets.QApplication.translate("Form", "CheckBox", None, -1))
+        # self.today_label.setText(QtWidgets.QApplication.translate("Form", "Today", None, -1))
+        # self.label_3.setText(QtWidgets.QApplication.translate("Form", " Mon 15 April", None, -1))
+        # self.checkBox_3.setText(QtWidgets.QApplication.translate("Form", "CheckBox", None, -1))
         self.label_4.setText(QtWidgets.QApplication.translate("Form", "History", None, -1))
         self.pushButton.setText(QtWidgets.QApplication.translate("Form", "Label", None, -1))
         self.pushButton_2.setText(QtWidgets.QApplication.translate("Form", "Date created", None, -1))

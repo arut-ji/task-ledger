@@ -78,16 +78,16 @@ class Task_ledger(QWidget):
         self.stackedWidget.setCurrentIndex(3)
 
 
-class TaskLedger(QWidget):
-    def __init__(self):
-        QWidget.__init__(self, None)
+class TaskLedgerUI(QWidget):
+    def __init__(self, application, parent=None):
+        QWidget.__init__(self, parent)
 
         # Initializing the managers, subject, observers
         self.user_auth = task_auth.AuthService()
         self.manager = task_manager.TaskLedgerSystem(self.user_auth)
         self.active_tasks = task_observers.ActiveTasksList()
         self.completed_tasks = task_observers.CompletedTasksList()
-
+        self.app = application
         self.manager.attach(self.active_tasks)
         self.manager.attach(self.completed_tasks)
 
@@ -105,19 +105,15 @@ class TaskLedger(QWidget):
         username = self.ui.login.username_lineEdit.text()
         password = self.ui.login.pw_lineEdit.text()
 
-        movie = QMovie("../../Assets/loading.gif")
-        splash_gif = splash.MovieSplashScreen(movie)
-        splash_gif.show()
-        success = self.user_auth.login(username, password)
         # Set system manager loading state
         self.manager.set_loading(True)
+
         success = self.manager.user_auth.login(username, password)
 
         if success:
             self.manager.set_loading(False)
             self.ui.goto_main()
             self.manager.set_subject_state("Initialize")
-
 
     def register_event(self):
         username = self.ui.reg.username_lineEdit.text()
@@ -130,7 +126,7 @@ class TaskLedger(QWidget):
             self.manager.set_subject_state("Initialize")
 
     def create_dialog(self):
-        self.dialog = dialog.Ui_Dialog()
+        self.dialog = dialog.Create_dialog()
         self.dialog.setupUi(self.ui)
 
         self.dialog.save_btn.clicked.connect(self.create_event)
@@ -139,7 +135,7 @@ class TaskLedger(QWidget):
 
     def create_event(self):
         topic = self.dialog.title.text()
-        description = self.dialog.textEdit.toPlainText()
+        description = self.dialog.textEdit_desc.toPlainText()
         start_date = self.dialog.from_dateEdit.date().toString("yyyy-MM-dd")
         end_date = self.dialog.to_dateEdit.date().toString("yyyy-MM-dd")
         start_time = self.dialog.timeEdit.text()
@@ -152,9 +148,8 @@ class TaskLedger(QWidget):
 
         self.manager.create_task(topic, description, start_at, end_at, status, location)
 
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    w = TaskLedger()
+    w = TaskLedgerUI(app)
     sys.exit(app.exec_())

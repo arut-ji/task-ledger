@@ -1,5 +1,3 @@
-from PySide2.QtCore import QSize, QObject
-from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QWidget
 
 from client.Code.ui_to_py.calendar_ui import CalendarWidget
@@ -190,10 +188,6 @@ class Ui_Form(QWidget):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtWidgets.QApplication.translate("Form", "Form", None, -1))
         self.create_button.setText(QtWidgets.QApplication.translate("Form", "+ Create", None, -1))
-        # self.checkBox_4.setText(QtWidgets.QApplication.translate("Form", "CheckBox", None, -1))
-        # self.today_label.setText(QtWidgets.QApplication.translate("Form", "Today", None, -1))
-        # self.label_3.setText(QtWidgets.QApplication.translate("Form", " Mon 15 April", None, -1))
-        # self.checkBox_3.setText(QtWidgets.QApplication.translate("Form", "CheckBox", None, -1))
         self.label_4.setText(QtWidgets.QApplication.translate("Form", "History", None, -1))
         self.pushButton.setText(QtWidgets.QApplication.translate("Form", "Label", None, -1))
         self.pushButton_2.setText(QtWidgets.QApplication.translate("Form", "Date created", None, -1))
@@ -226,6 +220,3 @@ class Ui_Form(QWidget):
     def display_noti(self):
         self.stackedWidget.setCurrentIndex(4)
         self.stackedWidget.removeWidget(self)
-
-
-

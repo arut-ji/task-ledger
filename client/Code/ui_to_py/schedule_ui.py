@@ -1,11 +1,7 @@
-import sys
-
 from PySide2 import QtWidgets, QtCore, QtGui
-from PySide2.QtCore import QSize, Qt
+from PySide2.QtCore import QSize
 from PySide2.QtGui import QIcon
 import datetime
-
-from PySide2.QtWidgets import QApplication
 
 mockTaskList = [
     {

@@ -157,63 +157,73 @@ QPushButton:hover#left_arrow, :hover#right_arrow{
 	border-radius: 20px;
 }
 
-QStandardItem, QCheckBox {
+QCheckBox {
     background-color:transparent;
-    color: black;
+    color: rgb(40, 19, 18);
     spacing: 4px;
     outline: none;
     padding-top: 4px;
     padding-bottom: 4px;
+	font-size: 14px;
+	height: 50px;
 }
 
-QStandardItem:focus, QCheckBox:focus {
+QListView::item{
+	padding: 10px;
+	font-size: 16px;
+	selection-background-color: transparent;
+	selection-color: rgb(40, 19, 18);
+}
+
+QAbstractItemView:focus, QCheckBox:focus {
     border: none;
 }
 
-QStandardItem QCheckBox QWidget:disabled {
+QAbstractItemView QCheckBox QWidget:disabled {
     background-color: transparent;
     color: #9B9B9B;
 }
 
-QStandardItem::indicator, QCheckBox::indicator {
+QAbstractItemView::indicator, QCheckBox::indicator {
     margin-left: 4px;
 	margin-right: 10px;
     width: 30px;
     height: 30px;
+
 }
 
-QStandardItem::indicator:unchecked, QCheckBox::indicator:unchecked {
+QAbstractItemView::indicator:unchecked, QCheckBox::indicator:unchecked {
 	image: url(../Assets/checkbox_unchecked.png)
 }
 
-QStandardItem::indicator:unchecked:hover, QCheckBox::indicator:unchecked:hover{
+QAbstractItemView::indicator:unchecked:hover, QCheckBox::indicator:unchecked:hover{
     border: none;
     image: url(../Assets/checkbox_unchecked_active.png)
 }
 
-QStandardItem QCheckBox::indicator:unchecked:pressed{
+QAbstractItemView::indicator:unchecked:pressed, QCheckBox::indicator:unchecked:pressed{
     border: none;
     image: url(../Assets/checkbox_checked_active.png)
 }
 
-QStandardItem QCheckBox::indicator:unchecked:disabled {
+QAbstractItemView::indicator:unchecked:disabled, QCheckBox::indicator:unchecked:disabled {
     image: url(../Assets/checkbox_checked.png)
 }
 
-QStandardItem QCheckBox::indicator:checked {
+QAbstractItemView::indicator:checked, QCheckBox::indicator:checked {
     image: url(../Assets/checkbox_checked.png)
 }
-QStandardItem QCheckBox::indicator:checked:hover{
+QAbstractItemView::indicator:checked:hover, QCheckBox::indicator:checked:hover{
     border: none;
     image: url(../Assets/checkbox_checked_active.png);
 }
 
-QStandardItem QCheckBox::indicator:checked:pressed{
+QAbstractItemView::indicator:checked:pressed, QCheckBox::indicator:checked:pressed{
     border: none;
     image: url(../Assets/checkbox_unchecked_active.png);
 }
 
-QStandardItem QCheckBox::indicator:checked:disabled{
+QAbstractItemView::indicator:checked:disabled, QCheckBox::indicator:checked:disabled{
     image: url(../Assets/checkbox_checked.png)
 }
 

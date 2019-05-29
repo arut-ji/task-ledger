@@ -12,6 +12,7 @@ class TaskLedgerSystem:
         self.user_auth = user_auth
         self._observers = set()
         self._subject_state = None
+        self.loading = False
 
     def attach(self, observer):
         """
@@ -77,7 +78,16 @@ class TaskLedgerSystem:
 
     def get_tasks(self, status=False):
         params = {"status": status}
+        params = {
+            "status": status
+        }
+
         res = requests.get(self.user_auth.task_url, params=params)
+
         if res.status_code == 200:
             return res.json()
         return False
+
+    def set_loading(self, loading_status):
+        self.loading = loading_status
+

@@ -88,9 +88,9 @@ class Ui_Form(QWidget):
         # schedule
         self.stackedWidgetPage1 = QtWidgets.QWidget()
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
-        self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
+        self.schedule_ui = schedule.Schedule_ui(self.active_tasks.task_list, self.stackedWidgetPage1)
         self.schedule_ui.setupUi(self.stackedWidgetPage1)
-        self.schedule_ui.display_task(self.active_tasks.task_list)
+
         self.stackedWidget.addWidget(self.stackedWidgetPage1)
 
         # calendar

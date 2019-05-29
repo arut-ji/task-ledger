@@ -1,7 +1,6 @@
 import requests
 import client.Code.controller.task as task_definition
 
-
 class TaskLedgerSystem:
     """
         Acts as the manager of the tasks instances of the respective user instance

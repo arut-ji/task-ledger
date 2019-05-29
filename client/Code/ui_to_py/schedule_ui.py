@@ -3,10 +3,36 @@ from PySide2.QtCore import QSize
 from PySide2.QtGui import QIcon
 
 
+mockTaskList = [
+    {
+        "id": 19,
+        "topic": "TestEvent",
+        "description": "TestDescription",
+        "created_at": "2019-05-28T21:20:27.905367Z",
+        "start_at": "2019-06-03T03:00:00Z",
+        "end_at": "2019-06-03T05:00:00Z",
+        "status": False,
+        "location": "TestLocation",
+        "user": 1
+    },
+    {
+        "id": 20,
+        "topic": "Project Deadline",
+        "description": "Send SEP project.",
+        "created_at": "2019-05-29T09:18:23.223777Z",
+        "start_at": "2019-06-02T06:00:00Z",
+        "end_at": "2019-06-02T09:00:00Z",
+        "status": False,
+        "location": "International College, KMITL",
+        "user": 1
+    }
+]
+
 class Schedule_ui(QtWidgets.QWidget):
-    def __init__(self, task_list, parent=None):
+    def __init__(self, task_list=None, parent=None):
         super(Schedule_ui, self).__init__(parent)
         self.tasks = task_list
+        self.date = QtCore.QDate()
 
     def setupUi(self, parent):
         # Button
@@ -26,7 +52,11 @@ class Schedule_ui(QtWidgets.QWidget):
         self.right_arrow.setIconSize(QSize(21, 21))
         self.right_arrow.setObjectName("right_arrow")
 
+        print(self.date.currentDate())
+
+        
         self.today_label = QtWidgets.QLabel(parent)
+
         self.today_label.setGeometry(QtCore.QRect(130, 20, 91, 51))
         font = QtGui.QFont()
         font.setFamily("Helvetica Neue")
@@ -46,25 +76,23 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.list_view = QtWidgets.QListView(parent)
         self.list_view.setGeometry(80, 120, 590, 450)
-        self.model = QtGui.QStandardItemModel(self.list_view)
 
+        self.model = QtGui.QStandardItemModel(self.list_view)
         self.list_view.setModel(self.model)
+        self.model.clear()
+
+        for task in self.tasks:
+            taskListItem = QtGui.QStandardItem(task['topic'])
+            taskListItem.setCheckable(True)
+            # taskListItem.setCheckState(task['status'])
+            self.model.appendRow(taskListItem)
 
         # self.checkBox_3 = QtWidgets.QCheckBox(parent)
         # self.checkBox_3.setGeometry(QtCore.QRect(100, 170, 271, 41))
         # self.checkBox_3.setObjectName("checkBox_3")
         # self.checkBox_3.setText('hi')
-        # 
+        #
         # self.checkBox_4 = QtWidgets.QCheckBox(parent)
         # self.checkBox_4.setGeometry(QtCore.QRect(100, 120, 271, 41))
         # self.checkBox_4.setObjectName("checkBox_4")
         # self.checkBox_4.setText('hi')
-
-    def display_task(self, task_list):
-        print(task_list)
-        self.model.clear()
-
-        for todo in task_list:
-            item = QtGui.QStandardItem(todo.topic)
-            item.setCheckable(True)
-            self.model.appendRow(item)

@@ -4,6 +4,7 @@ from PySide2.QtCore import QRect
 from PySide2.QtGui import QMovie
 from PySide2.QtWidgets import QWidget, QStackedWidget, QApplication
 
+import client.Code.ui_to_py.schedule_ui as schedule
 import client.Code.ui_to_py.landing_page_ui as landing
 import client.Code.ui_to_py.login_ui as login
 import client.Code.ui_to_py.register_ui as reg
@@ -143,7 +144,7 @@ class TaskLedgerUI(QWidget):
 
         topic = self.dialog.title.text()
 
-        description = self.dialog.textEdit.toPlainText()
+        description = self.dialog.textEdit_desc.toPlainText()
         start_date = sdate.toString("yyyy-MM-dd")
         end_date = edate.toString("yyyy-MM-dd")
         start_time = stime.toString()

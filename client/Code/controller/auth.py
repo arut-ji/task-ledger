@@ -13,7 +13,6 @@ class AuthService:
         self.__username = None
         self.__token = None
         self.__user_id = 1  # For testing
-        self.__user_id = None
 
         self.login_url = "http://task-ledger.appspot.com/rest-auth/login/"
         self.registration_url = "http://task-ledger.appspot.com/rest-auth/registration/"

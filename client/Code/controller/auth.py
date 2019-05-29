@@ -13,7 +13,7 @@ class UserAuth:
         self.__username = None
         self.__token = None
 
-        self.login_url = "http://task-ledger.appspot.com/rest-authlogin/"
+        self.login_url = "http://task-ledger.appspot.com/rest-auth/login/"
         self.registration_url = "http://task-ledger.appspot.com/rest-auth/registration/"
         self.task_url = "http://task-ledger.appspot.com/api/tasks/"
 

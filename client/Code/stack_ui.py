@@ -1,6 +1,7 @@
 import sys
 
 from PySide2.QtCore import QRect
+from PySide2.QtGui import QMovie
 from PySide2.QtWidgets import QWidget, QStackedWidget, QApplication
 
 import client.Code.ui_to_py.landing_page_ui as landing
@@ -8,6 +9,8 @@ import client.Code.ui_to_py.login_ui as login
 import client.Code.ui_to_py.register_ui as reg
 import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
+
+import client.Code.ui_to_py.splashScreen as splash
 
 import client.Code.controller.auth as task_auth
 import client.Code.controller.manager as task_manager
@@ -23,7 +26,7 @@ class Task_ledger(QWidget):
         self.stackedWidget.setGeometry(QRect(0, 0, 1000, 600))
         self.stackedWidget.setObjectName("stackedWidget")
 
-        #Landing Page
+        # Landing Page
         self.stackedWidgetPage1 = QWidget()
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
         self.landing = landing.Ui_TaskLedger(self.stackedWidgetPage1)
@@ -32,7 +35,7 @@ class Task_ledger(QWidget):
         self.stackedWidget.addWidget(self.stackedWidgetPage1)
         self.landing.pushButton.clicked.connect(self.goto_login)
 
-        #Login Page
+        # Login Page
         self.stackedWidgetPage2 = QWidget()
         self.stackedWidgetPage2.setObjectName("stackedWidgetPage2")
         self.login = login.Ui_Form(self.stackedWidgetPage2)
@@ -42,7 +45,7 @@ class Task_ledger(QWidget):
         self.login.back.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage2)
 
-        #register Page
+        # register Page
         self.stackedWidgetPage3 = QWidget()
         self.stackedWidgetPage3.setObjectName("stackedWidgetPage3")
         self.reg = reg.Ui_Form(self.stackedWidgetPage3)
@@ -51,7 +54,7 @@ class Task_ledger(QWidget):
         self.reg.back.clicked.connect(self.goto_login)
         self.stackedWidget.addWidget(self.stackedWidgetPage3)
 
-        #main
+        # main
         self.stackedWidgetPage4 = QWidget()
         self.stackedWidgetPage4.setObjectName("stackedWidgetPage4")
         self.main = main.Ui_Form(self.stackedWidgetPage4)
@@ -75,7 +78,7 @@ class Task_ledger(QWidget):
         self.stackedWidget.setCurrentIndex(3)
 
 
-class LoginUI(QWidget):
+class TaskLedger(QWidget):
     def __init__(self):
         QWidget.__init__(self, None)
 
@@ -102,6 +105,9 @@ class LoginUI(QWidget):
         username = self.ui.login.username_lineEdit.text()
         password = self.ui.login.pw_lineEdit.text()
 
+        movie = QMovie("../../Assets/loading.gif")
+        splash_gif = splash.MovieSplashScreen(movie)
+        splash_gif.show()
         success = self.user_auth.login(username, password)
         if success:
             self.ui.goto_main()
@@ -144,5 +150,5 @@ class LoginUI(QWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    w = LoginUI()
+    w = TaskLedger()
     sys.exit(app.exec_())

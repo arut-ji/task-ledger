@@ -8,7 +8,7 @@ class AuthService:
             Represents the user and manages its API calls to authenticate user
             Verify the credentials
             Update credentials
-            Get user information through JWT
+            Get user information through Token
         """
         self.__username = None
         self.__token = None

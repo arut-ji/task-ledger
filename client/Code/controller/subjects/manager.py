@@ -1,5 +1,5 @@
 import requests
-from client.Code.controller.models.task import Task
+from client.Code.controller.models.models import Task
 
 class TaskLedgerSystem:
     """

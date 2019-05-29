@@ -2,6 +2,7 @@ class Task:
     """
         When loading tasks from database no fields shall be None value
         When creating new tasks to be added, task_id and created_at have to be have value None
+        sdate and edate are QDate Objects which is used to verify date before POST request to api endpoint
     """
 
     def __init__(self, task_id, topic, desc, created_at, start_at, end_at, status, location, user):
@@ -14,6 +15,26 @@ class Task:
         self.status = status
         self.location = location
         self.user = user
+
+        self.start_date_object = None
+        self.end_date_object = None
+        self.start_time_object = None
+        self.end_time_object = None
+
+    def set_date_time_object(self, sdate, edate, stime, etime):
+        self.start_date_object = sdate
+        self.end_date_object = edate
+        self.start_time_object = stime
+        self.end_time_object = etime
+
+    def check_format(self):
+        if self.start_date_object <= self.end_date_object:
+            a = self.start_time_object <= self.end_time_object
+            if self.start_date_object < self.end_date_object:
+                return True
+            elif self.start_time_object <= self.end_time_object:
+                return True
+        return False
 
     def update(self, data):
         """

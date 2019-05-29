@@ -78,6 +78,7 @@ class Task_ledger(QWidget):
         self.stackedWidget.setCurrentIndex(3)
 
 
+
 class TaskLedgerUI(QWidget):
     def __init__(self, application, parent=None):
         QWidget.__init__(self, parent)

@@ -5,6 +5,7 @@ from PySide2.QtWidgets import QWidget
 from client.Code.ui_to_py.calendar_ui import CalendarWidget
 from client.Code.ui_to_py.line_graph import TableWidget
 import client.Code.ui_to_py.schedule_ui as schedule
+import client.Code.controller.observers as task_observers
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
@@ -17,6 +18,7 @@ class Ui_Form(QWidget):
         Form.setStyleSheet(css_file)
         font.setFamily("Helvetica")
         Form.setFont(font)
+        self.active_tasks = task_observers.ActiveTasksList()
 
         # navbar
         self.label = QtWidgets.QLabel(Form)
@@ -88,6 +90,7 @@ class Ui_Form(QWidget):
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
         self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
         self.schedule_ui.setupUi(self.stackedWidgetPage1)
+        self.schedule_ui.display_task(self.active_tasks.task_list)
         self.stackedWidget.addWidget(self.stackedWidgetPage1)
 
         # calendar

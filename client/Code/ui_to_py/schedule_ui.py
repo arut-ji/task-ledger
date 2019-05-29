@@ -4,9 +4,9 @@ from PySide2.QtGui import QIcon
 
 
 class Schedule_ui(QtWidgets.QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, task_list, parent=None):
         super(Schedule_ui, self).__init__(parent)
-        self.task = []
+        self.tasks = task_list
 
     def setupUi(self, parent):
         # Button
@@ -50,12 +50,21 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.list_view.setModel(self.model)
 
-        self.checkBox_3 = QtWidgets.QCheckBox(parent)
-        self.checkBox_3.setGeometry(QtCore.QRect(100, 170, 271, 41))
-        self.checkBox_3.setObjectName("checkBox_3")
-        self.checkBox_3.setText('hi')
+        # self.checkBox_3 = QtWidgets.QCheckBox(parent)
+        # self.checkBox_3.setGeometry(QtCore.QRect(100, 170, 271, 41))
+        # self.checkBox_3.setObjectName("checkBox_3")
+        # self.checkBox_3.setText('hi')
+        # 
+        # self.checkBox_4 = QtWidgets.QCheckBox(parent)
+        # self.checkBox_4.setGeometry(QtCore.QRect(100, 120, 271, 41))
+        # self.checkBox_4.setObjectName("checkBox_4")
+        # self.checkBox_4.setText('hi')
 
-        self.checkBox_4 = QtWidgets.QCheckBox(parent)
-        self.checkBox_4.setGeometry(QtCore.QRect(100, 120, 271, 41))
-        self.checkBox_4.setObjectName("checkBox_4")
-        self.checkBox_4.setText('hi')
+    def display_task(self, task_list):
+        print(task_list)
+        self.model.clear()
+
+        for todo in task_list:
+            item = QtGui.QStandardItem(todo.topic)
+            item.setCheckable(True)
+            self.model.appendRow(item)

@@ -29,9 +29,9 @@ mockTaskList = [
 ]
 
 class Schedule_ui(QtWidgets.QWidget):
-    def __init__(self, task_list=None, parent=None):
+    def __init__(self, parent=None, task_list=None ):
         super(Schedule_ui, self).__init__(parent)
-        self.tasks = task_list
+        self.tasks = mockTaskList
         self.date_now = datetime.date.today()
 
     def setupUi(self, parent=None):
@@ -79,11 +79,11 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.update_label(self.date_now)
 
-        # for task in self.tasks:
-        #     taskListItem = QtGui.QStandardItem(task['topic'])
-        #     taskListItem.setCheckable(True)
-        #     # taskListItem.setCheckState(task['status'])
-        #     self.model.appendRow(taskListItem)
+        for task in self.tasks:
+            taskListItem = QtGui.QStandardItem(task['topic'])
+            taskListItem.setCheckable(True)
+            # taskListItem.setCheckState(task['status'])
+            self.model.appendRow(taskListItem)
 
         # self.checkBox_3 = QtWidgets.QCheckBox(parent)
         # self.checkBox_3.setGeometry(QtCore.QRect(100, 170, 271, 41))

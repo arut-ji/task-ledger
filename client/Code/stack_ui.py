@@ -7,6 +7,7 @@ import client.Code.ui_to_py.login_ui as login
 import client.Code.ui_to_py.register_ui as reg
 import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
+import client.Code.ui_to_py.side_navbar_ui as navbar
 
 import client.Code.controller.subjects.manager as manager
 
@@ -54,7 +55,8 @@ class Task_ledger(QWidget):
         self.main = main.Ui_Form(self.stackedWidgetPage4)
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
-        self.main.log_out.clicked.connect(self.goto_landing)
+        self.main.navbar.log_out.clicked.connect(self.goto_landing)
+        # navbar.log_out.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage4)
 
         self.stackedWidget.setCurrentIndex(0)
@@ -87,7 +89,7 @@ class TaskLedgerUI(QWidget):
 
         self.ui.login.button_login.clicked.connect(self.login_event)
         self.ui.reg.reg_button.clicked.connect(self.register_event)
-        self.ui.main.create_button.clicked.connect(self.create_dialog)
+        self.ui.main.navbar.create_button.clicked.connect(self.create_dialog)
 
         self.show()
 

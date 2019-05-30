@@ -1,3 +1,4 @@
+import PySide2
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtCore import QSize
 from PySide2.QtGui import QIcon
@@ -28,6 +29,8 @@ import datetime
 #         "user": 1
 #     }
 # ]
+from PySide2.QtWidgets import QListWidgetItem
+
 
 class Observer:
     def update(self, payload):
@@ -88,17 +91,16 @@ class Schedule_ui(QtWidgets.QWidget):
         self.list_view.setModel(self.model)
         self.model.clear()
 
+        self.list_view.clicked.connect(self.itemClicked)
         self.update_label(self.date_now)
 
-        # self.checkBox_3 = QtWidgets.QCheckBox(parent)
-        # self.checkBox_3.setGeometry(QtCore.QRect(100, 170, 271, 41))
-        # self.checkBox_3.setObjectName("checkBox_3")
-        # self.checkBox_3.setText('hi')
-        #
-        # self.checkBox_4 = QtWidgets.QCheckBox(parent)
-        # self.checkBox_4.setGeometry(QtCore.QRect(100, 120, 271, 41))
-        # self.checkBox_4.setObjectName("checkBox_4")
-        # self.checkBox_4.setText('hi')
+    def itemClicked(self, index):
+        task = self.model.itemFromIndex(index).data()
+        checked = self.model.itemFromIndex(index).checkState()
+        if not checked:
+            print(task)
+        else:
+            print("Status Changed")
 
     def next_date(self):
         self.date_now += datetime.timedelta(days=1)
@@ -121,15 +123,3 @@ class Schedule_ui(QtWidgets.QWidget):
     def get_str_date(self, date):
         return ' ' + date.strftime("%d") + ' ' \
                + date.strftime("%B") + ' ' + date.strftime("%Y")
-
-    def update(self, arg):
-        self.state_initialize(arg)
-        super(Schedule_ui, self).update()
-
-    def state_initialize(self, arg):
-        self.model.clear()
-        for task in arg.tasks:
-            if task.get_detail()["status"] is False:
-                task_list_item = QtGui.QStandardItem(task.get_detail()['topic'])
-                task_list_item.setCheckable(True)
-                self.model.appendRow(task_list_item)

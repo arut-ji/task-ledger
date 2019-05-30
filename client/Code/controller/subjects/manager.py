@@ -30,6 +30,8 @@ class TaskLedgerSystem:
 
         observer._subject = self
         self._observers.add(observer)
+        if self.task_list is not None:
+            self._notify(self.task_list)
 
     def detach(self, observer):
         """

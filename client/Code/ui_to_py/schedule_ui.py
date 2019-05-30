@@ -86,7 +86,6 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.model = QtGui.QStandardItemModel(self.list_view)
         self.list_view.setModel(self.model)
-        self.list_view.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.model.clear()
 
         self.update_label(self.date_now)

@@ -10,10 +10,15 @@ import client.Code.ui_to_py.dialog_ui as dialog
 
 from client.Code.controller.subjects.manager import TaskLedgerSystem
 
-DEBUG = True
+DEBUG = False
 
 
 class Task_ledger(QWidget):
+
+    def __init__(self, system, parent=None):
+        super(Task_ledger, self).__init__(parent)
+        self.system = system
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.setFixedSize(1000, 600)
@@ -54,11 +59,13 @@ class Task_ledger(QWidget):
         self.stackedWidgetPage4 = QWidget()
         self.stackedWidgetPage4.setObjectName("stackedWidgetPage4")
         self.main = main.Ui_Form(self.stackedWidgetPage4)
-        self.main.setObservable(self.system)
+        # Pass system object to the child Widget
+        self.main.set_system(self.system)
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
         self.main.log_out.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage4)
+
 
         self.stackedWidget.setCurrentIndex(0)
 
@@ -93,7 +100,8 @@ class TaskLedgerUI(QWidget):
         self.system = TaskLedgerSystem()
 
         # Set up the UI and mapping the buttons
-        self.ui = Task_ledger()
+        self.ui = Task_ledger(self.system)
+        # self.ui.set_system(self.system)
         self.ui.setupUi(self)
 
         self.system.attach(self.ui.main.schedule_ui)
@@ -169,17 +177,9 @@ class TaskLedgerUI(QWidget):
             "end_at": end_at,
             "status": status,
             "location": location,
-            "user": self.system.user["id"]
         }
 
-        time_object = {
-            "s_date": s_date,
-            "e_date": e_date,
-            "s_time": s_time,
-            "e_time": e_time
-        }
-
-        self.system.create_task(task_data, time_object)
+        self.system.create_task(task_data)
 
 
 if __name__ == '__main__':

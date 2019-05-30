@@ -7,6 +7,6 @@ class Observer(metaclass=abc.ABCMeta):
         changes in a subject.
     """
     @abc.abstractmethod
-    def update(self, arg):
+    def update_data(self, data):
         pass
 

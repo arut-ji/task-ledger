@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 # from client.Code.utility.validators import TaskValidator
@@ -60,10 +60,10 @@ class TaskList:
     def add_task(self, new_task: Task):
         self.tasks += [new_task]
 
-    def update_task(self, task_id: int, payload: Dict) -> Task:
+    def update_task(self, task_id: int, updated_task: Task) -> Task:
         for task in self.tasks:
             if task.id == task_id:
-                task.__dict__ = payload
+                task.__dict__ = updated_task.__dict__
                 task.id = task_id
                 return task
 
@@ -73,33 +73,34 @@ class TaskList:
                 return task
         return None
 
-    def delete_task(self, task_id: int) -> Task:
+    def delete_task(self, task_id: int):
         for task in self.tasks:
             if task_id == task.id:
                 result = task
                 self.tasks.remove(task)
                 return result
+        return None
 
-    def count(self):
+    def count(self) -> int:
         return len(self.tasks)
 
-    def get_task_list(self):
+    def get_task_list(self) -> List[Task]:
         return self.tasks
 
-    def json(self):
+    def json(self) -> str:
         return json.dumps([task.json() for task in self.tasks])
 
-mock_task_data = {
-    "id": 20,
-    "topic": "Project Deadline",
-    "description": "Send SEP project.",
-    "created_at": "2019-05-29T09:18:23.223777Z",
-    "start_at": "2019-06-02T06:00:00Z",
-    "end_at": "2019-06-02T09:00:00Z",
-    "status": False,
-    "location": "International College, KMITL",
-    "user": 1
-}
-
-task = Task(mock_task_data)
-print(task)
+# # mock_task_data = {
+# #     "id": 20,
+# #     "topic": "Project Deadline",
+# #     "description": "Send SEP project.",
+# #     "created_at": "2019-05-29T09:18:23.223777Z",
+# #     "start_at": "2019-06-02T06:00:00Z",
+# #     "end_at": "2019-06-02T09:00:00Z",
+# #     "status": False,
+# #     "location": "International College, KMITL",
+# #     "user": 1
+# # }
+# #
+# # task = Task(mock_task_data)
+# print(task)

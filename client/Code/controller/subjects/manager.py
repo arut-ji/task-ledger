@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Dict
+from typing import Dict, Set
 
 from client.Code.controller.models.models import TaskList
 from client.Code.controller.models.models import Task
@@ -36,22 +36,23 @@ class TaskLedgerSystem(Observable):
         self.task_validator = TaskValidator()
         self.user = None
         self.token = None
+        self.loading = False
 
     def _notify_observers(self):
         for observer in self._observers:
-            observer.update(self.task_list)
+            observer.update_data(self.task_list)
 
-    def set_current_user(self, user):
+    def set_current_user(self, user: Dict):
         self.user = user
 
-    def set_current_token(self, token):
+    def set_current_token(self, token: str):
         self.token = token
 
     def set_task_list(self, task_list: TaskList):
         self.task_list = task_list
         self._notify_observers()
 
-    def login(self, username, password):
+    def login(self, username, password) -> bool:
 
         response = AuthService.login(username, password)
 
@@ -63,46 +64,71 @@ class TaskLedgerSystem(Observable):
             return True
         return False
 
-    def create_task(self, details: Dict):
+    def is_authenticated(self) -> bool:
+        return self.token is not None
+
+    def register(self, username, password1, password2) -> bool:
+        response = AuthService.register(username, password1, password2)
+
+        if response:
+            self.set_current_user(response['user'])
+            self.set_current_token(response['key'])
+            task_list = TaskService.list_task(self.user["id"])
+            self.set_task_list(task_list)
+            return True
+        return False
+
+    def create_task(self, details: Dict) -> bool:
 
         details.update({'user': self.user['id']})
         is_valid = self.task_validator.validate(details)
-        print(is_valid)
         if is_valid:
             new_task = self.task_service.create_task(details)
             self.task_list.add_task(new_task)
             self._notify_observers()
+            return True
+        return False
 
-    # TODO: implement update_task
-    def update_task(self, task_id, details):
-        pass
+    def update_task(self, task_id: int, details: Dict):
+        details.update({'user': self.user['id']})
+        is_valid = self.task_validator.validate(details)
 
-    # TODO: implement delete_task
+        if is_valid:
+            updated_task = TaskService.update_task(task_id, details)
+            self.task_list.update_task(task_id, updated_task)
+            self._notify_observers()
+            return True
+        return False
+
     def delete_task(self, task_id):
-        pass
+        deleted_task = self.task_list.delete_task(task_id)
+
+        is_delete_success = False
+
+        if deleted_task is not None:
+            is_delete_success = TaskService.delete_task(task_id)
+
+        if is_delete_success:
+            self._notify_observers()
+            return True
+
+        return False
 
     def set_loading(self, loading_status):
         self.loading = loading_status
 
-#
-#     def update_task(self, task_id, task_data):
-#         res = self.task_service.update_task(task_id, task_data)
-#         if res:
-#             self.task_list.update_task(task_id, task_data)
-#             self.set_subject_state("Updated Task", self.task_list)
-#             return True
-#
+
+class ConcreteObserver(Observer):
+    def update_data(self, task_list: TaskList):
+        for task in task_list.get_task_list():
+            print(task)
+
 
 # system = TaskLedgerSystem()
 # system.attach(ConcreteObserver())
 #
 # system.login('admin', 'admin')
-# system.create_task({
-#     "topic": "Project Deadline",
-#     "description": "Send SEP project.",
-#     "created_at": "2019-05-29T09:18:23.223777Z",
-#     "start_at": "2019-06-02T06:00:00Z",
-#     "end_at": "2019-06-02T09:00:00Z",
-#     "status": False,
-#     "location": "International College, KMITL",
-# })
+# print()
+# result = system.delete_task(34)
+#
+# print(result)

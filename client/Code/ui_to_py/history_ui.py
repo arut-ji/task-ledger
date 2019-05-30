@@ -3,6 +3,8 @@ import sys
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtWidgets import QWidget, QApplication
 
+from client.Code.controller.models.models import TaskList
+
 
 class History_ui(QtWidgets.QWidget):
     def __init__(self, parent=None):
@@ -51,6 +53,9 @@ class History_ui(QtWidgets.QWidget):
         self.tableWidget.verticalHeader().setMinimumSectionSize(25)
 
         self.fill_table()
+
+    def update_data(self, task_list: TaskList):
+        pass
 
     def fill_table(self):
         for i in range(5):

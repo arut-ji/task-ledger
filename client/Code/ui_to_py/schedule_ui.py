@@ -1,38 +1,8 @@
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtCore import QSize
-from PySide2.QtGui import QIcon
+from PySide2.QtGui import QIcon, QStandardItem
 import datetime
-
-
-# mockTaskList = [
-#     {
-#         "id": 19,
-#         "topic": "TestEvent",
-#         "description": "TestDescription",
-#         "created_at": "2019-05-28T21:20:27.905367Z",
-#         "start_at": "2019-06-03T03:00:00Z",
-#         "end_at": "2019-06-03T05:00:00Z",
-#         "status": False,
-#         "location": "TestLocation",
-#         "user": 1
-#     },
-#     {
-#         "id": 20,
-#         "topic": "Project Deadline",
-#         "description": "Send SEP project.",
-#         "created_at": "2019-05-29T09:18:23.223777Z",
-#         "start_at": "2019-06-02T06:00:00Z",
-#         "end_at": "2019-06-02T09:00:00Z",
-#         "status": False,
-#         "location": "International College, KMITL",
-#         "user": 1
-#     }
-# ]
-
-class Observer:
-    def update(self, payload):
-        pass
-
+from client.Code.controller.models.models import TaskList
 
 class Schedule_ui(QtWidgets.QWidget):
 
@@ -40,10 +10,6 @@ class Schedule_ui(QtWidgets.QWidget):
         super(Schedule_ui, self).__init__(parent)
         # self.tasks = mockTaskList
         self.date_now = datetime.date.today()
-
-        self._subject = None
-        self._observer_state = None
-
 
     def setupUi(self, parent=None):
         # Button
@@ -90,16 +56,6 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.update_label(self.date_now)
 
-        # self.checkBox_3 = QtWidgets.QCheckBox(parent)
-        # self.checkBox_3.setGeometry(QtCore.QRect(100, 170, 271, 41))
-        # self.checkBox_3.setObjectName("checkBox_3")
-        # self.checkBox_3.setText('hi')
-        #
-        # self.checkBox_4 = QtWidgets.QCheckBox(parent)
-        # self.checkBox_4.setGeometry(QtCore.QRect(100, 120, 271, 41))
-        # self.checkBox_4.setObjectName("checkBox_4")
-        # self.checkBox_4.setText('hi')
-
     def next_date(self):
         self.date_now += datetime.timedelta(days=1)
         self.update_label(self.date_now)
@@ -122,14 +78,19 @@ class Schedule_ui(QtWidgets.QWidget):
         return ' ' + date.strftime("%d") + ' ' \
                + date.strftime("%B") + ' ' + date.strftime("%Y")
 
-    def update(self, arg):
-        self.state_initialize(arg)
+    # Subscribe to Observable
+    def update_data(self, task_list: TaskList):
+        self.model.clear()
+        task_list = task_list.get_task_list()
+        active_task_list = list(filter(lambda task: not task.status, task_list))
+
+        for task in active_task_list:
+            topic = task.topic
+            item = QStandardItem(topic)
+            item.setCheckable(True)
+            item.setCheckable(True)
+            item.setEditable(False)
+            self.model.appendRow(item)
+
         super(Schedule_ui, self).update()
 
-    def state_initialize(self, arg):
-        self.model.clear()
-        for task in arg.tasks:
-            if task.get_detail()["status"] is False:
-                task_list_item = QtGui.QStandardItem(task.get_detail()['topic'])
-                task_list_item.setCheckable(True)
-                self.model.appendRow(task_list_item)

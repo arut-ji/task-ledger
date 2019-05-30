@@ -10,6 +10,7 @@ import client.Code.ui_to_py.dialog_ui as dialog
 import client.Code.ui_to_py.dialog_reg as dialog_reg
 
 from client.Code.controller.subjects.manager import TaskLedgerSystem
+from client.Code.utility.parsers import DatetimeParser
 
 DEBUG = False
 
@@ -67,7 +68,6 @@ class Task_ledger(QWidget):
         self.main.navbar.log_out.clicked.connect(self.goto_landing)
         # navbar.log_out.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage4)
-
 
         self.stackedWidget.setCurrentIndex(0)
 
@@ -140,16 +140,14 @@ class TaskLedgerUI(QWidget):
         # Set system loading state
         self.system.set_loading(True)
 
-        if self.system.register(username, password1, password2):
+        result = self.system.register(username, password1, password2)
+        if result == True:
             self.system.set_loading(False)
-
-            # dialog
             self.dialog = dialog_reg.Reg_Dialog_Complete()
             self.dialog.setupUi(self.dialog)
             self.dialog.okay.clicked.connect(self.ui.goto_main)
             self.dialog.okay.clicked.connect(self.dialog.close)
             self.dialog.show()
-
         else:
             # dialog
             self.dialog = dialog_reg.Reg_Dialog_Error("This password is too short. It must contain at least 8 characters.")
@@ -166,42 +164,38 @@ class TaskLedgerUI(QWidget):
 
     def create_dialog(self):
         self.dialog = dialog.Create_dialog()
-        self.dialog.setupUi(self.ui)
+        self.dialog.setupUi(self.dialog)
 
         self.dialog.save_btn.clicked.connect(self.create_event)
-
-        self.ui.show()
+        self.dialog.save_btn.clicked.connect(self.dialog.close)
+        self.dialog.show()
 
     def create_event(self):
-        s_time = self.dialog.timeEdit.time()
-        s_date = self.dialog.from_dateEdit.date()
+        start_time = self.dialog.timeEdit.time()
+        start_date = self.dialog.from_dateEdit.date()
 
-        e_time = self.dialog.to_timeEdit.time()
-        e_date = self.dialog.to_dateEdit.date()
+        end_time = self.dialog.to_timeEdit.time()
+        end_date = self.dialog.to_dateEdit.date()
 
         topic = self.dialog.title.text()
 
         description = self.dialog.textEdit_desc.toPlainText()
-        start_date = s_date.toString("yyyy-MM-dd")
-        end_date = e_date.toString("yyyy-MM-dd")
-        start_time = s_time.toString()
-        end_time = e_time.toString()
         status = False
         location = self.dialog.location.text()
 
-        start_at = "{}T{}Z".format(start_date, start_time)
-        end_at = "{}T{}Z".format(end_date, end_time)
+        start_at = DatetimeParser.fromQDateAndQTime(start_date, start_time)
+        end_at = DatetimeParser.fromQDateAndQTime(end_date, end_time)
 
-        task_data = {
+        details = {
             "topic": topic,
             "description": description,
-            "start_at": start_at,
-            "end_at": end_at,
+            "start_at": str(start_at),
+            "end_at": str(end_at),
             "status": status,
             "location": location,
         }
 
-        self.system.create_task(task_data)
+        self.system.create_task(details)
 
 
 if __name__ == '__main__':

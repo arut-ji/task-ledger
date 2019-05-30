@@ -20,7 +20,6 @@ class TaskValidator(Validator):
             'user',
             'topic',
             'description',
-            'created_at',
             'start_at',
             'end_at',
             'status',

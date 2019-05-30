@@ -1,21 +1,25 @@
-from typing import List
-
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtCore import QSize, QDate, QTime
 from PySide2.QtGui import QIcon, QStandardItem
 import datetime
 
-from client.Code.controller.models.models import TaskList
+from client.Code.controller.models.models import TaskList, Task
 import client.Code.ui_to_py.dialog_ui as dialog
+from client.Code.controller.subjects.manager import TaskLedgerSystem
+from client.Code.utility.parsers import DatetimeParser
 
 
 class Schedule_ui(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super(Schedule_ui, self).__init__(parent)
-        # self.tasks = mockTaskList
         self.date_now = datetime.date.today()
         self.active_task_list = None
+        self.selected_task = None
+        self.system: TaskLedgerSystem = None
+
+    def bind_system(self, system):
+        self.system = system
 
     def setupUi(self, parent=None):
         # Button
@@ -60,10 +64,12 @@ class Schedule_ui(QtWidgets.QWidget):
         self.list_view.setModel(self.model)
         self.model.clear()
 
+        self.list_view.clicked.connect(self.itemClicked)
         self.update_label(self.date_now)
 
     def itemClicked(self, index):
-        task = self.model.itemFromIndex(index).data()
+        task: Task = self.model.itemFromIndex(index).data()
+        self.selected_task = task
         checked = self.model.itemFromIndex(index).checkState()
         if not checked:
             self.dialog = dialog.Display_dialog()
@@ -88,7 +94,36 @@ class Schedule_ui(QtWidgets.QWidget):
             self.dialog.edit_btn.clicked.connect(self.edit_dialog)
 
         else:
-            print("Status Changed")
+            details = task.get_detail()
+            details['status'] = True
+            self.system.update_task(task.id, details)
+
+    def update_task(self):
+
+        task_id = self.selected_task.id
+        topic = self.dialog.title.text()
+        location = self.dialog.location.text()
+        start_date = self.dialog.from_dateEdit.date()
+        end_date = self.dialog.to_dateEdit.date()
+        start_time = self.dialog.timeEdit.time()
+        end_time = self.dialog.to_timeEdit.time()
+        description = self.dialog.textEdit_desc.toPlainText()
+        status = self.selected_task.status
+
+        start_at = DatetimeParser.fromQDateAndQTime(start_date, start_time)
+        end_at = DatetimeParser.fromQDateAndQTime(end_date, end_time)
+
+        details = {
+            "topic": topic,
+            "description": description,
+            "start_at": str(start_at),
+            "end_at": str(end_at),
+            "status": status,
+            "location": location
+        }
+
+        # TODO: Error Dialog
+        is_update_success = self.system.update_task(task_id, details)
 
     def edit_dialog(self):
         self.dialog = dialog.Edit_dialog()
@@ -100,6 +135,8 @@ class Schedule_ui(QtWidgets.QWidget):
         self.dialog.textEdit_desc.setText(self.desc)
         self.dialog.timeEdit.setTime(self.start_time)
         self.dialog.to_timeEdit.setTime(self.end_time)
+        self.dialog.save_btn.clicked.connect(self.update_task)
+        self.dialog.save_btn.clicked.connect(self.dialog.close)
         self.dialog.show()
 
     def next_date(self):
@@ -130,7 +167,7 @@ class Schedule_ui(QtWidgets.QWidget):
         self.model.clear()
         current_date_tasks = list(
             filter(
-                lambda task: task.start_at.date() >= self.date_now,
+                lambda task: task.start_at.date() <= self.date_now and task.end_at.date() >= self.date_now,
                 self.active_task_list
             )
         )
@@ -144,6 +181,11 @@ class Schedule_ui(QtWidgets.QWidget):
             item.setEditable(False)
             self.model.appendRow(item)
 
+        # TODO: No Task display
+        if len(current_date_tasks) == 0:
+            # item = QStandardItem("No task for this day.")
+            pass
+
     # Subscribe to Observable
     def update_data(self, task_list: TaskList):
         task_list = task_list.get_task_list()
@@ -156,5 +198,3 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.update_task_list_view()
         super(Schedule_ui, self).update()
-
-

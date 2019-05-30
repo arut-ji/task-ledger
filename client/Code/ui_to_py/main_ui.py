@@ -48,6 +48,7 @@ class Ui_Form(QWidget):
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
         self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
         self.schedule_ui.setupUi(self.stackedWidgetPage1)
+        self.schedule_ui.bind_system(self.system)
 
         # Attach Observer to manager
         self.system.attach(self.schedule_ui)

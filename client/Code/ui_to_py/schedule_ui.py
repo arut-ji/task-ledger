@@ -3,36 +3,47 @@ from PySide2.QtCore import QSize
 from PySide2.QtGui import QIcon
 import datetime
 
-mockTaskList = [
-    {
-        "id": 19,
-        "topic": "TestEvent",
-        "description": "TestDescription",
-        "created_at": "2019-05-28T21:20:27.905367Z",
-        "start_at": "2019-06-03T03:00:00Z",
-        "end_at": "2019-06-03T05:00:00Z",
-        "status": False,
-        "location": "TestLocation",
-        "user": 1
-    },
-    {
-        "id": 20,
-        "topic": "Project Deadline",
-        "description": "Send SEP project.",
-        "created_at": "2019-05-29T09:18:23.223777Z",
-        "start_at": "2019-06-02T06:00:00Z",
-        "end_at": "2019-06-02T09:00:00Z",
-        "status": False,
-        "location": "International College, KMITL",
-        "user": 1
-    }
-]
+
+# mockTaskList = [
+#     {
+#         "id": 19,
+#         "topic": "TestEvent",
+#         "description": "TestDescription",
+#         "created_at": "2019-05-28T21:20:27.905367Z",
+#         "start_at": "2019-06-03T03:00:00Z",
+#         "end_at": "2019-06-03T05:00:00Z",
+#         "status": False,
+#         "location": "TestLocation",
+#         "user": 1
+#     },
+#     {
+#         "id": 20,
+#         "topic": "Project Deadline",
+#         "description": "Send SEP project.",
+#         "created_at": "2019-05-29T09:18:23.223777Z",
+#         "start_at": "2019-06-02T06:00:00Z",
+#         "end_at": "2019-06-02T09:00:00Z",
+#         "status": False,
+#         "location": "International College, KMITL",
+#         "user": 1
+#     }
+# ]
+
+class Observer:
+    def update(self, payload):
+        pass
+
 
 class Schedule_ui(QtWidgets.QWidget):
-    def __init__(self, parent=None, task_list=None ):
+
+    def __init__(self, parent=None):
         super(Schedule_ui, self).__init__(parent)
-        self.tasks = mockTaskList
+        # self.tasks = mockTaskList
         self.date_now = datetime.date.today()
+
+        self._subject = None
+        self._observer_state = None
+
 
     def setupUi(self, parent=None):
         # Button
@@ -79,12 +90,6 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.update_label(self.date_now)
 
-        for task in self.tasks:
-            taskListItem = QtGui.QStandardItem(task['topic'])
-            taskListItem.setCheckable(True)
-            # taskListItem.setCheckState(task['status'])
-            self.model.appendRow(taskListItem)
-
         # self.checkBox_3 = QtWidgets.QCheckBox(parent)
         # self.checkBox_3.setGeometry(QtCore.QRect(100, 170, 271, 41))
         # self.checkBox_3.setObjectName("checkBox_3")
@@ -116,3 +121,15 @@ class Schedule_ui(QtWidgets.QWidget):
     def get_str_date(self, date):
         return ' ' + date.strftime("%d") + ' ' \
                + date.strftime("%B") + ' ' + date.strftime("%Y")
+
+    def update(self, arg):
+        self.state_initialize(arg)
+        super(Schedule_ui, self).update()
+
+    def state_initialize(self, arg):
+        self.model.clear()
+        for task in arg.tasks:
+            if task.get_detail()["status"] is False:
+                task_list_item = QtGui.QStandardItem(task.get_detail()['topic'])
+                task_list_item.setCheckable(True)
+                self.model.appendRow(task_list_item)

@@ -17,7 +17,6 @@ class Ui_Form(QWidget):
         Form.setStyleSheet(css_file)
         font.setFamily("Helvetica")
         Form.setFont(font)
-        self.active_tasks = task_observers.ActiveTasksList()
 
         # navbar
         self.label = QtWidgets.QLabel(Form)

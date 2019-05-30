@@ -1,10 +1,12 @@
 from typing import List
 
 from PySide2 import QtWidgets, QtCore, QtGui
-from PySide2.QtCore import QSize
+from PySide2.QtCore import QSize, QDate, QTime
 from PySide2.QtGui import QIcon, QStandardItem
 import datetime
-from client.Code.controller.models.models import TaskList, Task
+
+from client.Code.controller.models.models import TaskList
+import client.Code.ui_to_py.dialog_ui as dialog
 
 
 class Schedule_ui(QtWidgets.QWidget):
@@ -60,6 +62,46 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.update_label(self.date_now)
 
+    def itemClicked(self, index):
+        task = self.model.itemFromIndex(index).data()
+        checked = self.model.itemFromIndex(index).checkState()
+        if not checked:
+            self.dialog = dialog.Display_dialog()
+            self.dialog.setupUi(self.dialog)
+            self.dialog.show()
+
+            self.start_date = QDate.fromString(task.start_at.strftime("%d/%m/%Y"), 'dd/MM/yyyy')
+            self.end_date = QDate.fromString(task.end_at.strftime("%d/%m/%Y"), 'dd/MM/yyyy')
+            self.start_time = QTime.fromString(task.start_at.strftime("%H:%M:%S"), 'hh:mm:ss')
+            self.end_time = QTime.fromString(task.end_at.strftime("%H:%M:%S"), 'hh:mm:ss')
+            self.topic = task.topic
+            self.location = task.location
+            self.desc = task.description
+
+            self.dialog.title.setText(self.topic)
+            self.dialog.location.setText(self.location)
+            self.dialog.from_dateEdit.setDate(self.start_date)
+            self.dialog.to_dateEdit.setDate(self.end_date)
+            self.dialog.textEdit_desc.setText(self.desc)
+            self.dialog.timeEdit.setTime(self.start_time)
+            self.dialog.to_timeEdit.setTime(self.end_time)
+            self.dialog.edit_btn.clicked.connect(self.edit_dialog)
+
+        else:
+            print("Status Changed")
+
+    def edit_dialog(self):
+        self.dialog = dialog.Edit_dialog()
+        self.dialog.setupUi(self.dialog)
+        self.dialog.title.setText(self.topic)
+        self.dialog.location.setText(self.location)
+        self.dialog.from_dateEdit.setDate(self.start_date)
+        self.dialog.to_dateEdit.setDate(self.end_date)
+        self.dialog.textEdit_desc.setText(self.desc)
+        self.dialog.timeEdit.setTime(self.start_time)
+        self.dialog.to_timeEdit.setTime(self.end_time)
+        self.dialog.show()
+
     def next_date(self):
         self.date_now += datetime.timedelta(days=1)
         self.update_label(self.date_now)
@@ -98,7 +140,7 @@ class Schedule_ui(QtWidgets.QWidget):
             item = QStandardItem(topic)
             item.setData(task)
             item.setCheckable(True)
-            item.setCheckable(True)
+            item.setData(task)
             item.setEditable(False)
             self.model.appendRow(item)
 
@@ -114,3 +156,5 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.update_task_list_view()
         super(Schedule_ui, self).update()
+
+

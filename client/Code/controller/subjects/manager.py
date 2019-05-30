@@ -1,130 +1,108 @@
+from abc import ABCMeta, abstractmethod
+from typing import Dict
+
 from client.Code.controller.models.models import TaskList
 from client.Code.controller.models.models import Task
+from client.Code.controller.observers.observers import Observer
 
 from client.Code.controller.services.services import AuthService
 from client.Code.controller.services.services import TaskService
+from client.Code.utility.validators import TaskValidator
 
 
-class TaskLedgerSystem:
-    """
-        Acts as the manager of the tasks instances of the respective user instance
-        The TaskLedgerSystem is the the subject to be observed
-    """
-
+class Observable(metaclass=ABCMeta):
     def __init__(self):
-        self.auth_service = AuthService()
-        self.task_service = TaskService()
-        self.task_list = None
-
         self._observers = set()
-
         self._subject_state = None
-        self.loading = False
-
-        self.user = None
 
     def attach(self, observer):
-        """
-            Attach an observer to the subject
-        """
-
-        observer._subject = self
         self._observers.add(observer)
-        if self.task_list is not None:
-            self._notify(self.task_list)
 
     def detach(self, observer):
-        """
-            Remove an observer from the Subject
-        """
-
-        observer._subject = None
         self._observers.discard(observer)
 
-    def _notify(self, arg=None):
-        """
-        Notify all the Observers of the change in Subject state
-        """
+    @abstractmethod
+    def _notify_observers(self):
+        pass
 
+
+class TaskLedgerSystem(Observable):
+
+    def __init__(self):
+        super().__init__()
+        self.task_list = TaskList()
+        self.auth_service = AuthService()
+        self.task_service = TaskService()
+        self.task_validator = TaskValidator()
+        self.user = None
+        self.token = None
+
+    def _notify_observers(self):
         for observer in self._observers:
-            observer.update(arg)
+            observer.update(self.task_list)
 
-    def get_subject_state(self):
-        """
-            Return Subject's current state
-        """
+    def set_current_user(self, user):
+        self.user = user
 
-        return self._subject_state
+    def set_current_token(self, token):
+        self.token = token
 
-    def set_subject_state(self, state, arg=None):
-        """
-            Set the Subject's current state
-        """
-
-        self._subject_state = state
-        self._notify(arg)
+    def set_task_list(self, task_list: TaskList):
+        self.task_list = task_list
+        self._notify_observers()
 
     def login(self, username, password):
-        """
-            Login - Authenticate using the AuthService class
-            Returns True if success
-            Returns False if error occurs
 
-            Make request to load tasks then notify observers if success
-        """
+        response = AuthService.login(username, password)
 
-        res = self.auth_service.login(username, password)
-
-        if res:
-            self.user = res["user"]
-            self.task_list = self.task_service.list_task(self.user["id"])
-            self.set_subject_state("Initialize", self.task_list)
+        if response:
+            self.set_current_user(response['user'])
+            self.set_current_token(response['key'])
+            task_list = TaskService.list_task(self.user["id"])
+            self.set_task_list(task_list)
             return True
         return False
 
-    def register(self, username, pw1, pw2):
-        """
-            Register - Authenticate using the AuthService class
-            Returns True if success
-            Returns False if error occurs
+    def create_task(self, details: Dict):
 
-            Make request to load tasks then notify observers if success
-        """
+        details.update({'user': self.user['id']})
+        is_valid = self.task_validator.validate(details)
+        print(is_valid)
+        if is_valid:
+            new_task = self.task_service.create_task(details)
+            self.task_list.add_task(new_task)
+            self._notify_observers()
 
-        res = self.auth_service.register(username, pw1, pw2)
+    # TODO: implement update_task
+    def update_task(self, task_id, details):
+        pass
 
-        if res:
-            self.user = res["user"]
-            self.task_list = self.task_service.list_task(self.user["id"])
-            self.set_subject_state("Initialize")
-            return True
-        return False
-
-    def create_task(self, task_data, time_object=None):
-        """
-            Create Task - Create Task Object and make POST request
-            Return True if success
-            Return False if error occurs
-
-            Make request creates new task, loads it into task list then notify observers of the change
-        """
-
-        task = Task(task_data)
-        task.set_date_time_object(time_object)
-
-        if task.check_format():
-            if self.task_service.create_task(task_data):
-                self.task_list.add_task(task_data)
-                self.set_subject_state("Created Task", self.task_list)
-                return True
-        return False
-
-    def update_task(self, task_id, task_data):
-        res = self.task_service.update_task(task_id, task_data)
-        if res:
-            self.task_list.update_task(task_id, task_data)
-            self.set_subject_state("Updated Task", self.task_list)
-            return True
+    # TODO: implement delete_task
+    def delete_task(self, task_id):
+        pass
 
     def set_loading(self, loading_status):
         self.loading = loading_status
+
+#
+#     def update_task(self, task_id, task_data):
+#         res = self.task_service.update_task(task_id, task_data)
+#         if res:
+#             self.task_list.update_task(task_id, task_data)
+#             self.set_subject_state("Updated Task", self.task_list)
+#             return True
+#
+
+# system = TaskLedgerSystem()
+# system.attach(ConcreteObserver())
+#
+# system.login('admin', 'admin')
+# system.create_task({
+#     "topic": "Project Deadline",
+#     "description": "Send SEP project.",
+#     "created_at": "2019-05-29T09:18:23.223777Z",
+#     "start_at": "2019-06-02T06:00:00Z",
+#     "end_at": "2019-06-02T09:00:00Z",
+#     "status": False,
+#     "location": "International College, KMITL",
+# })

@@ -8,7 +8,9 @@ import client.Code.ui_to_py.register_ui as reg
 import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
 
-import client.Code.controller.subjects.manager as manager
+from client.Code.controller.subjects.manager import TaskLedgerSystem
+
+DEBUG = True
 
 
 class Task_ledger(QWidget):
@@ -52,6 +54,7 @@ class Task_ledger(QWidget):
         self.stackedWidgetPage4 = QWidget()
         self.stackedWidgetPage4.setObjectName("stackedWidgetPage4")
         self.main = main.Ui_Form(self.stackedWidgetPage4)
+        self.main.setObservable(self.system)
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
         self.main.log_out.clicked.connect(self.goto_landing)
@@ -72,12 +75,22 @@ class Task_ledger(QWidget):
         self.stackedWidget.setCurrentIndex(3)
 
 
+mock_user = {
+    "key": "6bdf6d2c610e585fd8584f2bc51127df87fcec71",
+    "user": {
+        "id": 1,
+        "username": "admin",
+        "email": "admin@admin.com"
+    }
+}
+
+
 class TaskLedgerUI(QWidget):
     def __init__(self, application, parent=None):
         QWidget.__init__(self, parent)
 
         self.app = application
-        self.system = manager.TaskLedgerSystem()
+        self.system = TaskLedgerSystem()
 
         # Set up the UI and mapping the buttons
         self.ui = Task_ledger()
@@ -98,8 +111,13 @@ class TaskLedgerUI(QWidget):
         # Set system loading state
         self.system.set_loading(True)
 
-        if self.system.login(username, password):
+        # Goto main page
+        if self.system.login(username, password) and not DEBUG:
             self.system.set_loading(False)
+            self.ui.goto_main()
+        else:
+            self.system.user = mock_user["user"]
+            # self.system.token = mock_user["token"]
             self.ui.goto_main()
         self.system.set_loading(False)
 

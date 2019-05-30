@@ -3,12 +3,16 @@ from PySide2.QtWidgets import QWidget
 from client.Code.ui_to_py.calendar_ui import CalendarWidget
 from client.Code.ui_to_py.line_graph import TableWidget
 import client.Code.ui_to_py.schedule_ui as schedule
-import client.Code.controller.observers as task_observers
 import client.Code.ui_to_py.history_ui as history
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
+
 class Ui_Form(QWidget):
+
+    def setObservable(self, observable:Observable):
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(1000, 600)
@@ -88,6 +92,10 @@ class Ui_Form(QWidget):
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
         self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
         self.schedule_ui.setupUi(self.stackedWidgetPage1)
+        # add schedule UI as an observer to system
+
+
+
 
         self.stackedWidget.addWidget(self.stackedWidgetPage1)
 

@@ -1,8 +1,11 @@
+import PySide2
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtCore import QSize
 from PySide2.QtGui import QIcon, QStandardItem
 import datetime
 from client.Code.controller.models.models import TaskList
+from PySide2.QtWidgets import QListWidgetItem
+
 
 class Schedule_ui(QtWidgets.QWidget):
 
@@ -54,7 +57,16 @@ class Schedule_ui(QtWidgets.QWidget):
         self.list_view.setModel(self.model)
         self.model.clear()
 
+        self.list_view.clicked.connect(self.itemClicked)
         self.update_label(self.date_now)
+
+    def itemClicked(self, index):
+        task = self.model.itemFromIndex(index).data()
+        checked = self.model.itemFromIndex(index).checkState()
+        if not checked:
+            print(task)
+        else:
+            print("Status Changed")
 
     def next_date(self):
         self.date_now += datetime.timedelta(days=1)
@@ -93,4 +105,3 @@ class Schedule_ui(QtWidgets.QWidget):
             self.model.appendRow(item)
 
         super(Schedule_ui, self).update()
-

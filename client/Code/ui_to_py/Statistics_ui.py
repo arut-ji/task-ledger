@@ -2,9 +2,9 @@ import sys
 from random import randrange
 
 from PySide2.QtCore import QAbstractTableModel, QModelIndex, QRect, Qt
-from PySide2.QtGui import QColor, QPainter
-from PySide2.QtWidgets import (QApplication, QGridLayout, QHeaderView,
-                               QTableView, QWidget, QVBoxLayout)
+from PySide2.QtGui import QColor, QPainter, QFont
+from PySide2.QtWidgets import (QApplication, QHeaderView,
+                               QTableView, QWidget, QVBoxLayout, QLabel, QFrame)
 from PySide2.QtCharts import QtCharts
 
 class CustomTableModel(QAbstractTableModel):
@@ -132,6 +132,28 @@ class TableWidget(QWidget):
         # self.main_layout.setColumnStretch(0, 0)
         self.setLayout(self.main_layout)
 
+
+class StatisticsUI(QWidget):
+    def __init__(self, parent=None):
+        super(StatisticsUI, self).__init__(parent)
+
+    def setupUI(self, parent=None):
+        self.stat_label = QLabel(parent)
+        self.stat_label.setGeometry(QRect(280, 40, 200, 51))
+        font = QFont()
+        font.setFamily("Helvetica")
+        font.setPointSize(42)
+        self.stat_label.setFont(font)
+        self.stat_label.setObjectName("stat_label")
+        self.stat_label.setText("Statistics")
+
+        self.stat_frame = QFrame(parent)
+        self.stat_frame.setObjectName("stat_frame")
+        self.stat_frame.setGeometry(20, 100, 671, 451)
+
+        self.stat_graph = TableWidget(self.stat_frame)
+        self.stat_graph.setGeometry(0, 0, 671, 451)
+        self.stat_graph.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

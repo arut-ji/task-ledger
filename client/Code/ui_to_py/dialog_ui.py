@@ -1,4 +1,8 @@
+import sys
+
 from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtWidgets import QWidget, QApplication
+
 
 class Dialog_task(QtWidgets.QWidget):
     def __init__(self, parent=None):
@@ -6,7 +10,7 @@ class Dialog_task(QtWidgets.QWidget):
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(463, 500)
+        Dialog.resize(463, 433)
         css_file = open('../Stylesheet/dialog_stylesheet.css').read()
         Dialog.setStyleSheet(css_file)
 
@@ -25,14 +29,6 @@ class Dialog_task(QtWidgets.QWidget):
         self.location_icon.setScaledContents(True)
         self.location_icon.setObjectName("location_icon")
 
-        self.label_noti = QtWidgets.QLabel(Dialog)
-        self.label_noti.setGeometry(QtCore.QRect(70, 265, 101, 21))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(18)
-        self.label_noti.setFont(font)
-        self.label_noti.setObjectName("label_4")
-
         self.label_dueto = QtWidgets.QLabel(Dialog)
         self.label_dueto.setGeometry(QtCore.QRect(150, 80, 60, 16))
         font = QtGui.QFont()
@@ -50,7 +46,7 @@ class Dialog_task(QtWidgets.QWidget):
         self.label_location.setObjectName("label_3")
 
         self.label_desc = QtWidgets.QLabel(Dialog)
-        self.label_desc.setGeometry(QtCore.QRect(30, 310, 121, 21))
+        self.label_desc.setGeometry(QtCore.QRect(30, 260, 121, 21))
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         font.setPointSize(18)
@@ -98,7 +94,7 @@ class Dialog_task(QtWidgets.QWidget):
         self.radioButton.setObjectName("radioButton")
 
         self.textEdit_desc = QtWidgets.QTextEdit(Dialog)
-        self.textEdit_desc.setGeometry(QtCore.QRect(30, 340, 401, 114))
+        self.textEdit_desc.setGeometry(QtCore.QRect(30, 290, 401, 114))
         self.textEdit_desc.setObjectName("textEdit")
 
         self.to_dateEdit = QtWidgets.QDateEdit(Dialog)
@@ -110,13 +106,6 @@ class Dialog_task(QtWidgets.QWidget):
         self.to_dateEdit.setCalendarPopup(True)
         self.to_dateEdit.setObjectName("to_dateEdit")
 
-        self.noti_icon = QtWidgets.QLabel(Dialog)
-        self.noti_icon.setGeometry(QtCore.QRect(30, 260, 30, 30))
-        self.noti_icon.setText("")
-        self.noti_icon.setPixmap(QtGui.QPixmap("../Assets/ring.png"))
-        self.noti_icon.setScaledContents(True)
-        self.noti_icon.setObjectName("noti_icon")
-
         self.title = QtWidgets.QLineEdit(Dialog)
         self.title.setGeometry(QtCore.QRect(30, 20, 281, 31))
         font = QtGui.QFont()
@@ -125,27 +114,18 @@ class Dialog_task(QtWidgets.QWidget):
         self.title.setFont(font)
         self.title.setObjectName("title")
 
-        self.comboBox = QtWidgets.QComboBox(Dialog)
-        self.comboBox.setGeometry(QtCore.QRect(190, 265, 161, 26))
-        self.comboBox.setObjectName("comboBox")
-
-        # btn
-
-
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtWidgets.QApplication.translate("Dialog", "Dialog", None, -1))
         self.location.setPlaceholderText(QtWidgets.QApplication.translate("Dialog", "Add Location", None, -1))
-        self.label_noti.setText(QtWidgets.QApplication.translate("Dialog", "Notifications", None, -1))
         self.label_dueto.setText(QtWidgets.QApplication.translate("Dialog", "due to", None, -1))
         self.label_location.setText(QtWidgets.QApplication.translate("Dialog", "Location", None, -1))
         self.radioButton.setText(QtWidgets.QApplication.translate("Dialog", "All day", None, -1))
         self.textEdit_desc.setPlaceholderText(QtWidgets.QApplication.translate("Dialog", "Add Description", None, -1))
         self.label_desc.setText(QtWidgets.QApplication.translate("Dialog", "Descriptions", None, -1))
         self.label_to_time.setText(QtWidgets.QApplication.translate("Dialog", "-", None, -1))
-        # self.save_btn.setText(QtWidgets.QApplication.translate("Dialog", "CREATE", None, -1))
         self.title.setPlaceholderText(QtWidgets.QApplication.translate("Dialog", "Title", None, -1))
         self.label_time.setText(QtWidgets.QApplication.translate("Dialog", "Time", None, -1))
 
@@ -172,6 +152,15 @@ class Display_dialog(Dialog_task):
         self.edit_btn.setGeometry(QtCore.QRect(330, 20, 101, 30))
         self.edit_btn.setObjectName("save_btn")
         self.edit_btn.setText("Edit")
+
+        # set Editable
+        self.location.setReadOnly(True)
+        self.from_dateEdit.setReadOnly(True)
+        self.timeEdit.setReadOnly(True)
+        self.to_dateEdit.setReadOnly(True)
+        self.radioButton.setCheckable(False)
+        self.to_timeEdit.setReadOnly(True)
+        self.textEdit_desc.setReadOnly(True)
 
 
 class Edit_dialog(Dialog_task):

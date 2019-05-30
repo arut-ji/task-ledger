@@ -1,15 +1,25 @@
+import PySide2
 from PySide2.QtWidgets import QWidget
 
+from client.Code.controller.subjects.manager import Observable
 from client.Code.ui_to_py.calendar_ui import CalendarWidget
 import client.Code.ui_to_py.Statistics_ui as statistics
 import client.Code.ui_to_py.schedule_ui as schedule
-import client.Code.controller.observers as task_observers
 import client.Code.ui_to_py.history_ui as history
 import client.Code.ui_to_py.side_navbar_ui as nav
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_Form(QWidget):
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.system = None
+
+    def set_system(self, system: Observable):
+        self.system = system
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(1000, 600)
@@ -38,6 +48,9 @@ class Ui_Form(QWidget):
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
         self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
         self.schedule_ui.setupUi(self.stackedWidgetPage1)
+
+        # Attach Observer to manager
+        self.system.attach(self.schedule_ui)
         self.stackedWidget.addWidget(self.stackedWidgetPage1)
 
         # calendar
@@ -52,6 +65,9 @@ class Ui_Form(QWidget):
         self.page_2.setObjectName("page_2")
         self.history_ui = history.History_ui(self.page_2)
         self.history_ui.setupUi(self.page_2)
+        
+        # Attach history observer to manager
+        self.system.attach(self.history_ui)
         self.stackedWidget.addWidget(self.page_2)
 
         # statistics

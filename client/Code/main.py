@@ -13,9 +13,9 @@ class mainUI(QWidget):
 
         self.show()
 
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     w = mainUI()
     sys.exit(app.exec_())
-

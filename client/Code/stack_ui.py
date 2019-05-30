@@ -9,10 +9,17 @@ import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
 import client.Code.ui_to_py.side_navbar_ui as navbar
 
-import client.Code.controller.subjects.manager as manager
+from client.Code.controller.subjects.manager import TaskLedgerSystem
+
+DEBUG = False
 
 
 class Task_ledger(QWidget):
+
+    def __init__(self, system, parent=None):
+        super(Task_ledger, self).__init__(parent)
+        self.system = system
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.setFixedSize(1000, 600)
@@ -53,11 +60,14 @@ class Task_ledger(QWidget):
         self.stackedWidgetPage4 = QWidget()
         self.stackedWidgetPage4.setObjectName("stackedWidgetPage4")
         self.main = main.Ui_Form(self.stackedWidgetPage4)
+        # Pass system object to the child Widget
+        self.main.set_system(self.system)
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
         self.main.navbar.log_out.clicked.connect(self.goto_landing)
         # navbar.log_out.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage4)
+
 
         self.stackedWidget.setCurrentIndex(0)
 
@@ -74,15 +84,26 @@ class Task_ledger(QWidget):
         self.stackedWidget.setCurrentIndex(3)
 
 
+mock_user = {
+    "key": "6bdf6d2c610e585fd8584f2bc51127df87fcec71",
+    "user": {
+        "id": 1,
+        "username": "admin",
+        "email": "admin@admin.com"
+    }
+}
+
+
 class TaskLedgerUI(QWidget):
     def __init__(self, application, parent=None):
         QWidget.__init__(self, parent)
 
         self.app = application
-        self.system = manager.TaskLedgerSystem()
+        self.system = TaskLedgerSystem()
 
         # Set up the UI and mapping the buttons
-        self.ui = Task_ledger()
+        self.ui = Task_ledger(self.system)
+        # self.ui.set_system(self.system)
         self.ui.setupUi(self)
 
         self.system.attach(self.ui.main.schedule_ui)
@@ -100,8 +121,13 @@ class TaskLedgerUI(QWidget):
         # Set system loading state
         self.system.set_loading(True)
 
-        if self.system.login(username, password):
+        # Goto main page
+        if self.system.login(username, password) and not DEBUG:
             self.system.set_loading(False)
+            self.ui.goto_main()
+        else:
+            self.system.user = mock_user["user"]
+            # self.system.token = mock_user["token"]
             self.ui.goto_main()
         self.system.set_loading(False)
 
@@ -153,17 +179,9 @@ class TaskLedgerUI(QWidget):
             "end_at": end_at,
             "status": status,
             "location": location,
-            "user": self.system.user["id"]
         }
 
-        time_object = {
-            "s_date": s_date,
-            "e_date": e_date,
-            "s_time": s_time,
-            "e_time": e_time
-        }
-
-        self.system.create_task(task_data, time_object)
+        self.system.create_task(task_data)
 
 
 if __name__ == '__main__':

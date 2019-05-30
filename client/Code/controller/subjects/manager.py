@@ -1,130 +1,134 @@
+from abc import ABCMeta, abstractmethod
+from typing import Dict, Set
+
 from client.Code.controller.models.models import TaskList
 from client.Code.controller.models.models import Task
+from client.Code.controller.observers.observers import Observer
 
 from client.Code.controller.services.services import AuthService
 from client.Code.controller.services.services import TaskService
+from client.Code.utility.validators import TaskValidator
 
 
-class TaskLedgerSystem:
-    """
-        Acts as the manager of the tasks instances of the respective user instance
-        The TaskLedgerSystem is the the subject to be observed
-    """
-
+class Observable(metaclass=ABCMeta):
     def __init__(self):
-        self.auth_service = AuthService()
-        self.task_service = TaskService()
-        self.task_list = None
-
         self._observers = set()
-
         self._subject_state = None
-        self.loading = False
-
-        self.user = None
 
     def attach(self, observer):
-        """
-            Attach an observer to the subject
-        """
-
-        observer._subject = self
         self._observers.add(observer)
-        if self.task_list is not None:
-            self._notify(self.task_list)
 
     def detach(self, observer):
-        """
-            Remove an observer from the Subject
-        """
-
-        observer._subject = None
         self._observers.discard(observer)
 
-    def _notify(self, arg=None):
-        """
-        Notify all the Observers of the change in Subject state
-        """
+    @abstractmethod
+    def _notify_observers(self):
+        pass
 
+
+class TaskLedgerSystem(Observable):
+
+    def __init__(self):
+        super().__init__()
+        self.task_list = TaskList()
+        self.auth_service = AuthService()
+        self.task_service = TaskService()
+        self.task_validator = TaskValidator()
+        self.user = None
+        self.token = None
+        self.loading = False
+
+    def _notify_observers(self):
         for observer in self._observers:
-            observer.update(arg)
+            observer.update_data(self.task_list)
 
-    def get_subject_state(self):
-        """
-            Return Subject's current state
-        """
+    def set_current_user(self, user: Dict):
+        self.user = user
 
-        return self._subject_state
+    def set_current_token(self, token: str):
+        self.token = token
 
-    def set_subject_state(self, state, arg=None):
-        """
-            Set the Subject's current state
-        """
+    def set_task_list(self, task_list: TaskList):
+        self.task_list = task_list
+        self._notify_observers()
 
-        self._subject_state = state
-        self._notify(arg)
+    def login(self, username, password) -> bool:
 
-    def login(self, username, password):
-        """
-            Login - Authenticate using the AuthService class
-            Returns True if success
-            Returns False if error occurs
+        response = AuthService.login(username, password)
 
-            Make request to load tasks then notify observers if success
-        """
-
-        res = self.auth_service.login(username, password)
-
-        if res:
-            self.user = res["user"]
-            self.task_list = self.task_service.list_task(self.user["id"])
-            self.set_subject_state("Initialize", self.task_list)
+        if response:
+            self.set_current_user(response['user'])
+            self.set_current_token(response['key'])
+            task_list = TaskService.list_task(self.user["id"])
+            self.set_task_list(task_list)
             return True
         return False
 
-    def register(self, username, pw1, pw2):
-        """
-            Register - Authenticate using the AuthService class
-            Returns True if success
-            Returns False if error occurs
+    def is_authenticated(self) -> bool:
+        return self.token is not None
 
-            Make request to load tasks then notify observers if success
-        """
+    def register(self, username, password1, password2) -> bool:
+        response = AuthService.register(username, password1, password2)
 
-        res = self.auth_service.register(username, pw1, pw2)
-
-        if res:
-            self.user = res["user"]
-            self.task_list = self.task_service.list_task(self.user["id"])
-            self.set_subject_state("Initialize")
+        if response:
+            self.set_current_user(response['user'])
+            self.set_current_token(response['key'])
+            task_list = TaskService.list_task(self.user["id"])
+            self.set_task_list(task_list)
             return True
         return False
 
-    def create_task(self, task_data, time_object=None):
-        """
-            Create Task - Create Task Object and make POST request
-            Return True if success
-            Return False if error occurs
+    def create_task(self, details: Dict) -> bool:
 
-            Make request creates new task, loads it into task list then notify observers of the change
-        """
-
-        task = Task(task_data)
-        task.set_date_time_object(time_object)
-
-        if task.check_format():
-            if self.task_service.create_task(task_data):
-                self.task_list.add_task(task_data)
-                self.set_subject_state("Created Task", self.task_list)
-                return True
+        details.update({'user': self.user['id']})
+        is_valid = self.task_validator.validate(details)
+        if is_valid:
+            new_task = self.task_service.create_task(details)
+            self.task_list.add_task(new_task)
+            self._notify_observers()
+            return True
         return False
 
-    def update_task(self, task_id, task_data):
-        res = self.task_service.update_task(task_id, task_data)
-        if res:
-            self.task_list.update_task(task_id, task_data)
-            self.set_subject_state("Updated Task", self.task_list)
+    def update_task(self, task_id: int, details: Dict):
+        details.update({'user': self.user['id']})
+        is_valid = self.task_validator.validate(details)
+
+        if is_valid:
+            updated_task = TaskService.update_task(task_id, details)
+            self.task_list.update_task(task_id, updated_task)
+            self._notify_observers()
             return True
+        return False
+
+    def delete_task(self, task_id):
+        deleted_task = self.task_list.delete_task(task_id)
+
+        is_delete_success = False
+
+        if deleted_task is not None:
+            is_delete_success = TaskService.delete_task(task_id)
+
+        if is_delete_success:
+            self._notify_observers()
+            return True
+
+        return False
 
     def set_loading(self, loading_status):
         self.loading = loading_status
+
+
+class ConcreteObserver(Observer):
+    def update_data(self, task_list: TaskList):
+        for task in task_list.get_task_list():
+            print(task)
+
+
+# system = TaskLedgerSystem()
+# system.attach(ConcreteObserver())
+#
+# system.login('admin', 'admin')
+# print()
+# result = system.delete_task(34)
+#
+# print(result)

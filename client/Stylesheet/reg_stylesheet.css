@@ -38,3 +38,7 @@ QPushButton#back{
 	background-color: transparent;
 	border: none;
 }
+
+QLabel#err_msg{
+	color: rgb(201, 50, 41);
+}

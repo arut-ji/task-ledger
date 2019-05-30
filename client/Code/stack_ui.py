@@ -1,13 +1,13 @@
 import sys
 
 from PySide2.QtCore import QRect
-from PySide2.QtWidgets import QWidget, QStackedWidget, QApplication
+from PySide2.QtWidgets import QWidget, QStackedWidget, QApplication, QLabel
 import client.Code.ui_to_py.landing_page_ui as landing
 import client.Code.ui_to_py.login_ui as login
 import client.Code.ui_to_py.register_ui as reg
 import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
-import client.Code.ui_to_py.side_navbar_ui as navbar
+import client.Code.ui_to_py.dialog_reg as dialog_reg
 
 from client.Code.controller.subjects.manager import TaskLedgerSystem
 
@@ -122,13 +122,14 @@ class TaskLedgerUI(QWidget):
         self.system.set_loading(True)
 
         # Goto main page
-        if self.system.login(username, password) and not DEBUG:
+        if self.system.login(username, password):
             self.system.set_loading(False)
             self.ui.goto_main()
+
         else:
-            self.system.user = mock_user["user"]
-            # self.system.token = mock_user["token"]
-            self.ui.goto_main()
+            self.ui.login.error_msg.setText("Invalid username or password")
+            self.ui.login.username_lineEdit.setText("")
+            self.ui.login.pw_lineEdit.setText("")
         self.system.set_loading(False)
 
     def register_event(self):
@@ -141,7 +142,26 @@ class TaskLedgerUI(QWidget):
 
         if self.system.register(username, password1, password2):
             self.system.set_loading(False)
-            self.ui.goto_main()
+
+            # dialog
+            self.dialog = dialog_reg.Reg_Dialog_Complete()
+            self.dialog.setupUi(self.dialog)
+            self.dialog.okay.clicked.connect(self.ui.goto_main)
+            self.dialog.okay.clicked.connect(self.dialog.close)
+            self.dialog.show()
+
+        else:
+            # dialog
+            self.dialog = dialog_reg.Reg_Dialog_Error("This password is too short. It must contain at least 8 characters.")
+            self.dialog.setupUi(self.dialog)
+            self.dialog.okay.clicked.connect(self.dialog.close)
+            self.dialog.show()
+
+            self.ui.reg.username_lineEdit.setText("")
+            self.ui.reg.line_id_lineEdit.setText("")
+            self.ui.reg.pw_lineEdit.setText("")
+            self.ui.reg.re_pw_lineEdit.setText("")
+
         self.system.set_loading(False)
 
     def create_dialog(self):

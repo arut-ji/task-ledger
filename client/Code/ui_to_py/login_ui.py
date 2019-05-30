@@ -61,6 +61,13 @@ class Ui_Form(QtWidgets.QWidget):
         self.reg_label.setFont(font)
         self.reg_label.setObjectName("reg_label")
 
+        self.error_msg = QtWidgets.QLabel(Form)
+        self.error_msg.setGeometry(QtCore.QRect(365, 330, 251, 31))
+        self.error_msg.setObjectName("err_msg")
+        font.setPointSize(18)
+        self.error_msg.setFont(font)
+        self.error_msg.setText("")
+
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
         

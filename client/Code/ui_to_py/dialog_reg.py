@@ -5,27 +5,20 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication
 
 
-class Reg_Dialog(QtWidgets.QDialog):
+class Reg_Dialog_Complete(QtWidgets.QDialog):
     def setupUi(self, Dialog):
         Dialog.setObjectName("dialog")
         Dialog.setFixedSize(340, 221)
 
-        css_file = open('../../Stylesheet/dialog_stylesheet.css').read()
+        css_file = open('../Stylesheet/dialog_stylesheet.css').read()
         Dialog.setStyleSheet(css_file)
 
         self.movie_screen = QtWidgets.QLabel(Dialog)
-        # self.movie_screen.setFixedSize(QtCore.QSize(80, 80))
         self.movie_screen.setGeometry(140, 10, 100, 100)
         self.movie_screen.setSizePolicy(QtWidgets.QSizePolicy.Expanding,
                                         QtWidgets.QSizePolicy.Expanding)
 
-
-        # main_layout = QtWidgets.QVBoxLayout()
-        # main_layout.addWidget(self.movie_screen)
-        # Dialog.setLayout(main_layout)
-
-
-        ag_file = "../../Assets/success.gif"
+        ag_file = "../Assets/success.gif"
         self.movie = QtGui.QMovie(ag_file)
         self.movie.setCacheMode(QtGui.QMovie.CacheAll)
         self.movie.setSpeed(100)
@@ -47,12 +40,61 @@ class Reg_Dialog(QtWidgets.QDialog):
         self.okay.setFont(font)
         self.okay.setObjectName("okay")
 
+class Reg_Dialog_Error(QtWidgets.QDialog):
+    def __init__(self, msg, parent=None):
+        super(Reg_Dialog_Error, self).__init__(parent)
+        self.err_msg = msg
+
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("dialog")
+        Dialog.setFixedSize(340, 221)
+
+        css_file = open('../Stylesheet/dialog_stylesheet.css').read()
+        Dialog.setStyleSheet(css_file)
+
+        self.label = Label(Dialog)
+        self.label.setText(self.err_msg)
+        self.label.setGeometry(20, 0, 290, 200)
+        self.label.setAlignment(Qt.AlignCenter)
+        font = QtGui.QFont()
+        font.setFamily("Helvetica")
+        font.setPointSize(18)
+        self.label.setFont(font)
+        self.label.formatText()
+
+        self.okay = QtWidgets.QPushButton(Dialog)
+        self.okay.setText("Try Again")
+        self.okay.setGeometry(120, 160, 101, 30)
+        font.setPointSize(16)
+        self.okay.setFont(font)
+        self.okay.setObjectName("okay")
+
+
+class Label(QtWidgets.QLabel):
+    def __init__(self, parent=None):
+        super(Label, self).__init__(parent)
+
+    def resizeEvent(self, event):
+        self.formatText()
+        event.accept()
+
+    def formatText(self):
+        width = self.width()
+        text = self.text()
+        new = ''
+        for word in text.split():
+            if len(new.split('\n')[-1]) < width * 0.09:
+                new = new + ' ' + word
+            else:
+                new = new + '\n' + ' ' + word
+        self.setText(new)
+
 
 class create_dialogUI(QtWidgets.QWidget):
     def __init__(self):
         QtWidgets.QWidget.__init__(self, None)
 
-        self.ui = Reg_Dialog()
+        self.ui = Reg_Dialog_Error("This password is too short. It must contain at least 8 characters.")
         self.ui.setupUi(self)
 
         self.show()

@@ -9,7 +9,6 @@ import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
 
 import client.Code.controller.subjects.manager as manager
-import client.Code.controller.observers.observers as observers
 
 
 class Task_ledger(QWidget):
@@ -78,17 +77,13 @@ class TaskLedgerUI(QWidget):
         QWidget.__init__(self, parent)
 
         self.app = application
-
         self.system = manager.TaskLedgerSystem()
-        self.incomplete_observers = observers.IncompleteTasks()
-        self.completed_observers = observers.CompletedTasks()
-
-        self.system.attach(self.incomplete_observers)
-        self.system.attach(self.completed_observers)
 
         # Set up the UI and mapping the buttons
         self.ui = Task_ledger()
         self.ui.setupUi(self)
+
+        self.system.attach(self.ui.main.schedule_ui)
 
         self.ui.login.button_login.clicked.connect(self.login_event)
         self.ui.reg.reg_button.clicked.connect(self.register_event)
@@ -104,7 +99,6 @@ class TaskLedgerUI(QWidget):
         self.system.set_loading(True)
 
         if self.system.login(username, password):
-            self.system.set_subject_state("Initialize")
             self.system.set_loading(False)
             self.ui.goto_main()
         self.system.set_loading(False)
@@ -118,7 +112,6 @@ class TaskLedgerUI(QWidget):
         self.system.set_loading(True)
 
         if self.system.register(username, password1, password2):
-            self.system.set_subject_state("Initialize")
             self.system.set_loading(False)
             self.ui.goto_main()
         self.system.set_loading(False)
@@ -158,7 +151,7 @@ class TaskLedgerUI(QWidget):
             "end_at": end_at,
             "status": status,
             "location": location,
-            "user": self.system.auth_service.get_user_id()
+            "user": self.system.user["id"]
         }
 
         time_object = {

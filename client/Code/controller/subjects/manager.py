@@ -76,7 +76,7 @@ class TaskLedgerSystem:
         if res:
             self.user = res["user"]
             self.task_list = self.task_service.list_task(self.user["id"])
-            self.set_subject_state("Initialize")
+            self.set_subject_state("Initialize", self.task_list)
             return True
         return False
 
@@ -113,7 +113,7 @@ class TaskLedgerSystem:
         if task.check_format():
             if self.task_service.create_task(task_data):
                 self.task_list.add_task(task_data)
-                self.set_subject_state("Created Task")
+                self.set_subject_state("Created Task", self.task_list)
                 return True
         return False
 
@@ -121,7 +121,7 @@ class TaskLedgerSystem:
         res = self.task_service.update_task(task_id, task_data)
         if res:
             self.task_list.update_task(task_id, task_data)
-            self.set_subject_state("Updated Task")
+            self.set_subject_state("Updated Task", self.task_list)
             return True
 
     def set_loading(self, loading_status):

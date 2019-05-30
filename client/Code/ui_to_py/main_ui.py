@@ -16,7 +16,6 @@ class Ui_Form(QWidget):
         Form.setStyleSheet(css_file)
         font.setFamily("Helvetica")
         Form.setFont(font)
-        self.active_tasks = task_observers.ActiveTasksList()
 
         # navbar
         self.label = QtWidgets.QLabel(Form)
@@ -86,7 +85,7 @@ class Ui_Form(QWidget):
         # schedule
         self.stackedWidgetPage1 = QtWidgets.QWidget()
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
-        self.schedule_ui = schedule.Schedule_ui(self.active_tasks.task_list, self.stackedWidgetPage1)
+        self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
         self.schedule_ui.setupUi(self.stackedWidgetPage1)
 
         self.stackedWidget.addWidget(self.stackedWidgetPage1)

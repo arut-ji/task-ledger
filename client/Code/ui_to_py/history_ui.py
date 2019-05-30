@@ -1,9 +1,10 @@
 import sys
+from typing import List
 
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtWidgets import QWidget, QApplication
 
-from client.Code.controller.models.models import TaskList
+from client.Code.controller.models.models import TaskList, Task
 
 
 class History_ui(QtWidgets.QWidget):
@@ -32,9 +33,9 @@ class History_ui(QtWidgets.QWidget):
         self.tableWidget.setColumnCount(5)
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(5)
-        self.tableWidget.setRowCount(10)
-        item = QtWidgets.QTableWidgetItem("Title")
+        # self.tableWidget.setColumnCount(5)
+        # self.tableWidget.setRowCount(10)
+        item = QtWidgets.QTableWidgetItem("Topic")
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem("Start Date")
         self.tableWidget.setHorizontalHeaderItem(1, item)
@@ -52,13 +53,31 @@ class History_ui(QtWidgets.QWidget):
         self.tableWidget.verticalHeader().setHighlightSections(True)
         self.tableWidget.verticalHeader().setMinimumSectionSize(25)
 
-        self.fill_table()
-
     def update_data(self, task_list: TaskList):
-        pass
+        task_list = task_list.get_task_list()
+        inactive_task_list = list(filter(lambda task: task.status, task_list))
 
-    def fill_table(self):
-        for i in range(5):
+        self.update_table(inactive_task_list)
+
+        super(History_ui, self).update()
+
+    def update_table(self, task_list: List[Task]):
+
+        row_count = len(task_list)
+        column_count = 5
+
+        self.tableWidget.setRowCount(row_count)
+        self.tableWidget.setColumnCount(column_count)
+
+        for i in range(row_count):
+            task = task_list[i]
+            detail = [
+                task.topic,
+                str(task.start_at.date()),
+                str(task.end_at.date()),
+                str(task.start_at.time()),
+                str(task.end_at.time())
+            ]
             for k in range(5):
                 if i % 2 == 0:
                     self.brush = QtGui.QBrush(QtGui.QColor(247, 249, 251))
@@ -66,7 +85,7 @@ class History_ui(QtWidgets.QWidget):
                     self.brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
 
                 cell = QtWidgets.QTableWidgetItem()
-                cell.setText('eiei')
+                cell.setText(detail[k])
                 cell.setForeground(self.brush)
                 cell.setBackground(self.brush)
                 cell.setTextColor(QtGui.QColor(40, 19, 18))

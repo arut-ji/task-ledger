@@ -1,8 +1,11 @@
+from typing import List
+
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtCore import QSize
 from PySide2.QtGui import QIcon, QStandardItem
 import datetime
-from client.Code.controller.models.models import TaskList
+from client.Code.controller.models.models import TaskList, Task
+
 
 class Schedule_ui(QtWidgets.QWidget):
 
@@ -10,6 +13,7 @@ class Schedule_ui(QtWidgets.QWidget):
         super(Schedule_ui, self).__init__(parent)
         # self.tasks = mockTaskList
         self.date_now = datetime.date.today()
+        self.active_task_list = None
 
     def setupUi(self, parent=None):
         # Button
@@ -59,10 +63,12 @@ class Schedule_ui(QtWidgets.QWidget):
     def next_date(self):
         self.date_now += datetime.timedelta(days=1)
         self.update_label(self.date_now)
+        self.update_task_list_view()
 
     def prev_date(self):
         self.date_now -= datetime.timedelta(days=1)
         self.update_label(self.date_now)
+        self.update_task_list_view()
 
     def update_label(self, date):
         self.date.setText(self.get_str_date(self.date_now))
@@ -78,19 +84,33 @@ class Schedule_ui(QtWidgets.QWidget):
         return ' ' + date.strftime("%d") + ' ' \
                + date.strftime("%B") + ' ' + date.strftime("%Y")
 
-    # Subscribe to Observable
-    def update_data(self, task_list: TaskList):
+    def update_task_list_view(self):
         self.model.clear()
-        task_list = task_list.get_task_list()
-        active_task_list = list(filter(lambda task: not task.status, task_list))
+        current_date_tasks = list(
+            filter(
+                lambda task: task.start_at.date() >= self.date_now,
+                self.active_task_list
+            )
+        )
 
-        for task in active_task_list:
+        for task in current_date_tasks:
             topic = task.topic
             item = QStandardItem(topic)
+            item.setData(task)
             item.setCheckable(True)
             item.setCheckable(True)
             item.setEditable(False)
             self.model.appendRow(item)
 
-        super(Schedule_ui, self).update()
+    # Subscribe to Observable
+    def update_data(self, task_list: TaskList):
+        task_list = task_list.get_task_list()
+        self.active_task_list = list(
+            filter(
+                lambda task: not task.status,
+                task_list
+            )
+        )
 
+        self.update_task_list_view()
+        super(Schedule_ui, self).update()

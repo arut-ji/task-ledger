@@ -59,9 +59,8 @@ class AuthService(BaseService):
         response = requests.post(REGISTRATION_API, data=payload)
 
         if response.status_code == 201:
-            return response.json()
-
-        return None
+            return []
+        return response.json()
 
 
 class TaskService(BaseService):

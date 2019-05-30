@@ -39,7 +39,14 @@ class Task:
         return json.dumps(self.__dict__)
 
     def get_detail(self):
-        return self.__dict__
+        return {
+            "topic": self.topic,
+            "description": self.description,
+            "start_at": str(self.start_at),
+            "end_at": str(self.end_at),
+            "status": self.status,
+            "location": self.location
+        }
 
     def __str__(self):
         return str(self.__dict__)

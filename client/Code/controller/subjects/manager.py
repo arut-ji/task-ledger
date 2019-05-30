@@ -70,13 +70,10 @@ class TaskLedgerSystem(Observable):
     def register(self, username, password1, password2) -> bool:
         response = AuthService.register(username, password1, password2)
 
-        if response:
-            self.set_current_user(response['user'])
-            self.set_current_token(response['key'])
-            task_list = TaskService.list_task(self.user["id"])
-            self.set_task_list(task_list)
+        if len(response) == 0:
             return True
-        return False
+        else:
+            return response
 
     def create_task(self, details: Dict) -> bool:
 

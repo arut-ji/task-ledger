@@ -1,6 +1,7 @@
 import sys
 
 from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtCore import QDate
 from PySide2.QtWidgets import QWidget, QApplication
 
 
@@ -77,6 +78,7 @@ class Dialog_task(QtWidgets.QWidget):
         self.from_dateEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.from_dateEdit.setCalendarPopup(True)
         self.from_dateEdit.setObjectName("from_dateEdit")
+        self.from_dateEdit.setDate(QDate.currentDate())
 
         self.timeEdit = QtWidgets.QTimeEdit(Dialog)
         self.timeEdit.setGeometry(QtCore.QRect(130, 120, 61, 28))
@@ -100,6 +102,7 @@ class Dialog_task(QtWidgets.QWidget):
         self.to_dateEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.to_dateEdit.setCalendarPopup(True)
         self.to_dateEdit.setObjectName("to_dateEdit")
+        self.to_dateEdit.setDate(QDate.currentDate())
 
         self.title = QtWidgets.QLineEdit(Dialog)
         self.title.setGeometry(QtCore.QRect(30, 20, 281, 31))
@@ -168,7 +171,7 @@ class Edit_dialog(Dialog_task):
         self.save_btn.setObjectName("save_btn")
         self.save_btn.setText("Save")
 
-        self.save_btn = QtWidgets.QPushButton(Dialog)
-        self.save_btn.setGeometry(QtCore.QRect(330, 60, 101, 30))
-        self.save_btn.setObjectName("delete_btn")
-        self.save_btn.setText("Delete")
+        self.delete_btn = QtWidgets.QPushButton(Dialog)
+        self.delete_btn.setGeometry(QtCore.QRect(330, 60, 101, 30))
+        self.delete_btn.setObjectName("delete_btn")
+        self.delete_btn.setText("Delete")

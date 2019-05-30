@@ -35,10 +35,10 @@ class Observer:
 
 
 class Schedule_ui(QtWidgets.QWidget):
+
     def __init__(self, parent=None):
         super(Schedule_ui, self).__init__(parent)
         # self.tasks = mockTaskList
-
         self.date_now = datetime.date.today()
 
         self._subject = None

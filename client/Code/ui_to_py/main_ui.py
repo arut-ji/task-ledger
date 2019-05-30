@@ -4,6 +4,7 @@ from client.Code.ui_to_py.calendar_ui import CalendarWidget
 from client.Code.ui_to_py.line_graph import TableWidget
 import client.Code.ui_to_py.schedule_ui as schedule
 import client.Code.controller.observers as task_observers
+import client.Code.ui_to_py.history_ui as history
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
@@ -100,52 +101,9 @@ class Ui_Form(QWidget):
         # history
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setObjectName("page_2")
-        self.label_4 = QtWidgets.QLabel(self.page_2)
-        self.label_4.setGeometry(QtCore.QRect(290, 40, 131, 51))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(42)
-        self.label_4.setFont(font)
-        self.label_4.setObjectName("label_4")
-        self.frame = QtWidgets.QFrame(self.page_2)
-        self.frame.setGeometry(QtCore.QRect(110, 100, 471, 31))
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.pushButton = QtWidgets.QPushButton(self.frame)
-        self.pushButton.setGeometry(QtCore.QRect(90, 0, 51, 32))
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        self.pushButton.setFont(font)
-        self.pushButton.setFlat(True)
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(self.frame)
-        self.pushButton_2.setGeometry(QtCore.QRect(160, 0, 81, 32))
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        self.pushButton_2.setFont(font)
-        self.pushButton_2.setFlat(True)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_4 = QtWidgets.QPushButton(self.frame)
-        self.pushButton_4.setGeometry(QtCore.QRect(270, 0, 71, 32))
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        self.pushButton_4.setFont(font)
-        self.pushButton_4.setFlat(True)
-        self.pushButton_4.setObjectName("pushButton_4")
-        self.pushButton_3 = QtWidgets.QPushButton(self.frame)
-        self.pushButton_3.setGeometry(QtCore.QRect(370, 0, 81, 32))
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        self.pushButton_3.setFont(font)
-        self.pushButton_3.setFlat(True)
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.label_5 = QtWidgets.QLabel(self.frame)
-        self.label_5.setGeometry(QtCore.QRect(20, 0, 71, 31))
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        self.label_5.setFont(font)
-        self.label_5.setObjectName("label_5")
+        self.history_ui = history.History_ui(self.page_2)
+        self.history_ui.setupUi(self.page_2)
+
         self.stackedWidget.addWidget(self.page_2)
 
         # statistics
@@ -187,12 +145,6 @@ class Ui_Form(QWidget):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtWidgets.QApplication.translate("Form", "Form", None, -1))
         self.create_button.setText(QtWidgets.QApplication.translate("Form", "+ Create", None, -1))
-        self.label_4.setText(QtWidgets.QApplication.translate("Form", "History", None, -1))
-        self.pushButton.setText(QtWidgets.QApplication.translate("Form", "Label", None, -1))
-        self.pushButton_2.setText(QtWidgets.QApplication.translate("Form", "Date created", None, -1))
-        self.pushButton_4.setText(QtWidgets.QApplication.translate("Form", "Completed", None, -1))
-        self.pushButton_3.setText(QtWidgets.QApplication.translate("Form", "Incompleted", None, -1))
-        self.label_5.setText(QtWidgets.QApplication.translate("Form", "filter by: ", None, -1))
         self.stat_label.setText(QtWidgets.QApplication.translate("Form", "Statistic", None, -1))
         self.stat_label_2.setText(QtWidgets.QApplication.translate("Form", "Notification", None, -1))
         self.schedule.setText(QtWidgets.QApplication.translate("Form", "Schedule", None, -1))

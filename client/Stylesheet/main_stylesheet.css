@@ -159,61 +159,71 @@ QPushButton:hover#left_arrow, :hover#right_arrow{
 
 QCheckBox {
     background-color:transparent;
-    color: black;
+    color: rgb(40, 19, 18);
     spacing: 4px;
     outline: none;
     padding-top: 4px;
     padding-bottom: 4px;
+	font-size: 14px;
+	height: 50px;
 }
 
-QCheckBox:focus {
+QListView::item{
+	padding: 10px;
+	font-size: 16px;
+	selection-background-color: transparent;
+	selection-color: rgb(40, 19, 18);
+}
+
+QAbstractItemView:focus, QCheckBox:focus {
     border: none;
 }
 
-QCheckBox QWidget:disabled {
+QAbstractItemView QCheckBox QWidget:disabled {
     background-color: transparent;
     color: #9B9B9B;
 }
 
-QCheckBox::indicator {
+QAbstractItemView::indicator, QCheckBox::indicator {
     margin-left: 4px;
 	margin-right: 10px;
     width: 30px;
     height: 30px;
+
 }
 
-QCheckBox::indicator:unchecked {
+QAbstractItemView::indicator:unchecked, QCheckBox::indicator:unchecked {
 	image: url(../Assets/checkbox_unchecked.png)
 }
 
-QCheckBox::indicator:unchecked:hover{
+QAbstractItemView::indicator:unchecked:hover, QCheckBox::indicator:unchecked:hover{
     border: none;
     image: url(../Assets/checkbox_unchecked_active.png)
 }
 
-QCheckBox::indicator:unchecked:pressed{
+QAbstractItemView::indicator:unchecked:pressed, QCheckBox::indicator:unchecked:pressed{
     border: none;
     image: url(../Assets/checkbox_checked_active.png)
 }
 
-QCheckBox::indicator:unchecked:disabled {
+QAbstractItemView::indicator:unchecked:disabled, QCheckBox::indicator:unchecked:disabled {
     image: url(../Assets/checkbox_checked.png)
 }
 
-QCheckBox::indicator:checked {
+QAbstractItemView::indicator:checked, QCheckBox::indicator:checked {
     image: url(../Assets/checkbox_checked.png)
 }
-QCheckBox::indicator:checked:hover{
+QAbstractItemView::indicator:checked:hover, QCheckBox::indicator:checked:hover{
     border: none;
     image: url(../Assets/checkbox_checked_active.png);
 }
 
-QCheckBox::indicator:checked:pressed{
+QAbstractItemView::indicator:checked:pressed, QCheckBox::indicator:checked:pressed{
     border: none;
     image: url(../Assets/checkbox_unchecked_active.png);
 }
 
-QCheckBox::indicator:checked:disabled{
+QAbstractItemView::indicator:checked:disabled, QCheckBox::indicator:checked:disabled{
     image: url(../Assets/checkbox_checked.png)
 }
 
@@ -237,4 +247,50 @@ QFrame#stat_frame{
 	background-color: transparent;
 	border: 1px solid rgb(40, 19, 18);
 	border-radius: 8px;
+}
+
+QHeaderView::section {
+    background-color: transparent;
+    padding: 3px;
+    height: 40px;
+    font-size: 12px;
+    color: rgb(40, 19, 18);
+}
+
+QTableWidgetItem{
+	 color: rgb(40, 19, 18);
+}
+QTableWidget{
+    color: rgb(40, 19, 18);
+	selection-background-color: transparent;
+	selection-color: rgb(40, 19, 18);
+}
+
+QScrollBar:vertical {
+	border: none;
+	background:white;
+	width: 8px;
+	margin: 0px 0px 0px 0px;
+
+}
+QScrollBar::handle:vertical {
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+		stop: 0 rgb(179, 179, 179), stop: 0.5 rgb(179, 179, 179), stop:1 rgb(179, 179, 179));
+	min-height: 0px;
+	border-radius: 4px;
+}
+QScrollBar::add-line:vertical {
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+	stop: 0 rgb(179, 179, 179), stop: 0.5 rgb(179, 179, 179),  stop:1 rgb(179, 179, 179));
+	 height: 0px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+
+}
+QScrollBar::sub-line:vertical {
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+	stop: 0  rgb(179, 179, 179), stop: 0.5 rgb(179, 179, 179),  stop:1 rgb(179, 179, 179));
+	height: 0 px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
 }

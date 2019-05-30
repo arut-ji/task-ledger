@@ -123,4 +123,3 @@ class TaskService(BaseService):
         if response.status_code == 200:
             return TaskList(response.json())
         return None
-

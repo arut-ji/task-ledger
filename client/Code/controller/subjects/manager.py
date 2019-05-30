@@ -14,10 +14,10 @@ class TaskLedgerSystem:
     def __init__(self):
         self.auth_service = AuthService()
         self.task_service = TaskService()
-
-        self.task_list = TaskList()
+        self.task_list = None
 
         self._observers = set()
+
         self._subject_state = None
         self.loading = False
 

@@ -88,11 +88,6 @@ class Dialog_task(QtWidgets.QWidget):
         self.to_timeEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.to_timeEdit.setObjectName("to_timeEdit")
 
-        self.radioButton = QtWidgets.QRadioButton(Dialog)
-        self.radioButton.setGeometry(QtCore.QRect(300, 120, 100, 28))
-        self.radioButton.setChecked(False)
-        self.radioButton.setObjectName("radioButton")
-
         self.textEdit_desc = QtWidgets.QTextEdit(Dialog)
         self.textEdit_desc.setGeometry(QtCore.QRect(30, 290, 401, 114))
         self.textEdit_desc.setObjectName("textEdit")
@@ -122,7 +117,6 @@ class Dialog_task(QtWidgets.QWidget):
         self.location.setPlaceholderText(QtWidgets.QApplication.translate("Dialog", "Add Location", None, -1))
         self.label_dueto.setText(QtWidgets.QApplication.translate("Dialog", "due to", None, -1))
         self.label_location.setText(QtWidgets.QApplication.translate("Dialog", "Location", None, -1))
-        self.radioButton.setText(QtWidgets.QApplication.translate("Dialog", "All day", None, -1))
         self.textEdit_desc.setPlaceholderText(QtWidgets.QApplication.translate("Dialog", "Add Description", None, -1))
         self.label_desc.setText(QtWidgets.QApplication.translate("Dialog", "Descriptions", None, -1))
         self.label_to_time.setText(QtWidgets.QApplication.translate("Dialog", "-", None, -1))
@@ -158,10 +152,9 @@ class Display_dialog(Dialog_task):
         self.from_dateEdit.setReadOnly(True)
         self.timeEdit.setReadOnly(True)
         self.to_dateEdit.setReadOnly(True)
-        self.radioButton.setCheckable(False)
         self.to_timeEdit.setReadOnly(True)
         self.textEdit_desc.setReadOnly(True)
-
+        self.title.setReadOnly(True)
 
 class Edit_dialog(Dialog_task):
     def __init__(self, parent=None):

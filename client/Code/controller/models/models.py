@@ -1,4 +1,5 @@
 from typing import Dict, List
+import json
 
 
 class Task:
@@ -48,6 +49,24 @@ class Task:
         """
         self.__dict__ = data
 
+    def json(self):
+        keys = [
+            'id',
+            'topic',
+            'description',
+            'created_at',
+            'start_at',
+            'end_at',
+            'status',
+            'location',
+            'user'
+        ]
+
+        task_json = {}
+        for key in keys:
+            task_json[key] = self.__dict__[key]
+        return json.dumps(task_json)
+
     def get_detail(self):
         return self.__dict__
 
@@ -92,3 +111,10 @@ class TaskList:
 
     def count(self):
         return len(self.tasks)
+
+    def get_task_list(self):
+        return self.tasks
+
+    def json(self):
+        return json.dumps([task.json() for task in self.tasks])
+

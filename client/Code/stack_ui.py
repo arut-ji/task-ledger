@@ -136,7 +136,6 @@ class TaskLedgerUI(QWidget):
         if self.system.login(username, password):
             self.system.set_loading(False)
             self.ui.goto_main()
-
         else:
             self.ui.login.error_msg.setText("Invalid username or password")
             self.ui.login.username_lineEdit.setText("")
@@ -152,17 +151,20 @@ class TaskLedgerUI(QWidget):
         self.system.set_loading(True)
 
         result = self.system.register(username, password1, password2)
-        if result == True:
+        if len(result.values()) == 0:
             self.system.set_loading(False)
             self.dialog = dialog_reg.Reg_Dialog_Complete()
             self.dialog.setupUi(self.dialog)
-            self.dialog.okay.clicked.connect(self.ui.goto_main)
+            self.dialog.okay.clicked.connect(self.ui.goto_login)
             self.dialog.okay.clicked.connect(self.dialog.close)
             self.dialog.show()
         else:
             # dialog
-            lst = []
-            self.dialog = dialog_reg.Reg_Dialog_Error(lst)
+            error_messages = []
+            for message in result.values():
+                error_messages += message
+
+            self.dialog = dialog_reg.Reg_Dialog_Error(error_messages)
             self.dialog.setupUi(self.dialog)
             self.dialog.okay.clicked.connect(self.dialog.close)
             self.dialog.show()

@@ -24,10 +24,17 @@ class AuthService(BaseService):
 
     @staticmethod
     def login(username, password):
+
         """
-            Request to API endpoint to verify user credentials
-            Return True if successful
-            Return False if credentials does not match
+            :param username: user's username
+            :type username: str
+
+            :param password: user's password
+            :type password: str
+
+            :return user's id details and token
+            :rtype  Dict or None
+
         """
 
         payload = {
@@ -46,8 +53,16 @@ class AuthService(BaseService):
     def register(username, password1, password2):
         """
             Request to to API endpoint to create new user
-            Return True if user created succesfully
-            Return False if created successfully
+
+            :param username: user's username
+            :type username: str
+            :param password1: user's password
+            :type password1: str
+            :param password2: user's confirmed password
+            :type password2: str
+
+            :return empty list if successful, error messages if unsuccessful
+            :rtype list or dict
         """
 
         payload = {

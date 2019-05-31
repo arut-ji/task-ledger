@@ -8,6 +8,7 @@ import client.Code.ui_to_py.register_ui as reg
 import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
 import client.Code.ui_to_py.dialog_reg as dialog_reg
+import client.Code.ui_to_py.dialog_logout as dialog_logout
 
 from client.Code.controller.subjects.manager import TaskLedgerSystem
 from client.Code.utility.parsers import DatetimeParser
@@ -65,11 +66,19 @@ class Task_ledger(QWidget):
         self.main.set_system(self.system)
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
-        self.main.navbar.log_out.clicked.connect(self.goto_landing)
+        self.main.navbar.log_out.clicked.connect(self.logout)
         # navbar.log_out.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage4)
 
         self.stackedWidget.setCurrentIndex(0)
+
+    def logout(self):
+        self.dialog = dialog_logout.Logout_Dialog()
+        self.dialog.setupUi(self.dialog)
+        self.dialog.okay.clicked.connect(self.goto_landing)
+        self.dialog.okay.clicked.connect(self.dialog.close)
+        self.dialog.no.clicked.connect(self.dialog.close)
+        self.dialog.show()
 
     def goto_landing(self):
         self.stackedWidget.setCurrentIndex(0)
@@ -150,7 +159,8 @@ class TaskLedgerUI(QWidget):
             self.dialog.show()
         else:
             # dialog
-            self.dialog = dialog_reg.Reg_Dialog_Error("This password is too short. It must contain at least 8 characters.")
+            lst = []
+            self.dialog = dialog_reg.Reg_Dialog_Error(lst)
             self.dialog.setupUi(self.dialog)
             self.dialog.okay.clicked.connect(self.dialog.close)
             self.dialog.show()
@@ -178,6 +188,7 @@ class TaskLedgerUI(QWidget):
         end_date = self.dialog.to_dateEdit.date()
 
         topic = self.dialog.title.text()
+
 
         description = self.dialog.textEdit_desc.toPlainText()
         status = False

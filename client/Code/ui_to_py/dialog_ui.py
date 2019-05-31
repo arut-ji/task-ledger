@@ -66,9 +66,13 @@ class Dialog_task(QtWidgets.QWidget):
         self.label_time.setObjectName("label_2")
 
         # lineEdit
-        self.location = QtWidgets.QLineEdit(Dialog)
-        self.location.setGeometry(QtCore.QRect(70, 210, 359, 28))
-        self.location.setObjectName("location")
+        self.title = QtWidgets.QLineEdit(Dialog)
+        self.title.setGeometry(QtCore.QRect(30, 20, 281, 31))
+        font = QtGui.QFont()
+        font.setFamily("Helvetica")
+        font.setPointSize(21)
+        self.title.setFont(font)
+        self.title.setObjectName("title")
 
         self.from_dateEdit = QtWidgets.QDateEdit(Dialog)
         self.from_dateEdit.setGeometry(QtCore.QRect(30, 70, 110, 31))
@@ -80,20 +84,6 @@ class Dialog_task(QtWidgets.QWidget):
         self.from_dateEdit.setObjectName("from_dateEdit")
         self.from_dateEdit.setDate(QDate.currentDate())
 
-        self.timeEdit = QtWidgets.QTimeEdit(Dialog)
-        self.timeEdit.setGeometry(QtCore.QRect(130, 120, 61, 28))
-        self.timeEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
-        self.timeEdit.setObjectName("timeEdit")
-
-        self.to_timeEdit = QtWidgets.QTimeEdit(Dialog)
-        self.to_timeEdit.setGeometry(QtCore.QRect(220, 120, 61, 28))
-        self.to_timeEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
-        self.to_timeEdit.setObjectName("to_timeEdit")
-
-        self.textEdit_desc = QtWidgets.QTextEdit(Dialog)
-        self.textEdit_desc.setGeometry(QtCore.QRect(30, 290, 401, 114))
-        self.textEdit_desc.setObjectName("textEdit")
-
         self.to_dateEdit = QtWidgets.QDateEdit(Dialog)
         self.to_dateEdit.setGeometry(QtCore.QRect(210, 70, 110, 31))
         self.to_dateEdit.setAcceptDrops(False)
@@ -104,13 +94,23 @@ class Dialog_task(QtWidgets.QWidget):
         self.to_dateEdit.setObjectName("to_dateEdit")
         self.to_dateEdit.setDate(QDate.currentDate())
 
-        self.title = QtWidgets.QLineEdit(Dialog)
-        self.title.setGeometry(QtCore.QRect(30, 20, 281, 31))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(21)
-        self.title.setFont(font)
-        self.title.setObjectName("title")
+        self.timeEdit = QtWidgets.QTimeEdit(Dialog)
+        self.timeEdit.setGeometry(QtCore.QRect(130, 120, 61, 28))
+        self.timeEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
+        self.timeEdit.setObjectName("timeEdit")
+
+        self.to_timeEdit = QtWidgets.QTimeEdit(Dialog)
+        self.to_timeEdit.setGeometry(QtCore.QRect(220, 120, 61, 28))
+        self.to_timeEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
+        self.to_timeEdit.setObjectName("to_timeEdit")
+
+        self.location = QtWidgets.QLineEdit(Dialog)
+        self.location.setGeometry(QtCore.QRect(70, 210, 359, 28))
+        self.location.setObjectName("location")
+
+        self.textEdit_desc = QtWidgets.QTextEdit(Dialog)
+        self.textEdit_desc.setGeometry(QtCore.QRect(30, 290, 401, 114))
+        self.textEdit_desc.setObjectName("textEdit")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)

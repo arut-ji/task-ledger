@@ -59,7 +59,9 @@ class Ui_Form(QWidget):
         self.page.setObjectName("page")
         self.calendarWidget = CalendarWidget(self.page)
         self.calendarWidget.setGeometry(QtCore.QRect(40, 80, 651, 391))
+        self.calendarWidget.clicked.connect(self.display_sch)
         self.stackedWidget.addWidget(self.page)
+        self.calendarWidget.bind_system(self.system)
 
         # history
         self.page_2 = QtWidgets.QWidget()
@@ -99,6 +101,7 @@ class Ui_Form(QWidget):
         self.label_noti.setText(QtWidgets.QApplication.translate("Form", "Notification", None, -1))
 
     def display_sch(self):
+        self.schedule_ui.set_date(self.calendarWidget.get_selected_date())
         self.stackedWidget.setCurrentIndex(0)
 
     def display_cal(self):

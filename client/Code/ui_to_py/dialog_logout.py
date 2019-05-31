@@ -10,11 +10,11 @@ class Logout_Dialog(QtWidgets.QDialog):
         Dialog.setObjectName("dialog")
         Dialog.setFixedSize(340, 221)
 
-        css_file = open('../../Stylesheet/dialog_stylesheet.css').read()
+        css_file = open('../Stylesheet/dialog_stylesheet.css').read()
         Dialog.setStyleSheet(css_file)
 
         self.graphic = QtWidgets.QLabel(Dialog)
-        self.graphic.setPixmap(QtGui.QPixmap('../../Assets/logout_confirm.png'))
+        self.graphic.setPixmap(QtGui.QPixmap('../Assets/logout_confirm.png'))
         self.graphic.setGeometry(120, 10, 101, 100)
         self.graphic.setScaledContents(True)
 

@@ -1,6 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import Dict, Set
 
+from PySide2.QtCore import QDate
+
 from client.Code.controller.models.models import TaskList
 from client.Code.controller.models.models import Task
 from client.Code.controller.observers.observers import Observer
@@ -114,6 +116,9 @@ class TaskLedgerSystem(Observable):
     def set_loading(self, loading_status):
         self.loading = loading_status
 
+    def is_busy(self, date: QDate) -> bool:
+        return self.task_list.is_busy(date)
+
 
 class ConcreteObserver(Observer):
     def update_data(self, task_list: TaskList):
@@ -123,9 +128,12 @@ class ConcreteObserver(Observer):
 
 # system = TaskLedgerSystem()
 # system.attach(ConcreteObserver())
-#
+
 # system.login('admin', 'admin')
-# print()
+# tasks = system.task_list.get_task_list()
+# for task in tasks:
+#     print(task)
+# print(system.is_busy(QDate(2019, 6, 2)))
 # result = system.delete_task(34)
 #
 # print(result)

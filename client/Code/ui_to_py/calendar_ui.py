@@ -1,6 +1,8 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 
 #TODO:: today selection-hover
+from client.Code.controller.subjects.manager import TaskLedgerSystem
+
 
 class CalendarWidget(QtWidgets.QCalendarWidget):
     def __init__(self, parent=None):
@@ -11,12 +13,18 @@ class CalendarWidget(QtWidgets.QCalendarWidget):
         self.cur_day = QtGui.QTextCharFormat()
         self.brush = QtGui.QBrush()
         self.today = QtCore.QDate.currentDate()
-
+        self.system: TaskLedgerSystem = None
         for d in (QtCore.Qt.Saturday, QtCore.Qt.Sunday,):
             fmt = self.weekdayTextFormat(d)
             fmt.setForeground(QtCore.Qt.black)
             self.setWeekdayTextFormat(d, fmt)
         self.show()
+
+    def bind_system(self, system):
+        self.system = system
+
+    def get_selected_date(self):
+        return self.selectedDate().toPython()
 
     def get_color(self, color):
         switcher = {
@@ -29,7 +37,8 @@ class CalendarWidget(QtWidgets.QCalendarWidget):
         return switcher.get(color)
 
     def paintCell(self, painter, rect, date):
-        if date == self.selectedDate():
+        is_busy = self.system.is_busy(date)
+        if is_busy:
             painter.save()
             painter.fillRect(rect, QtGui.QColor("white"))
             painter.setPen(QtCore.Qt.NoPen)
@@ -37,7 +46,7 @@ class CalendarWidget(QtWidgets.QCalendarWidget):
 
             #selection
             painter.setBrush(QtGui.QColor(self.get_color(color)))
-            r = QtCore.QRect(QtCore.QPoint(), min(rect.width(), rect.height())*QtCore.QSize(1, 1))
+            r = QtCore.QRect(QtCore.QPoint(), min(rect.width() - 5, rect.height() - 5)*QtCore.QSize(1, 1))
             r.moveCenter(rect.center())
             painter.drawEllipse(r)
             painter.setPen(QtGui.QPen(QtGui.QColor("white")))

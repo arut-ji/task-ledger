@@ -27,13 +27,18 @@ QCalendarWidget QAbstractItemView:enabled
 {
 	font-size:18px;
 	color: black;
-	selection-color: rgb(231, 119, 32);
+	selection-color: black;
 }
 
 QCalendarWidget QAbstractItemView
 {
     selection-background-color: transparent;
-    selection-color: white;
+	selection-color: black;
+}
+
+QCalendarWidget QAbstractItemView::item
+{
+    height: 50px;
 }
 
 QCalendarWidget QWidget#qt_calendar_navigationbar
@@ -293,4 +298,8 @@ QScrollBar::sub-line:vertical {
 	height: 0 px;
 	subcontrol-position: top;
 	subcontrol-origin: margin;
+}
+
+QListView{
+	border: none;
 }

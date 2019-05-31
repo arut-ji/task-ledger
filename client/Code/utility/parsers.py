@@ -1,6 +1,7 @@
 from PySide2.QtCore import QTime, QDate
 from dateutil import parser
-from datetime import datetime
+from datetime import datetime, date
+import time
 
 class DatetimeParser:
     @staticmethod
@@ -13,4 +14,13 @@ class DatetimeParser:
         native_time = qtime.toPython()
         return datetime.combine(native_date, native_time)
 
+    @staticmethod
+    def fromQDateToDate(qdate: QDate) -> date:
+        return qdate.toPython()
+
+    @staticmethod
+    def fromQTimeToTime(qtime: QTime) -> time:
+        return qtime.toPython()
+
+    # def fromQDateToDatetime(self, qdate: QDate) -> :
 

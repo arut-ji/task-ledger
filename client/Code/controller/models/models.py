@@ -2,6 +2,8 @@ from typing import Dict, List, Optional
 import json
 
 # from client.Code.utility.validators import TaskValidator
+from PySide2.QtCore import QDate
+
 from client.Code.utility.parsers import DatetimeParser
 from client.Code.utility.validators import TaskValidator
 
@@ -94,20 +96,38 @@ class TaskList:
     def get_task_list(self) -> List[Task]:
         return self.tasks
 
+    def is_busy(self, date: QDate):
+        native_date = DatetimeParser.fromQDateToDate(date)
+        return len(
+            list(
+                filter(
+                    lambda task: task.start_at.date() <= native_date and task.end_at.date() >= native_date and not task.status,
+                    self.tasks
+                )
+            )
+        ) > 0
+
+
     def json(self) -> str:
         return json.dumps([task.json() for task in self.tasks])
 
-# # mock_task_data = {
-# #     "id": 20,
-# #     "topic": "Project Deadline",
-# #     "description": "Send SEP project.",
-# #     "created_at": "2019-05-29T09:18:23.223777Z",
-# #     "start_at": "2019-06-02T06:00:00Z",
-# #     "end_at": "2019-06-02T09:00:00Z",
-# #     "status": False,
-# #     "location": "International College, KMITL",
-# #     "user": 1
-# # }
-# #
-# # task = Task(mock_task_data)
+mock_task_data = {
+    "id": 20,
+    "topic": "Project Deadline",
+    "description": "Send SEP project.",
+    "created_at": "2019-05-29T09:18:23.223777Z",
+    "start_at": "2019-06-02T06:00:00Z",
+    "end_at": "2019-06-02T09:00:00Z",
+    "status": False,
+    "location": "International College, KMITL",
+    "user": 1
+}
+#
+# task = Task(mock_task_data)
+# tasks = TaskList()
+# tasks.add_task(task)
 # print(task)
+#
+# # print(task.start_at.date())
+# # print(task.end_at.date())
+# print(tasks.is_busy(QDate(2019, 6, 2)))

@@ -2,7 +2,7 @@ import sys
 
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QApplication
+from PySide2.QtWidgets import QApplication, QSizePolicy
 
 
 class Reg_Dialog_Complete(QtWidgets.QDialog):
@@ -43,58 +43,44 @@ class Reg_Dialog_Complete(QtWidgets.QDialog):
 class Reg_Dialog_Error(QtWidgets.QDialog):
     def __init__(self, msg, parent=None):
         super(Reg_Dialog_Error, self).__init__(parent)
+        self.length = len(msg)
         self.err_msg = msg
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("dialog")
-        Dialog.setFixedSize(340, 221)
+        Dialog.setFixedSize(340, 221 * self.length * 0.75)
 
         css_file = open('../Stylesheet/dialog_stylesheet.css').read()
         Dialog.setStyleSheet(css_file)
 
-        self.label = Label(Dialog)
-        self.label.setText(self.err_msg)
-        self.label.setGeometry(20, 0, 290, 200)
+        self.label = QtWidgets.QLabel(Dialog)
+        self.text = ''
+        for i in range(len(self.err_msg)):
+            self.text = self.text + '\n\n' + self.err_msg[i]
+        self.label.setText(self.text)
+        self.label.setWordWrap(True)
+
+        self.label.setGeometry(20, 0 , 290,  221 * self.length * 0.75 - 100)
         self.label.setAlignment(Qt.AlignCenter)
         font = QtGui.QFont()
         font.setFamily("Helvetica")
         font.setPointSize(18)
         self.label.setFont(font)
-        self.label.formatText()
+        # self.label.formatText()
 
         self.okay = QtWidgets.QPushButton(Dialog)
         self.okay.setText("Try Again")
-        self.okay.setGeometry(120, 160, 101, 30)
+        self.okay.setGeometry(120, 160 * self.length * 0.75, 101, 30)
         font.setPointSize(16)
         self.okay.setFont(font)
         self.okay.setObjectName("okay")
-
-
-class Label(QtWidgets.QLabel):
-    def __init__(self, parent=None):
-        super(Label, self).__init__(parent)
-
-    def resizeEvent(self, event):
-        self.formatText()
-        event.accept()
-
-    def formatText(self):
-        width = self.width()
-        text = self.text()
-        new = ''
-        for word in text.split():
-            if len(new.split('\n')[-1]) < width * 0.09:
-                new = new + ' ' + word
-            else:
-                new = new + '\n' + ' ' + word
-        self.setText(new)
 
 
 class create_dialogUI(QtWidgets.QWidget):
     def __init__(self):
         QtWidgets.QWidget.__init__(self, None)
 
-        self.ui = Reg_Dialog_Error("This password is too short. It must contain at least 8 characters.")
+        self.ui = Reg_Dialog_Error(["This password is too short. It must contain at least 8 characters.", " eie This password is too short. It must contain at least 8 characters."])
         self.ui.setupUi(self)
 
         self.show()

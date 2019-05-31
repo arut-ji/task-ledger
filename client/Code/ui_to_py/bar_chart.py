@@ -1,21 +1,23 @@
+import datetime
 import sys
 
 from PySide2.QtCharts import QtCharts
-from PySide2.QtCore import Qt
+from PySide2.QtCore import Qt, QDateTime
 from PySide2.QtGui import QPainter
 from PySide2.QtWidgets import QWidget, QApplication, QVBoxLayout
 from PySide2 import QtCore
 
 
 class BarChart(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, lst, parent=None):
         QWidget.__init__(self, parent)
         set_sun = QtCharts.QBarSet("ME")
+        self.lst = lst
 
-        self.setFixedSize(1000, 600)
+        self.setFixedSize(651, 431)
 
-        for i in range(1,8):
-            set_sun.append(i)
+        for i in range(len(self.lst)):
+            set_sun.append(self.lst[i])
 
         self.series = QtCharts.QBarSeries()
         self.series.append(set_sun)
@@ -26,16 +28,19 @@ class BarChart(QWidget):
         self.chart.setAnimationOptions(QtCharts.QChart.SeriesAnimations)
 
         axisX = QtCharts.QBarCategoryAxis()
-        axisX.append(["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"])
-        # axisX.append("MON")
-        # axisX.append("TUE")
-        # axisX.append("WED")
-        # axisX.append("THU")
-        # axisX.append("FRI")
-        # axisX.append("SAT")
+        self.date_now = datetime.date.today()
+        print(self.date_to_string(self.date_now - datetime.timedelta(days=6)))
+        axisX.append([self.date_to_string(self.date_now - datetime.timedelta(days=6)),
+                      self.date_to_string(self.date_now - datetime.timedelta(days=5)),
+                      self.date_to_string(self.date_now - datetime.timedelta(days=4)),
+                      self.date_to_string(self.date_now - datetime.timedelta(days=3)),
+                      self.date_to_string(self.date_now - datetime.timedelta(days=2)),
+                      self.date_to_string(self.date_now - datetime.timedelta(days=1)),
+                      self.date_to_string(self.date_now)])
 
         self.chart.createDefaultAxes()
         self.chart.setAxisX(axisX, self.series)
+        self.series.attachAxis(axisX)
         self.chart.legend().setVisible(True)
         self.chart.legend().setAlignment(Qt.AlignBottom)
 
@@ -46,9 +51,12 @@ class BarChart(QWidget):
         self.main_layout.addWidget(self.chartView)
         self.setLayout(self.main_layout)
 
+    def date_to_string(self, date):
+        return date.strftime("%d") + ' ' + date.strftime("%b")
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    w = BarChart()
+    w = BarChart([0, 1, -1, -9, 2, 3, -2])
     w.show()
     sys.exit(app.exec_())
 

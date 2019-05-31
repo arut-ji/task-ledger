@@ -2,11 +2,14 @@ import math
 import sys
 from random import randrange
 
-from PySide2.QtCore import QAbstractTableModel, QModelIndex, QRect, Qt
-from PySide2.QtGui import QColor, QPainter, QFont, QPen
+from PySide2.QtCore import QAbstractTableModel, QModelIndex, QRect, Qt, QSize
+from PySide2.QtGui import QColor, QPainter, QFont, QPen, QIcon
 from PySide2.QtWidgets import (QApplication, QHeaderView,
-                               QTableView, QWidget, QVBoxLayout, QLabel, QFrame)
+                               QTableView, QWidget, QVBoxLayout, QLabel, QFrame, QPushButton)
 from PySide2.QtCharts import QtCharts
+
+from client.Code.ui_to_py.bar_chart import BarChart
+
 
 class CustomTableModel(QAbstractTableModel):
     def __init__(self):
@@ -173,13 +176,31 @@ class StatisticsUI(QWidget):
         self.stat_label.setFont(font)
         self.stat_label.setObjectName("stat_label")
         self.stat_label.setText("Statistics")
+        #
+        # self.left_arrow = QPushButton(parent)
+        # self.left_arrow.setGeometry(QRect(30, 55, 41, 41))
+        # self.left_arrow.setText("")
+        # self.left_arrow.setIcon(QIcon("../Assets/arrow_left.png"))
+        # self.left_arrow.setFlat(True)
+        # self.left_arrow.setIconSize(QSize(21, 21))
+        # self.left_arrow.setObjectName("left_arrow")
+        # self.left_arrow.clicked.connect(self.prev_date)
+
+        # self.right_arrow = QPushButton(parent)
+        # self.right_arrow.setGeometry(QRect(80, 55, 41, 41))
+        # self.right_arrow.setText("")
+        # self.right_arrow.setIcon(QIcon("../Assets/arrow_right.png"))
+        # self.right_arrow.setFlat(True)
+        # self.right_arrow.setIconSize(QSize(21, 21))
+        # self.right_arrow.setObjectName("right_arrow")
+        # self.right_arrow.clicked.connect(self.next_date)
 
         self.stat_frame = QFrame(parent)
         self.stat_frame.setObjectName("stat_frame")
         self.stat_frame.setGeometry(20, 100, 671, 451)
 
-        self.stat_graph = TableWidget(self.stat_frame)
-        self.stat_graph.setGeometry(0, 0, 671, 451)
+        self.stat_graph = BarChart([0, 1, -1, -9, 2, 3, -2], self.stat_frame)
+        self.stat_graph.setGeometry(0, 30, 671, 451)
         self.stat_graph.show()
 
 if __name__ == "__main__":

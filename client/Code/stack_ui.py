@@ -14,7 +14,8 @@ from client.Code.controller.subjects.manager import TaskLedgerSystem
 from client.Code.utility.parsers import DatetimeParser
 
 DEBUG = False
-
+error_stylesheet = "border-color: red; color: red;"
+normal_stylesheet = "border-color: black; color: black;"
 
 class Task_ledger(QWidget):
 
@@ -25,6 +26,7 @@ class Task_ledger(QWidget):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.setFixedSize(1000, 600)
+        Form.setWindowTitle("Task Ledger")
 
         self.stackedWidget = QStackedWidget(Form)
         self.stackedWidget.setGeometry(QRect(0, 0, 1000, 600))
@@ -175,10 +177,18 @@ class TaskLedgerUI(QWidget):
     def create_dialog(self):
         self.dialog = dialog.Create_dialog()
         self.dialog.setupUi(self.dialog)
-
-        self.dialog.save_btn.clicked.connect(self.create_event)
-        self.dialog.save_btn.clicked.connect(self.dialog.close)
+        self.dialog.save_btn.clicked.connect(self.created)
         self.dialog.show()
+
+    def created(self):
+        topic = self.dialog.title.text()
+        if topic == '':
+            self.dialog.title.setStyleSheet(error_stylesheet)
+        else:
+            self.dialog.title.setStyleSheet(normal_stylesheet)
+            # self.dialog.save_btn.clicked.disconnect(self.created)
+            self.create_event()
+
 
     def create_event(self):
         start_time = self.dialog.timeEdit.time()
@@ -188,7 +198,6 @@ class TaskLedgerUI(QWidget):
         end_date = self.dialog.to_dateEdit.date()
 
         topic = self.dialog.title.text()
-
 
         description = self.dialog.textEdit_desc.toPlainText()
         status = False
@@ -206,7 +215,25 @@ class TaskLedgerUI(QWidget):
             "location": location,
         }
 
-        self.system.create_task(details)
+
+        if self.system.create_task(details):
+            self.dialog.close()
+        else:
+            if start_at.date() > end_at.date():
+                self.dialog.to_dateEdit.setStyleSheet(error_stylesheet)
+                self.dialog.from_dateEdit.setStyleSheet(error_stylesheet)
+
+            elif start_at.date() <= end_at.date():
+                self.dialog.to_dateEdit.setStyleSheet(normal_stylesheet)
+                self.dialog.from_dateEdit.setStyleSheet(normal_stylesheet)
+
+            if start_time > end_time:
+                self.dialog.timeEdit.setStyleSheet(error_stylesheet)
+                self.dialog.to_timeEdit.setStyleSheet(error_stylesheet)
+            else:
+                self.dialog.timeEdit.setStyleSheet(normal_stylesheet)
+                self.dialog.to_timeEdit.setStyleSheet(normal_stylesheet)
+
 
 
 if __name__ == '__main__':

@@ -132,7 +132,7 @@ class Create_dialog(Dialog_task):
 
     def setupUi(self, Dialog):
         super().setupUi(Dialog)
-
+        self.setWindowTitle("Create Task")
         self.save_btn = QtWidgets.QPushButton(Dialog)
         self.save_btn.setGeometry(QtCore.QRect(330, 20, 101, 30))
         self.save_btn.setObjectName("save_btn")
@@ -142,9 +142,9 @@ class Display_dialog(Dialog_task):
     def __init__(self, parent=None):
         super(Display_dialog, self).__init__(parent)
 
-    def setupUi(self, Dialog):
+    def setupUi(self, Dialog, title):
         super().setupUi(Dialog)
-
+        self.setWindowTitle(title)
         self.edit_btn = QtWidgets.QPushButton(Dialog)
         self.edit_btn.setGeometry(QtCore.QRect(330, 20, 101, 30))
         self.edit_btn.setObjectName("save_btn")
@@ -165,7 +165,7 @@ class Edit_dialog(Dialog_task):
 
     def setupUi(self, Dialog):
         super().setupUi(Dialog)
-
+        self.setWindowTitle("Edit Task")
         self.save_btn = QtWidgets.QPushButton(Dialog)
         self.save_btn.setGeometry(QtCore.QRect(330, 20, 101, 30))
         self.save_btn.setObjectName("save_btn")

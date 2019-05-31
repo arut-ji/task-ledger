@@ -83,7 +83,7 @@ class Schedule_ui(QtWidgets.QWidget):
         checked = self.model.itemFromIndex(index).checkState()
         if not checked:
             self.dialog = dialog.Display_dialog()
-            self.dialog.setupUi(self.dialog)
+            self.dialog.setupUi(self.dialog, task.topic)
             self.dialog.show()
 
             self.start_date = QDate.fromString(task.start_at.strftime("%d/%m/%Y"), 'dd/MM/yyyy')

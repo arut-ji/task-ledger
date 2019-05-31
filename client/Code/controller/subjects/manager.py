@@ -69,11 +69,11 @@ class TaskLedgerSystem(Observable):
     def is_authenticated(self) -> bool:
         return self.token is not None
 
-    def register(self, username, password1, password2) -> bool:
+    def register(self, username, password1, password2) -> Dict:
         response = AuthService.register(username, password1, password2)
 
         if len(response) == 0:
-            return True
+            return {}
         else:
             return response
 

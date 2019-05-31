@@ -179,18 +179,8 @@ class TaskLedgerUI(QWidget):
     def create_dialog(self):
         self.dialog = dialog.Create_dialog()
         self.dialog.setupUi(self.dialog)
-        self.dialog.save_btn.clicked.connect(self.created)
+        self.dialog.save_btn.clicked.connect(self.create_event)
         self.dialog.show()
-
-    def created(self):
-        topic = self.dialog.title.text()
-        if topic == '':
-            self.dialog.title.setStyleSheet(error_stylesheet)
-        else:
-            self.dialog.title.setStyleSheet(normal_stylesheet)
-            # self.dialog.save_btn.clicked.disconnect(self.created)
-            self.create_event()
-
 
     def create_event(self):
         start_time = self.dialog.timeEdit.time()
@@ -217,15 +207,24 @@ class TaskLedgerUI(QWidget):
             "location": location,
         }
 
+        # if topic == '':
+        #     self.dialog.title.setStyleSheet(error_stylesheet)
+        # else:
+        #     self.dialog.title.setStyleSheet(normal_stylesheet)
 
         if self.system.create_task(details):
             self.dialog.close()
         else:
+            if topic == '':
+                self.dialog.title.setStyleSheet(error_stylesheet)
+            else:
+                self.dialog.title.setStyleSheet(normal_stylesheet)
+
             if start_at.date() > end_at.date():
                 self.dialog.to_dateEdit.setStyleSheet(error_stylesheet)
                 self.dialog.from_dateEdit.setStyleSheet(error_stylesheet)
 
-            elif start_at.date() <= end_at.date():
+            else:
                 self.dialog.to_dateEdit.setStyleSheet(normal_stylesheet)
                 self.dialog.from_dateEdit.setStyleSheet(normal_stylesheet)
 

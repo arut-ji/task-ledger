@@ -15,7 +15,6 @@ from client.Code.utility.validators import TaskValidator
 class Observable(metaclass=ABCMeta):
     def __init__(self):
         self._observers = set()
-        self._subject_state = None
 
     def attach(self, observer):
         self._observers.add(observer)

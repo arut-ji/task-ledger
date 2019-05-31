@@ -101,15 +101,20 @@ class TaskList:
         return len(
             list(
                 filter(
-                    lambda task: task.start_at.date() <= native_date and task.end_at.date() >= native_date and not task.status,
+                    lambda
+                        task: task.start_at.date() <= native_date and task.end_at.date() >= native_date and not task.status,
                     self.tasks
                 )
             )
         ) > 0
 
-
     def json(self) -> str:
         return json.dumps([task.json() for task in self.tasks])
+
+
+class KarmaPoint:
+    def __init__(self, task_list: TaskList):
+        pass
 
 mock_task_data = {
     "id": 20,

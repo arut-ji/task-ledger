@@ -8,6 +8,9 @@ from PySide2.QtWidgets import (QApplication, QHeaderView,
                                QTableView, QWidget, QVBoxLayout, QLabel, QFrame)
 from PySide2.QtCharts import QtCharts
 
+from client.Code.ui_to_py.bar_chart import BarChart
+
+
 class CustomTableModel(QAbstractTableModel):
     def __init__(self):
         QAbstractTableModel.__init__(self)
@@ -178,7 +181,7 @@ class StatisticsUI(QWidget):
         self.stat_frame.setObjectName("stat_frame")
         self.stat_frame.setGeometry(20, 100, 671, 451)
 
-        self.stat_graph = TableWidget(self.stat_frame)
+        self.stat_graph = BarChart(self.stat_frame)
         self.stat_graph.setGeometry(0, 0, 671, 451)
         self.stat_graph.show()
 

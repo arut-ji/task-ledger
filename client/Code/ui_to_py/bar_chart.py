@@ -12,10 +12,16 @@ class BarChart(QWidget):
         QWidget.__init__(self, parent)
         set_sun = QtCharts.QBarSet("ME")
 
-        self.setFixedSize(1000, 600)
+        self.setFixedSize(651, 431)
 
-        for i in range(1,8):
-            set_sun.append(i)
+        set_sun.append(1)
+        set_sun.append(-2)
+        set_sun.append(-3)
+        set_sun.append(4)
+        set_sun.append(5)
+        set_sun.append(6)
+        set_sun.append(7)
+        set_sun.append(-2)
 
         self.series = QtCharts.QBarSeries()
         self.series.append(set_sun)
@@ -27,17 +33,11 @@ class BarChart(QWidget):
 
         axisX = QtCharts.QBarCategoryAxis()
         axisX.append(["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"])
-        # axisX.append("MON")
-        # axisX.append("TUE")
-        # axisX.append("WED")
-        # axisX.append("THU")
-        # axisX.append("FRI")
-        # axisX.append("SAT")
 
         self.chart.createDefaultAxes()
         self.chart.setAxisX(axisX, self.series)
         self.chart.legend().setVisible(True)
-        self.chart.legend().setAlignment(Qt.AlignBottom)
+        # self.chart.legend().setAlignment(Qt.AlignBottom)
 
         self.chartView = QtCharts.QChartView(self.chart)
         self.chartView.setRenderHint(QPainter.Antialiasing)

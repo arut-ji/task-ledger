@@ -228,7 +228,7 @@ class TaskLedgerUI(QWidget):
                 self.dialog.to_dateEdit.setStyleSheet(normal_stylesheet)
                 self.dialog.from_dateEdit.setStyleSheet(normal_stylesheet)
 
-            if start_time > end_time:
+            if start_time >= end_time:
                 self.dialog.timeEdit.setStyleSheet(error_stylesheet)
                 self.dialog.to_timeEdit.setStyleSheet(error_stylesheet)
             else:

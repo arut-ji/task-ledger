@@ -78,6 +78,9 @@ class Ui_Form(QWidget):
         self.page_4.setObjectName("page_4")
         self.statistics = statistics.StatisticsUI(self.page_4)
         self.statistics.setupUI(self.page_4)
+
+        # Attach statistics observer to manager
+        self.system.attach(self.statistics)
         self.stackedWidget.addWidget(self.page_4)
 
         # notification
@@ -102,6 +105,8 @@ class Ui_Form(QWidget):
 
     def display_sch(self):
         self.schedule_ui.set_date(self.calendarWidget.get_selected_date())
+        self.statistics.stat_graph.set_max_bound(self.calendarWidget.get_selected_date())
+        # self.statistics.stat_graph.update()
         self.stackedWidget.setCurrentIndex(0)
 
     def display_cal(self):

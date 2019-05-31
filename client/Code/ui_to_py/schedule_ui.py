@@ -142,7 +142,7 @@ class Schedule_ui(QtWidgets.QWidget):
             self.is_update_success = self.system.update_task(task_id, details)
 
         if not self.is_update_success:
-            if start_at.date() > end_at.date():
+            if start_at.date() >= end_at.date():
                 self.dialog.to_dateEdit.setStyleSheet(error_stylesheet)
                 self.dialog.from_dateEdit.setStyleSheet(error_stylesheet)
 
@@ -150,7 +150,7 @@ class Schedule_ui(QtWidgets.QWidget):
                 self.dialog.to_dateEdit.setStyleSheet(normal_stylesheet)
                 self.dialog.from_dateEdit.setStyleSheet(normal_stylesheet)
 
-            if start_time > end_time:
+            if start_time >= end_time:
                 self.dialog.timeEdit.setStyleSheet(error_stylesheet)
                 self.dialog.to_timeEdit.setStyleSheet(error_stylesheet)
             else:

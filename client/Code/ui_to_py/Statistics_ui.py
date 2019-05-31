@@ -28,6 +28,7 @@ class CustomTableModel(QAbstractTableModel):
                     self.min_val = min(self.min_val, data_vec[k])
                     self.max_val = max(self.max_val, data_vec[k])
             self.input_data.append(data_vec)
+        print(self.input_data)
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.input_data)

@@ -1,8 +1,9 @@
+import math
 import sys
 from random import randrange
 
 from PySide2.QtCore import QAbstractTableModel, QModelIndex, QRect, Qt
-from PySide2.QtGui import QColor, QPainter, QFont
+from PySide2.QtGui import QColor, QPainter, QFont, QPen
 from PySide2.QtWidgets import (QApplication, QHeaderView,
                                QTableView, QWidget, QVBoxLayout, QLabel, QFrame)
 from PySide2.QtCharts import QtCharts
@@ -12,17 +13,23 @@ class CustomTableModel(QAbstractTableModel):
         QAbstractTableModel.__init__(self)
         self.input_data = []
         self.mapping = {}
-        self.column_count = 4
-        self.row_count = 15
+        self.column_count = 2
+        self.row_count = 7
+        self.min_val = math.inf
+        self.max_val = -math.inf
 
         for i in range(self.row_count):
             data_vec = [0]*self.column_count
             for k in range(len(data_vec)):
-                if k % 2 == 0:
-                    data_vec[k] = i * 50 + randrange(30)
-                else:
+                if k == 0:
+                    data_vec[k] = i + 1
+                if k == 1:
                     data_vec[k] = randrange(100)
+                    self.min_val = min(self.min_val, data_vec[k])
+                    self.max_val = max(self.max_val, data_vec[k])
             self.input_data.append(data_vec)
+
+        print(self.input_data)
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.input_data)
@@ -88,7 +95,12 @@ class TableWidget(QWidget):
         self.chart.setAnimationOptions(QtCharts.QChart.AllAnimations)
 
         self.series = QtCharts.QLineSeries()
-        self.series.setName("Line 1")
+        pen = QPen()
+        pen.setWidth(3)
+        pen.setColor(QColor(242, 183, 54))
+        pen.setCapStyle(Qt.RoundCap)
+        self.series.setPen(pen)
+        self.series.setName("Weekly Karma Points")
         self.mapper = QtCharts.QVXYModelMapper(self)
         self.mapper.setXColumn(0)
         self.mapper.setYColumn(1)
@@ -104,21 +116,37 @@ class TableWidget(QWidget):
         self.model.add_mapping(seriesColorHex, QRect(0, 0, 2, self.model.rowCount()))
 
         # series 2
-        self.series = QtCharts.QLineSeries()
-        self.series.setName("Line 2")
+        # self.series = QtCharts.QLineSeries()
+        # self.series.setName("Monthy")
+        #
+        # self.mapper = QtCharts.QVXYModelMapper(self)
+        # self.mapper.setXColumn(2)
+        # self.mapper.setYColumn(3)
+        # self.mapper.setSeries(self.series)
+        # self.mapper.setModel(self.model)
+        # self.chart.addSeries(self.series)
+        #
+        # # get the color of the series and use it for showing the mapped area
+        # seriesColorHex = "{}".format(self.series.pen().color().name())
+        # self.model.add_mapping(seriesColorHex, QRect(2, 0, 2, self.model.rowCount()))
 
-        self.mapper = QtCharts.QVXYModelMapper(self)
-        self.mapper.setXColumn(2)
-        self.mapper.setYColumn(3)
-        self.mapper.setSeries(self.series)
-        self.mapper.setModel(self.model)
-        self.chart.addSeries(self.series)
+        axisX = QtCharts.QCategoryAxis()
+        axisX.append("SUN", 1)
+        axisX.append("MON", 2)
+        axisX.append("TUE", 3)
+        axisX.append("WED", 4)
+        axisX.append("THU", 5)
+        axisX.append("FRI", 6)
+        axisX.append("SAT", 7)
+        axisX.setRange(0, 7)
 
-        # get the color of the series and use it for showing the mapped area
-        seriesColorHex = "{}".format(self.series.pen().color().name())
-        self.model.add_mapping(seriesColorHex, QRect(2, 0, 2, self.model.rowCount()));
+        axisY = QtCharts.QValueAxis()
 
-        self.chart.createDefaultAxes()
+        axisY.setRange(self.model.min_val, self.model.max_val)
+
+
+        self.chart.addAxis(axisX, Qt.AlignBottom)
+        self.chart.addAxis(axisY, Qt.AlignLeft)
         self.chart_view = QtCharts.QChartView(self.chart)
         self.chart_view.setRenderHint(QPainter.Antialiasing)
         self.chart_view.setFixedSize(651, 431)

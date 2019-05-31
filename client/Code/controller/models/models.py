@@ -1,10 +1,11 @@
+import datetime
 from typing import Dict, List, Optional
 import json
 
 # from client.Code.utility.validators import TaskValidator
 from PySide2.QtCore import QDate
 
-from client.Code.utility.parsers import DatetimeParser
+from client.Code.utility.parsers import DatetimeParser, TaskAnalyser
 from client.Code.utility.validators import TaskValidator
 
 
@@ -23,16 +24,24 @@ class Task:
             'created_at',
             'start_at',
             'end_at',
+            'done_at'
             'status',
             'location',
             'user'
         ]
-
+        self.id = self.topic = self.description = self.created_at = self.start_at = self.end_at = self.done_at = self.status = self.location = self.user = None
         self.__dict__ = data
 
-        self.created_at = DatetimeParser.parse(self.created_at)
-        self.end_at = DatetimeParser.parse(self.end_at)
-        self.start_at = DatetimeParser.parse(self.start_at)
+        if isinstance(self.start_at, str):
+            self.created_at = DatetimeParser.parse(self.created_at)
+        if isinstance(self.end_at, str):
+            self.end_at = DatetimeParser.parse(self.end_at)
+        if isinstance(self.start_at, str):
+            self.start_at = DatetimeParser.parse(self.start_at)
+
+        if self.done_at is not None:
+            if isinstance(self.done_at, str):
+                self.done_at = DatetimeParser.parse(self.done_at)
 
     def update(self, data):
         self.__dict__ = data
@@ -47,8 +56,16 @@ class Task:
             "start_at": str(self.start_at),
             "end_at": str(self.end_at),
             "status": self.status,
-            "location": self.location
+            "location": self.location,
+            "done_at": self.done_at
         }
+
+    def get_point(self):
+        if self.status:
+            return 5 if self.done_at.date() < self.end_at.date() else -1 * (self.done_at.date() - self.end_at.date()).days
+        else:
+            return -1 * (
+                        datetime.datetime.now().date() - self.end_at.date()).days if datetime.datetime.now().date() > self.end_at.date() else 0
 
     def __str__(self):
         return str(self.__dict__)
@@ -111,26 +128,48 @@ class TaskList:
     def json(self) -> str:
         return json.dumps([task.json() for task in self.tasks])
 
+    def get_task_from_date(self, date: datetime.date):
+        return list(
+            filter(
+                lambda
+                    task: task.start_at.date() <= date and task.end_at.date() >= date,
+                self.tasks
+            )
+        )
 
-class KarmaPoint:
-    def __init__(self, task_list: TaskList):
-        pass
 
 mock_task_data = {
     "id": 20,
     "topic": "Project Deadline",
     "description": "Send SEP project.",
     "created_at": "2019-05-29T09:18:23.223777Z",
-    "start_at": "2019-06-02T06:00:00Z",
-    "end_at": "2019-06-02T09:00:00Z",
-    "status": False,
+    "start_at": "2019-05-02T06:00:00Z",
+    "end_at": "2019-05-02T09:00:00Z",
+    "status": True,
     "location": "International College, KMITL",
+    "done_at": "2019-05-29T09:18:23.223777Z",
+    "user": 1
+}
+mock_task_data_2 = {
+    "id": 20,
+    "topic": "Project Deadline",
+    "description": "Send SEP project.",
+    "created_at": "2019-05-29T09:18:23.223777Z",
+    "start_at": "2019-05-02T06:00:00Z",
+    "end_at": "2019-05-02T09:00:00Z",
+    "status": True,
+    "location": "International College, KMITL",
+    "done_at": "2019-05-30T09:18:23.223777Z",
     "user": 1
 }
 #
-# task = Task(mock_task_data)
-# tasks = TaskList()
-# tasks.add_task(task)
+task = Task(mock_task_data)
+
+print(task.get_point())
+tasks = TaskList()
+tasks.add_task(task)
+tasks.add_task(Task(mock_task_data_2))
+print(TaskAnalyser.countDoneTaskFromInteval(tasks, datetime.datetime.now(), 7))
 # print(task)
 #
 # # print(task.start_at.date())

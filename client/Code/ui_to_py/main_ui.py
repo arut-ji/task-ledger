@@ -7,8 +7,9 @@ import client.Code.ui_to_py.Statistics_ui as statistics
 import client.Code.ui_to_py.schedule_ui as schedule
 import client.Code.ui_to_py.history_ui as history
 import client.Code.ui_to_py.side_navbar_ui as nav
-
 from PySide2 import QtCore, QtGui, QtWidgets
+
+from client.Code.utility.parsers import DatetimeParser
 
 
 class Ui_Form(QWidget):
@@ -105,7 +106,12 @@ class Ui_Form(QWidget):
 
     def display_sch(self):
         self.schedule_ui.set_date(self.calendarWidget.get_selected_date())
-        self.statistics.stat_graph.set_max_bound(self.calendarWidget.get_selected_date())
+
+        selected_date = DatetimeParser.dateToDatetime(
+            self.calendarWidget.get_selected_date()
+        )
+
+        self.statistics.stat_graph.set_max_bound(selected_date)
         # self.statistics.stat_graph.update()
         self.stackedWidget.setCurrentIndex(0)
 

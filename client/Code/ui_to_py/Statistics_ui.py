@@ -63,7 +63,9 @@ class StatisticsUI(QWidget):
         self.combo_box.addItem("Monthly")
         self.combo_box.setCurrentIndex(0)
 
-        # if self.combo_box.currentData()
+        if self.combo_box.currentData():
+    #         If monthly
+            self.stat_graph.set_interval(31)
 
     def update_data(self, task_list: TaskList):
         self.task_list = task_list
@@ -77,9 +79,3 @@ class StatisticsUI(QWidget):
     def change_chart_forward(self):
         self.stat_graph.change_max_bound(7)
         # self.stat_graph.update()
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    w = TableWidget()
-    w.show()
-    sys.exit(app.exec_())

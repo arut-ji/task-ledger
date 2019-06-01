@@ -1,0 +1,30 @@
+QWidget{
+	background-color: white;
+}
+
+QPushButton:hover{
+	background-color: transparent;
+	border: 1px solid #361A17;
+	color: #361A17;
+}
+
+QPushButton{
+	background-color: rgb(40, 19, 18);
+	color: rgb(255, 255, 255);
+	border-radius: 8px;
+}
+
+QLabel#bg{
+	background-color: rgb(242, 247, 247);
+}
+
+QLabel{
+	background-color: transparent;
+}
+
+QTextEdit{
+	background-color: transparent;
+	color: rgb(40, 19, 18);
+	font-family: "Roboto Light";
+	font-size: 16pt;
+}

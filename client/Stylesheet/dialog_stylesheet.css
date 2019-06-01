@@ -1,0 +1,101 @@
+QWidget{
+	background-color: rgb(242, 247, 247);
+	color: rgb(40, 19, 18);
+}
+QLineEdit#title{
+	background-color: rgba(0,0,0,0%);
+	border-bottom: 1px solid black;
+	border-top: 0px;
+	padding: 1px;
+}
+
+QLineEdit:focus{
+	outline: none;
+	border: none;
+}
+
+QPushButton#save_btn{
+	background-color: rgba(242, 183, 54, 95);
+	color: rgb(40, 19, 18);
+	border-radius: 10px
+}
+QPushButton:hover#save_btn, #okay{
+	background-color: rgb(242, 183, 54);
+	color: rgb(40, 19, 18);
+	border-radius: 10px
+}
+QPushButton#delete_btn{
+	background-color: transparent;
+	color: rgb(40, 19, 18);
+	border: 1px solid #361A17;
+	border-radius: 10px
+}
+QPushButton:hover#delete_btn{
+	background-color: transparent;
+	border: 1px solid  rgb(40, 19, 18);
+	color: rgb(201, 50, 41);
+}
+QDateEdit{
+	background-color: rgb(242, 247, 247);
+	padding: 5px;
+	border-color: transparent;
+}
+
+QDateEdit, QComboBox{
+    background-color: white;
+    border-style: none;
+    spacing: 5px;
+}
+
+QDateEdit:drop-down, QComboBox:drop-down {
+    image: url(../Assets/arrow_down.png);
+    width: 25px;
+    height: 10px;
+    subcontrol-position: right center;
+    subcontrol-origin: margin;
+    background-color: white;
+    border-style: none;
+    spacing: 5px;
+}
+
+QTimeEdit{
+    background-color: white;
+    border-style: none;
+    spacing: 5px;
+}
+
+QtimeEdit:drop-down {
+    width: 25px;
+    height: 10px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+    background-color: white;
+    border-style: none;
+    spacing: 5px;
+}
+
+QLineEdit#location, QTextEdit{
+	background-color: white;
+	padding: 5px;
+	border-style: none;
+}
+
+QRadioButton::indicator{
+ 	background-image: white;
+	width: 20px; height: 20px;
+	margin-left: 5px; margin-right: 5px;
+}
+
+QRadioButton::indicator::unchecked{ image: url(../Assets/checkbox_unchecked.png); }
+
+QRadioButton::indicator::unchecked:hover{ image: url(../Assets/checkbox_unchecked_active.png);}
+
+QRadioButton::indicator::unchecked:pressed
+{ image: url(../Assets/checkbox_checked_active.png);}
+
+QRadioButton::indicator::checked{ image: url(../Assets/checkbox_checked.png); }
+
+QRadioButton::indicator::checked:hover{ image: url(../Assets/checkbox_checked_active.png);}
+
+QRadioButton::indicator::checked:pressed{ image: url(../Assets/checkbox_unchecked_active.png);}
+

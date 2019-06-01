@@ -11,10 +11,10 @@ from client.Code.utility.parsers import DatetimeParser
 error_stylesheet = "border-color: red; color: red;"
 normal_stylesheet = "border-color: black; color: black;"
 
-class Schedule_ui(QtWidgets.QWidget):
+class ScheduleUI(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
-        super(Schedule_ui, self).__init__(parent)
+        super(ScheduleUI, self).__init__(parent)
         self.date_now = datetime.date.today()
         self.active_task_list = None
         self.selected_task = None
@@ -52,15 +52,13 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.today_label.setGeometry(QtCore.QRect(130, 20, 200, 51))
         font = QtGui.QFont()
-        font.setFamily("Helvetica Neue")
+        font.setFamily("Roboto Light")
         font.setPointSize(32)
         self.today_label.setFont(font)
         self.today_label.setObjectName("today_label")
 
 
         self.date.setGeometry(QtCore.QRect(120, 60, 500, 51))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
         font.setPointSize(42)
         self.date.setFont(font)
         self.date.setObjectName("label_3")
@@ -74,7 +72,6 @@ class Schedule_ui(QtWidgets.QWidget):
 
         self.graphic = QtWidgets.QLabel(parent)
         self.graphic.setObjectName("label_4")
-        font = QtGui.QFont()
         font.setPointSize(20)
         self.label_notask = QtWidgets.QLabel(parent)
         self.label_notask.setFont(font)
@@ -225,7 +222,12 @@ class Schedule_ui(QtWidgets.QWidget):
             self.graphic.setScaledContents(True)
             self.graphic.setGeometry(QtCore.QRect(260, 195, 252, 211))
             self.label_notask.setGeometry(QtCore.QRect(280, 395, 221, 51))
+            font = QtGui.QFont()
+            font.setFamily("Roboto Light")
+            font.setPointSize(20)
+            self.label_notask.setFont(font)
             self.label_notask.setText("You are free on this day !")
+
 
         else:
             self.graphic.clear()
@@ -243,4 +245,4 @@ class Schedule_ui(QtWidgets.QWidget):
         )
 
         self.update_task_list_view()
-        super(Schedule_ui, self).update()
+        super(ScheduleUI, self).update()

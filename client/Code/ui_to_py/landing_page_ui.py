@@ -43,16 +43,22 @@ class LandingPageUI(QWidget):
         self.logo.setScaledContents(True)
         self.logo.setObjectName("logo")
 
-        self.textEdit.setGeometry(QtCore.QRect(520, 230, 351, 151))
+        self.textEdit.setGeometry(QtCore.QRect(520, 230, 351, 200))
         self.textEdit.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
         self.textEdit.setReadOnly(True)
         self.textEdit.setCursorWidth(0)
         self.textEdit.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
+        text = "    TaskLedger is an application that allows you to manage " \
+               "your schedule and view your past activities. " \
+               "Completed tasks are kept to visualize your productivity levels. " \
+               "\n    To get started, head on to the next page and " \
+               "create an account if you haven’t done so yet!"
+        self.textEdit.setText(text)
         self.textEdit.setObjectName("textEdit")
 
         self.pushButton.setGeometry(QtCore.QRect(520, 400, 161, 41))
         font = QtGui.QFont()
-        font.setFamily("Roboto")
+        font.setFamily("Roboto Light")
         font.setPointSize(16)
         self.pushButton.setFont(font)
         self.pushButton.setStyleSheet("")
@@ -64,11 +70,6 @@ class LandingPageUI(QWidget):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtWidgets.QApplication.translate("Form", "Task Ledger", None, -1))
-        self.textEdit.setHtml(QtWidgets.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'.SF NS Text\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Roboto\'; font-size:16pt;\">In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris. Sed ullamcorper </span></p></body></html>", None, -1))
         self.pushButton.setText(QtWidgets.QApplication.translate("Form", "Get Started !", None, -1))
 
 

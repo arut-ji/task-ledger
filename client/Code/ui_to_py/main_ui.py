@@ -19,7 +19,7 @@ class MainUI(QWidget):
         self.stackedWidgetPage1 = QtWidgets.QWidget()
         self.page = QtWidgets.QWidget()
 
-    def set_system(self, system: Observable):
+    def bind_system(self, system: Observable):
         self.system = system
 
     def setupUi(self, Form):
@@ -28,15 +28,15 @@ class MainUI(QWidget):
         font = QtGui.QFont()
         css_file = open('../Stylesheet/main_stylesheet.css').read()
         Form.setStyleSheet(css_file)
-        font.setFamily("Helvetica")
+        font.setFamily("Roboto Light")
         Form.setFont(font)
 
         # navbar
         self.navbar.setupUI(Form)
-        self.navbar.schedule.clicked.connect(self.display_sch)
-        self.navbar.calendar.clicked.connect(self.display_cal)
-        self.navbar.history.clicked.connect(self.display_his)
-        self.navbar.statistic.clicked.connect(self.display_stat)
+        self.navbar.schedule.clicked.connect(self.display_schedule)
+        self.navbar.calendar.clicked.connect(self.display_calendar)
+        self.navbar.history.clicked.connect(self.display_history)
+        self.navbar.statistic.clicked.connect(self.display_statistics)
 
         # stack area
         self.stackedWidget.setGeometry(QtCore.QRect(280, 0, 721, 601))
@@ -44,7 +44,7 @@ class MainUI(QWidget):
 
         # schedule
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
-        self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
+        self.schedule_ui = schedule.ScheduleUI(self.stackedWidgetPage1)
         self.schedule_ui.setupUi(self.stackedWidgetPage1)
         self.schedule_ui.bind_system(self.system)
 
@@ -56,14 +56,14 @@ class MainUI(QWidget):
         self.page.setObjectName("page")
         self.calendarWidget = CalendarWidget(self.page)
         self.calendarWidget.setGeometry(QtCore.QRect(40, 80, 651, 391))
-        self.calendarWidget.clicked.connect(self.display_sch)
+        self.calendarWidget.clicked.connect(self.display_schedule)
         self.stackedWidget.addWidget(self.page)
         self.calendarWidget.bind_system(self.system)
 
         # history
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setObjectName("page_2")
-        self.history_ui = history.History_ui(self.page_2)
+        self.history_ui = history.HistoryUI(self.page_2)
         self.history_ui.setupUi(self.page_2)
         
         # Attach history observer to manager
@@ -87,7 +87,7 @@ class MainUI(QWidget):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtWidgets.QApplication.translate("Form", "Form", None, -1))
 
-    def display_sch(self):
+    def display_schedule(self):
         self.schedule_ui.set_date(self.calendarWidget.get_selected_date())
 
         selected_date = DatetimeParser.dateToDatetime(
@@ -97,11 +97,11 @@ class MainUI(QWidget):
         self.statistics.stat_graph.set_max_bound(selected_date)
         self.stackedWidget.setCurrentIndex(0)
 
-    def display_cal(self):
+    def display_calendar(self):
         self.stackedWidget.setCurrentIndex(1)
 
-    def display_his(self):
+    def display_history(self):
         self.stackedWidget.setCurrentIndex(2)
 
-    def display_stat(self):
+    def display_statistics(self):
         self.stackedWidget.setCurrentIndex(3)

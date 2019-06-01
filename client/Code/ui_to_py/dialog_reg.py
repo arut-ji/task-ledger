@@ -28,7 +28,7 @@ class Reg_Dialog_Complete(QtWidgets.QDialog):
         self.label.setText("Register Completed !")
         self.label.setGeometry(80, 120, 200, 21)
         font = QtGui.QFont()
-        font.setFamily("Helvetica")
+        font.setFamily("Roboto Light")
         font.setPointSize(20)
         self.label.setFont(font)
 
@@ -62,7 +62,7 @@ class Reg_Dialog_Error(QtWidgets.QDialog):
         self.label.setGeometry(20, 0 , 290,  221 * self.length * 0.75 - 100)
         self.label.setAlignment(Qt.AlignCenter)
         font = QtGui.QFont()
-        font.setFamily("Helvetica")
+        font.setFamily("Roboto Light")
         font.setPointSize(18)
         self.label.setFont(font)
 

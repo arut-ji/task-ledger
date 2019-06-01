@@ -15,6 +15,7 @@ class NavBarUI(QtWidgets.QWidget):
         self.schedule = QtWidgets.QPushButton(parent)
         self.schedule.setGeometry(QtCore.QRect(30, 190, 89, 32))
         font = QtGui.QFont()
+        font.setFamily("Roboto Light")
         font.setPointSize(21)
         self.schedule.setFont(font)
         self.schedule.setObjectName("schedule")
@@ -22,7 +23,6 @@ class NavBarUI(QtWidgets.QWidget):
 
         self.calendar = QtWidgets.QPushButton(parent)
         self.calendar.setGeometry(QtCore.QRect(30, 240, 85, 32))
-        font = QtGui.QFont()
         font.setPointSize(21)
         self.calendar.setFont(font)
         self.calendar.setObjectName("calendar")
@@ -30,7 +30,6 @@ class NavBarUI(QtWidgets.QWidget):
 
         self.history = QtWidgets.QPushButton(parent)
         self.history.setGeometry(QtCore.QRect(30, 290, 69, 32))
-        font = QtGui.QFont()
         font.setPointSize(21)
         self.history.setFont(font)
         self.history.setText("History")
@@ -38,7 +37,6 @@ class NavBarUI(QtWidgets.QWidget):
 
         self.statistic = QtWidgets.QPushButton(parent)
         self.statistic.setGeometry(QtCore.QRect(30, 340, 88, 32))
-        font = QtGui.QFont()
         font.setPointSize(21)
         self.statistic.setFont(font)
         self.statistic.setText("Statistics")
@@ -55,7 +53,6 @@ class NavBarUI(QtWidgets.QWidget):
         # create button
         self.create_button = QtWidgets.QPushButton(parent)
         self.create_button.setGeometry(QtCore.QRect(30, 100, 211, 41))
-        font = QtGui.QFont()
         font.setPointSize(18)
         self.create_button.setFont(font)
         self.create_button.setObjectName("create_button")

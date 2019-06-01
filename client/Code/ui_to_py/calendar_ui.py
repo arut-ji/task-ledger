@@ -11,6 +11,7 @@ class CalendarWidget(QtWidgets.QCalendarWidget):
         self.cur_day = QtGui.QTextCharFormat()
         self.brush = QtGui.QBrush()
         self.today = QtCore.QDate.currentDate()
+        self.setFont("Roboto Light")
         self.system: TaskLedgerSystem = None
         for d in (QtCore.Qt.Saturday, QtCore.Qt.Sunday,):
             fmt = self.weekdayTextFormat(d)
@@ -47,6 +48,7 @@ class CalendarWidget(QtWidgets.QCalendarWidget):
             r = QtCore.QRect(QtCore.QPoint(), min(rect.width() - 5, rect.height() - 5)*QtCore.QSize(1, 1))
             r.moveCenter(rect.center())
             painter.drawEllipse(r)
+            painter.setFont("Roboto Light")
             painter.setPen(QtGui.QPen(QtGui.QColor("white")))
             painter.drawText(rect, QtCore.Qt.AlignCenter, str(date.day()))
             painter.restore()

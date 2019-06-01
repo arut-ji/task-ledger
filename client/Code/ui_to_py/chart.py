@@ -15,6 +15,7 @@ class BarChart(QWidget):
         bar_set = QtCharts.QBarSet("ME")
         bar_set.setColor(QColor(231, 119, 32))
         self.task_list = None
+        self.setFont("Roboto Light")
 
         self.max_bound: datetime = datetime.datetime.now()
 
@@ -24,7 +25,8 @@ class BarChart(QWidget):
         self.series = QtCharts.QBarSeries()
         self.chart = QtCharts.QChart()
         self.chart.addSeries(self.series)
-        self.chart.setTitle("Karma Points")
+        self.chart.setFont("Roboto Light")
+        self.chart.setTitle("Task Done")
         self.chart.setAnimationOptions(QtCharts.QChart.SeriesAnimations)
 
         self.axisX = QtCharts.QBarCategoryAxis()
@@ -76,7 +78,7 @@ class BarChart(QWidget):
 
         self.axisY.setRange(min(result), max(result) + max(result) * 0.3)
 
-        bar_set = QtCharts.QBarSet("Done tasks in each day.")
+        bar_set = QtCharts.QBarSet("Done tasks in each day")
         bar_set.setColor(QColor(231, 119, 32))
         bar_set.append(result)
         self.series.append(bar_set)

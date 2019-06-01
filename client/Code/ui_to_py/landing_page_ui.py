@@ -11,12 +11,12 @@ class LandingPageUI(QWidget):
         self.textEdit = QtWidgets.QTextEdit(parent)
         self.pushButton = QtWidgets.QPushButton(parent)
 
-    def setupUi(self, TaskLedger):
-        TaskLedger.setObjectName("TaskLedger")
-        TaskLedger.resize(1000, 600)
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(1000, 600)
 
         css_file = open('../Stylesheet/landing-page.css').read()
-        TaskLedger.setStyleSheet(css_file)
+        Form.setStyleSheet(css_file)
 
         self.landing_graphic.setGeometry(QtCore.QRect(90, 170, 359, 264))
         self.landing_graphic.setMinimumSize(QtCore.QSize(359, 264))
@@ -58,17 +58,17 @@ class LandingPageUI(QWidget):
         self.pushButton.setStyleSheet("")
         self.pushButton.setObjectName("pushButton")
 
-        self.retranslateUi(TaskLedger)
-        QtCore.QMetaObject.connectSlotsByName(TaskLedger)
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
         self.hide()
 
-    def retranslateUi(self, TaskLedger):
-        TaskLedger.setWindowTitle(QtWidgets.QApplication.translate("TaskLedger", "Task Ledger", None, -1))
-        self.textEdit.setHtml(QtWidgets.QApplication.translate("TaskLedger", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, Form):
+        Form.setWindowTitle(QtWidgets.QApplication.translate("Form", "Task Ledger", None, -1))
+        self.textEdit.setHtml(QtWidgets.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'.SF NS Text\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Roboto\'; font-size:16pt;\">In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris. Sed ullamcorper </span></p></body></html>", None, -1))
-        self.pushButton.setText(QtWidgets.QApplication.translate("TaskLedger", "Get Started !", None, -1))
+        self.pushButton.setText(QtWidgets.QApplication.translate("Form", "Get Started !", None, -1))
 
 

@@ -10,7 +10,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 
 from client.Code.utility.parsers import DatetimeParser
 
-class Ui_Form(QWidget):
+class MainUI(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.system = None

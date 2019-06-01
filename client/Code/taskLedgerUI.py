@@ -56,7 +56,7 @@ class Task_ledger(QWidget):
 
         # register Page
         self.stackedWidgetPage3.setObjectName("stackedWidgetPage3")
-        self.reg = reg.Ui_Form(self.stackedWidgetPage3)
+        self.reg = reg.RegisterUI(self.stackedWidgetPage3)
         self.reg.setupUi(self.stackedWidgetPage3)
         self.reg.setGeometry(0, 0, 1000, 600)
         self.reg.back.clicked.connect(self.goto_login)
@@ -64,9 +64,9 @@ class Task_ledger(QWidget):
 
         # main
         self.stackedWidgetPage4.setObjectName("stackedWidgetPage4")
-        self.main = main.Ui_Form(self.stackedWidgetPage4)
+        self.main = main.MainUI(self.stackedWidgetPage4)
         # Pass system object to the child Widget
-        self.main.set_system(self.system)
+        self.main.bind_system(self.system)
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
         self.main.navbar.log_out.clicked.connect(self.logout)

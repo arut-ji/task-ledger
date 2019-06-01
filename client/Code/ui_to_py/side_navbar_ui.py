@@ -1,6 +1,5 @@
 from PySide2 import QtWidgets, QtCore, QtGui
 
-
 class NavBarUI(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(NavBarUI, self).__init__(parent)
@@ -21,7 +20,6 @@ class NavBarUI(QtWidgets.QWidget):
         self.schedule.setObjectName("schedule")
         self.schedule.setText("Schedule")
 
-
         self.calendar = QtWidgets.QPushButton(parent)
         self.calendar.setGeometry(QtCore.QRect(30, 240, 85, 32))
         font = QtGui.QFont()
@@ -29,7 +27,6 @@ class NavBarUI(QtWidgets.QWidget):
         self.calendar.setFont(font)
         self.calendar.setObjectName("calendar")
         self.calendar.setText("Calendar")
-
 
         self.history = QtWidgets.QPushButton(parent)
         self.history.setGeometry(QtCore.QRect(30, 290, 69, 32))
@@ -46,14 +43,6 @@ class NavBarUI(QtWidgets.QWidget):
         self.statistic.setFont(font)
         self.statistic.setText("Statistics")
         self.statistic.setObjectName("statistic")
-
-        self.notification = QtWidgets.QPushButton(parent)
-        self.notification.setGeometry(QtCore.QRect(30, 390, 110, 32))
-        font = QtGui.QFont()
-        font.setPointSize(21)
-        self.notification.setFont(font)
-        self.notification.setText("Notification")
-        self.notification.setObjectName("notification")
 
         # logo label
         self.logo = QtWidgets.QLabel(parent)

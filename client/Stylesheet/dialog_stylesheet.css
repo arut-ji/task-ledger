@@ -14,7 +14,7 @@ QLineEdit:focus{
 	border: none;
 }
 
-QPushButton#save_btn, #okay{
+QPushButton#save_btn{
 	background-color: rgba(242, 183, 54, 95);
 	color: rgb(40, 19, 18);
 	border-radius: 10px

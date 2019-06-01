@@ -28,7 +28,6 @@ class Observable(metaclass=ABCMeta):
 
 
 class TaskLedgerSystem(Observable):
-
     def __init__(self):
         super().__init__()
         self.task_list = TaskList()
@@ -77,7 +76,6 @@ class TaskLedgerSystem(Observable):
             return response
 
     def create_task(self, details: Dict) -> bool:
-
         details.update({'user': self.user['id']})
         is_valid = self.task_validator.validate(details)
         if is_valid:
@@ -118,21 +116,8 @@ class TaskLedgerSystem(Observable):
     def is_busy(self, date: QDate) -> bool:
         return self.task_list.is_busy(date)
 
-
 class ConcreteObserver(Observer):
     def update_data(self, task_list: TaskList):
         for task in task_list.get_task_list():
             print(task)
 
-
-# system = TaskLedgerSystem()
-# system.attach(ConcreteObserver())
-
-# system.login('admin', 'admin')
-# tasks = system.task_list.get_task_list()
-# for task in tasks:
-#     print(task)
-# print(system.is_busy(QDate(2019, 6, 2)))
-# result = system.delete_task(34)
-#
-# print(result)

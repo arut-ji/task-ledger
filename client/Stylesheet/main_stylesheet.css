@@ -106,7 +106,7 @@ QPushButton:hover#create_button{
 
 /*Tab*/
 QTabWidget{
-	font-size: 20px;
+	font-size: 16px;
 }
 
 QTabWidget::pane{
@@ -124,8 +124,8 @@ QTabBar::tab{
 }
 
 QTabBar::tab:selected {
-    background: white;
-	color: rgb(231, 119, 32);
+    background: rgb(251, 166, 0);
+	color: #361A17;
 }
 
 QTabBar::tab:!selected {
@@ -340,4 +340,15 @@ QComboBox::drop-down {
 	border-left-style: solid;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
+}
+
+QPushButton#save_btn, #okay{
+	background-color: rgba(242, 183, 54, 95);
+	color: rgb(40, 19, 18);
+	border-radius: 10px
+}
+QPushButton:hover#save_btn, #okay{
+	background-color: rgb(242, 183, 54);
+	color: rgb(40, 19, 18);
+	border-radius: 10px
 }

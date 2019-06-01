@@ -8,12 +8,14 @@ import client.Code.ui_to_py.register_ui as reg
 import client.Code.ui_to_py.main_ui as main
 import client.Code.ui_to_py.dialog_ui as dialog
 import client.Code.ui_to_py.dialog_reg as dialog_reg
+import client.Code.ui_to_py.dialog_logout as dialog_logout
 
 from client.Code.controller.subjects.manager import TaskLedgerSystem
 from client.Code.utility.parsers import DatetimeParser
 
 DEBUG = False
-
+error_stylesheet = "border-color: red; color: red;"
+normal_stylesheet = "border-color: black; color: black;"
 
 class Task_ledger(QWidget):
 
@@ -24,6 +26,7 @@ class Task_ledger(QWidget):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.setFixedSize(1000, 600)
+        Form.setWindowTitle("Task Ledger")
 
         self.stackedWidget = QStackedWidget(Form)
         self.stackedWidget.setGeometry(QRect(0, 0, 1000, 600))
@@ -65,11 +68,19 @@ class Task_ledger(QWidget):
         self.main.set_system(self.system)
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
-        self.main.navbar.log_out.clicked.connect(self.goto_landing)
+        self.main.navbar.log_out.clicked.connect(self.logout)
         # navbar.log_out.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage4)
 
         self.stackedWidget.setCurrentIndex(0)
+
+    def logout(self):
+        self.dialog = dialog_logout.Logout_Dialog()
+        self.dialog.setupUi(self.dialog)
+        self.dialog.okay.clicked.connect(self.goto_landing)
+        self.dialog.okay.clicked.connect(self.dialog.close)
+        self.dialog.no.clicked.connect(self.dialog.close)
+        self.dialog.show()
 
     def goto_landing(self):
         self.stackedWidget.setCurrentIndex(0)
@@ -125,7 +136,6 @@ class TaskLedgerUI(QWidget):
         if self.system.login(username, password):
             self.system.set_loading(False)
             self.ui.goto_main()
-
         else:
             self.ui.login.error_msg.setText("Invalid username or password")
             self.ui.login.username_lineEdit.setText("")
@@ -141,16 +151,20 @@ class TaskLedgerUI(QWidget):
         self.system.set_loading(True)
 
         result = self.system.register(username, password1, password2)
-        if result == True:
+        if len(result.values()) == 0:
             self.system.set_loading(False)
             self.dialog = dialog_reg.Reg_Dialog_Complete()
             self.dialog.setupUi(self.dialog)
-            self.dialog.okay.clicked.connect(self.ui.goto_main)
+            self.dialog.okay.clicked.connect(self.ui.goto_login)
             self.dialog.okay.clicked.connect(self.dialog.close)
             self.dialog.show()
         else:
             # dialog
-            self.dialog = dialog_reg.Reg_Dialog_Error("This password is too short. It must contain at least 8 characters.")
+            error_messages = []
+            for message in result.values():
+                error_messages += message
+
+            self.dialog = dialog_reg.Reg_Dialog_Error(error_messages)
             self.dialog.setupUi(self.dialog)
             self.dialog.okay.clicked.connect(self.dialog.close)
             self.dialog.show()
@@ -165,9 +179,7 @@ class TaskLedgerUI(QWidget):
     def create_dialog(self):
         self.dialog = dialog.Create_dialog()
         self.dialog.setupUi(self.dialog)
-
         self.dialog.save_btn.clicked.connect(self.create_event)
-        self.dialog.save_btn.clicked.connect(self.dialog.close)
         self.dialog.show()
 
     def create_event(self):
@@ -195,7 +207,34 @@ class TaskLedgerUI(QWidget):
             "location": location,
         }
 
-        self.system.create_task(details)
+        # if topic == '':
+        #     self.dialog.title.setStyleSheet(error_stylesheet)
+        # else:
+        #     self.dialog.title.setStyleSheet(normal_stylesheet)
+
+        if self.system.create_task(details):
+            self.dialog.close()
+        else:
+            if topic == '':
+                self.dialog.title.setStyleSheet(error_stylesheet)
+            else:
+                self.dialog.title.setStyleSheet(normal_stylesheet)
+
+            if start_at.date() > end_at.date():
+                self.dialog.to_dateEdit.setStyleSheet(error_stylesheet)
+                self.dialog.from_dateEdit.setStyleSheet(error_stylesheet)
+
+            else:
+                self.dialog.to_dateEdit.setStyleSheet(normal_stylesheet)
+                self.dialog.from_dateEdit.setStyleSheet(normal_stylesheet)
+
+            if start_time >= end_time:
+                self.dialog.timeEdit.setStyleSheet(error_stylesheet)
+                self.dialog.to_timeEdit.setStyleSheet(error_stylesheet)
+            else:
+                self.dialog.timeEdit.setStyleSheet(normal_stylesheet)
+                self.dialog.to_timeEdit.setStyleSheet(normal_stylesheet)
+
 
 
 if __name__ == '__main__':

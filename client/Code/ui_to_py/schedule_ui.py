@@ -7,7 +7,10 @@ from client.Code.controller.models.models import TaskList, Task
 import client.Code.ui_to_py.dialog_ui as dialog
 from client.Code.controller.subjects.manager import TaskLedgerSystem
 from client.Code.utility.parsers import DatetimeParser
+import client.Code.ui_to_py.dialog_reg as dialog_reg
 
+error_stylesheet = "border-color: red; color: red;"
+normal_stylesheet = "border-color: black; color: black;"
 
 class Schedule_ui(QtWidgets.QWidget):
 
@@ -17,6 +20,12 @@ class Schedule_ui(QtWidgets.QWidget):
         self.active_task_list = None
         self.selected_task = None
         self.system: TaskLedgerSystem = None
+        self.busy = 0
+        self.date = QtWidgets.QLabel(parent)
+        self.today_label = QtWidgets.QLabel(parent)
+        self.list_view = QtWidgets.QListView(parent)
+        self.model = QtGui.QStandardItemModel(self.list_view)
+        self.is_update_success = False
 
     def bind_system(self, system):
         self.system = system
@@ -41,7 +50,7 @@ class Schedule_ui(QtWidgets.QWidget):
         self.right_arrow.setObjectName("right_arrow")
         self.right_arrow.clicked.connect(self.next_date)
 
-        self.today_label = QtWidgets.QLabel(parent)
+
         self.today_label.setGeometry(QtCore.QRect(130, 20, 200, 51))
         font = QtGui.QFont()
         font.setFamily("Helvetica Neue")
@@ -49,7 +58,7 @@ class Schedule_ui(QtWidgets.QWidget):
         self.today_label.setFont(font)
         self.today_label.setObjectName("today_label")
 
-        self.date = QtWidgets.QLabel(parent)
+
         self.date.setGeometry(QtCore.QRect(120, 60, 500, 51))
         font = QtGui.QFont()
         font.setFamily("Helvetica")
@@ -57,15 +66,19 @@ class Schedule_ui(QtWidgets.QWidget):
         self.date.setFont(font)
         self.date.setObjectName("label_3")
 
-        self.list_view = QtWidgets.QListView(parent)
         self.list_view.setGeometry(80, 120, 590, 450)
-
-        self.model = QtGui.QStandardItemModel(self.list_view)
         self.list_view.setModel(self.model)
         self.model.clear()
 
         self.list_view.clicked.connect(self.itemClicked)
         self.update_label(self.date_now)
+
+        self.graphic = QtWidgets.QLabel(parent)
+        self.graphic.setObjectName("label_4")
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.label_notask = QtWidgets.QLabel(parent)
+        self.label_notask.setFont(font)
 
     def itemClicked(self, index):
         task: Task = self.model.itemFromIndex(index).data()
@@ -73,7 +86,7 @@ class Schedule_ui(QtWidgets.QWidget):
         checked = self.model.itemFromIndex(index).checkState()
         if not checked:
             self.dialog = dialog.Display_dialog()
-            self.dialog.setupUi(self.dialog)
+            self.dialog.setupUi(self.dialog, task.topic)
             self.dialog.show()
 
             self.start_date = QDate.fromString(task.start_at.strftime("%d/%m/%Y"), 'dd/MM/yyyy')
@@ -122,8 +135,37 @@ class Schedule_ui(QtWidgets.QWidget):
             "location": location
         }
 
-        # TODO: Error Dialog
-        is_update_success = self.system.update_task(task_id, details)
+        if topic == '':
+            self.dialog.title.setStyleSheet(error_stylesheet)
+        else:
+            self.dialog.title.setStyleSheet(normal_stylesheet)
+            self.is_update_success = self.system.update_task(task_id, details)
+
+        if not self.is_update_success:
+            if start_at.date() >= end_at.date():
+                self.dialog.to_dateEdit.setStyleSheet(error_stylesheet)
+                self.dialog.from_dateEdit.setStyleSheet(error_stylesheet)
+
+            else:
+                self.dialog.to_dateEdit.setStyleSheet(normal_stylesheet)
+                self.dialog.from_dateEdit.setStyleSheet(normal_stylesheet)
+
+            if start_time >= end_time:
+                self.dialog.timeEdit.setStyleSheet(error_stylesheet)
+                self.dialog.to_timeEdit.setStyleSheet(error_stylesheet)
+            else:
+                self.dialog.timeEdit.setStyleSheet(normal_stylesheet)
+                self.dialog.to_timeEdit.setStyleSheet(normal_stylesheet)
+
+        else:
+            self.dialog.close()
+
+        # if not is_update_success:
+        #     lst = []
+        #     self.dialog = dialog_reg.Reg_Dialog_Error(lst)
+        #     self.dialog.setupUi(self.dialog)
+        #     self.dialog.okay.clicked.connect(self.dialog.close)
+        #     self.dialog.show()
 
     def edit_dialog(self):
         self.dialog = dialog.Edit_dialog()
@@ -136,7 +178,7 @@ class Schedule_ui(QtWidgets.QWidget):
         self.dialog.timeEdit.setTime(self.start_time)
         self.dialog.to_timeEdit.setTime(self.end_time)
         self.dialog.save_btn.clicked.connect(self.update_task)
-        self.dialog.save_btn.clicked.connect(self.dialog.close)
+        # self.dialog.save_btn.clicked.connect(self.dialog.close)
         self.dialog.show()
 
     def next_date(self):
@@ -149,21 +191,24 @@ class Schedule_ui(QtWidgets.QWidget):
         self.update_label(self.date_now)
         self.update_task_list_view()
 
-    def update_label(self, date):
+    def update_label(self, date_input):
         self.date.setText(self.get_str_date(self.date_now))
-        self.today_label.setText(date.strftime("%A"))
+        self.today_label.setText(date_input.strftime("%A"))
 
     def get_date(self):
         return self.date_now
 
     def set_date(self, date):
         self.date_now = date
+        self.update_label(self.date_now)
+        self.update_task_list_view()
 
     def get_str_date(self, date):
         return ' ' + date.strftime("%d") + ' ' \
                + date.strftime("%B") + ' ' + date.strftime("%Y")
 
     def update_task_list_view(self):
+        # self.is_busy(self.date_now)
         self.model.clear()
         current_date_tasks = list(
             filter(
@@ -171,6 +216,8 @@ class Schedule_ui(QtWidgets.QWidget):
                 self.active_task_list
             )
         )
+
+        self.busy = len(current_date_tasks)
 
         for task in current_date_tasks:
             topic = task.topic
@@ -181,10 +228,18 @@ class Schedule_ui(QtWidgets.QWidget):
             item.setEditable(False)
             self.model.appendRow(item)
 
-        # TODO: No Task display
         if len(current_date_tasks) == 0:
-            # item = QStandardItem("No task for this day.")
-            pass
+            self.graphic.setText("")
+            self.graphic.setPixmap(QtGui.QPixmap("../Assets/no_task.png"))
+            self.graphic.setScaledContents(True)
+            self.graphic.setGeometry(QtCore.QRect(260, 195, 252, 211))
+            self.label_notask.setGeometry(QtCore.QRect(280, 395, 221, 51))
+            self.label_notask.setText("You are free on this day !")
+
+        else:
+            self.graphic.clear()
+            self.label_notask.clear()
+
 
     # Subscribe to Observable
     def update_data(self, task_list: TaskList):

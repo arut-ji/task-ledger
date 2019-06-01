@@ -27,13 +27,18 @@ QCalendarWidget QAbstractItemView:enabled
 {
 	font-size:18px;
 	color: black;
-	selection-color: rgb(231, 119, 32);
+	selection-color: black;
 }
 
 QCalendarWidget QAbstractItemView
 {
     selection-background-color: transparent;
-    selection-color: white;
+	selection-color: black;
+}
+
+QCalendarWidget QAbstractItemView::item
+{
+    height: 50px;
 }
 
 QCalendarWidget QWidget#qt_calendar_navigationbar
@@ -293,4 +298,46 @@ QScrollBar::sub-line:vertical {
 	height: 0 px;
 	subcontrol-position: top;
 	subcontrol-origin: margin;
+}
+
+QListView{
+	border: none;
+}
+
+QComboBox{
+    color: rgb(40, 19, 18);
+    background-color: rgb(242, 247, 247);
+	border-radius: 7px;
+	border: 1px solid rgb(40, 19, 18);
+    selection-color:rgba(243,149,0,255);
+}
+
+QComboBox QAbstractItemView{
+    border-radius:0px;
+    border:0px;
+	width: 5px;
+    background-color: rgb(242, 247, 247);
+    color: rgb(40, 19, 18);
+}
+
+QComboBox::down-arrow:flat {
+	image: url(../Assets/arrow_down.png);
+	height: 16px;
+	width: 16px;
+	border: none;
+	border-radius: 7px;
+	background-color: rgb(242, 247, 247);
+}
+QComboBox::drop-down {
+	image: url(../Assets/arrow_down.png);
+	subcontrol-position: center right;
+	margin: 4px;
+	width: 16px;
+	height: 16px;
+	color: white;
+	border-left-width: 0px;
+	border-left-color: #8F9EAB;
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
 }

@@ -4,9 +4,6 @@ from typing import Dict, Set
 from PySide2.QtCore import QDate
 
 from client.Code.controller.models.models import TaskList
-from client.Code.controller.models.models import Task
-from client.Code.controller.observers.observers import Observer
-
 from client.Code.controller.services.services import AuthService
 from client.Code.controller.services.services import TaskService
 from client.Code.utility.validators import TaskValidator
@@ -122,12 +119,6 @@ class TaskLedgerSystem(Observable):
 
     def is_busy(self, date: QDate) -> bool:
         return self.task_list.is_busy(date)
-
-
-class ConcreteObserver(Observer):
-    def update_data(self, task_list: TaskList):
-        for task in task_list.get_task_list():
-            print(task)
 
 
 # system = TaskLedgerSystem()

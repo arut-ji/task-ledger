@@ -11,10 +11,11 @@ from PySide2.QtCharts import QtCharts
 
 
 from client.Code.controller.models.models import TaskList
+from client.Code.controller.observers.observers import ObserverWidget
 from client.Code.ui_to_py.bar_chart import BarChart
 
 
-class StatisticsUI(QWidget):
+class StatisticsUI(ObserverWidget):
     def __init__(self, parent=None):
         super(StatisticsUI, self).__init__(parent)
         self.task_list = None

@@ -81,17 +81,16 @@ class Dialog_task(QtWidgets.QWidget):
 
         self.timeEdit = QtWidgets.QTimeEdit(Dialog)
         self.timeEdit.setGeometry(QtCore.QRect(130, 120, 61, 28))
-        self.timeEdit.setFont(font)
         self.timeEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.timeEdit.setObjectName("timeEdit")
 
         self.to_timeEdit = QtWidgets.QTimeEdit(Dialog)
-        self.to_timeEdit.setFont(font)
         self.to_timeEdit.setGeometry(QtCore.QRect(220, 120, 61, 28))
         self.to_timeEdit.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.to_timeEdit.setObjectName("to_timeEdit")
 
         self.location = QtWidgets.QLineEdit(Dialog)
+        font.setPointSize(16)
         self.location.setFont(font)
         self.location.setGeometry(QtCore.QRect(70, 210, 359, 28))
         self.location.setObjectName("location")
@@ -122,6 +121,7 @@ class Create_dialog(Dialog_task):
     def setupUi(self, Dialog):
         super().setupUi(Dialog)
         self.setWindowTitle("Create Task")
+        self.title.clear()
         self.save_btn = QtWidgets.QPushButton(Dialog)
         self.save_btn.setGeometry(QtCore.QRect(330, 20, 101, 30))
         self.save_btn.setObjectName("save_btn")

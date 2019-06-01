@@ -3,6 +3,7 @@ from PySide2.QtCore import Qt
 
 class Reg_Dialog_Complete(QtWidgets.QDialog):
     def __init__(self, parent=None):
+        super(Reg_Dialog_Complete, self).__init__(parent)
         self.movie_screen = QtWidgets.QLabel(self)
         ag_file = "../Assets/success.gif"
         self.movie = QtGui.QMovie(ag_file)

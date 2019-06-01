@@ -2,12 +2,18 @@ from typing import List
 from PySide2 import QtWidgets, QtCore, QtGui
 
 from client.Code.controller.models.models import TaskList, Task
+from client.Code.controller.observers.observers import ObserverWidget
 
-class History_ui(QtWidgets.QWidget):
+
+class History_ui(ObserverWidget):
     def __init__(self, parent=None):
         super(History_ui, self).__init__(parent)
         self.label_history = QtWidgets.QLabel(parent)
         self.tableWidget = QtWidgets.QTableWidget(parent)
+        self.system = None
+
+    def bind(self, system):
+        self.system = system
 
     def setupUi(self, parent=None):
         self.label_history.setGeometry(QtCore.QRect(290, 40, 131, 51))
@@ -49,8 +55,8 @@ class History_ui(QtWidgets.QWidget):
         self.tableWidget.verticalHeader().setHighlightSections(True)
         self.tableWidget.verticalHeader().setMinimumSectionSize(25)
 
-    def update_data(self, task_list: TaskList):
-        task_list = task_list.get_task_list()
+    def update_data(self):
+        task_list = self.system.get_task_list().get_task_list()
         inactive_task_list = list(
             filter(
                 lambda task: task.status, task_list

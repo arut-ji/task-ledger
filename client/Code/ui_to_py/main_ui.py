@@ -1,6 +1,6 @@
 from PySide2.QtWidgets import QWidget
 
-from client.Code.controller.subjects.manager import Observable
+from client.Code.controller.subjects.subjects import Observable
 from client.Code.ui_to_py.calendar_ui import CalendarWidget
 import client.Code.ui_to_py.Statistics_ui as statistics
 import client.Code.ui_to_py.schedule_ui as schedule
@@ -19,7 +19,7 @@ class MainUI(QWidget):
         self.stackedWidgetPage1 = QtWidgets.QWidget()
         self.page = QtWidgets.QWidget()
 
-    def set_system(self, system: Observable):
+    def bind_system(self, system: Observable):
         self.system = system
 
     def setupUi(self, Form):
@@ -46,7 +46,7 @@ class MainUI(QWidget):
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
         self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
         self.schedule_ui.setupUi(self.stackedWidgetPage1)
-        self.schedule_ui.bind_system(self.system)
+        self.schedule_ui.bind(self.system)
 
         # Attach Observer to manager
         self.system.attach(self.schedule_ui)
@@ -58,13 +58,15 @@ class MainUI(QWidget):
         self.calendarWidget.setGeometry(QtCore.QRect(40, 80, 651, 391))
         self.calendarWidget.clicked.connect(self.display_sch)
         self.stackedWidget.addWidget(self.page)
-        self.calendarWidget.bind_system(self.system)
+        self.calendarWidget.bind(self.system)
 
         # history
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setObjectName("page_2")
         self.history_ui = history.History_ui(self.page_2)
         self.history_ui.setupUi(self.page_2)
+        self.history_ui.bind(self.system)
+
         
         # Attach history observer to manager
         self.system.attach(self.history_ui)
@@ -75,6 +77,7 @@ class MainUI(QWidget):
         self.page_4.setObjectName("page_4")
         self.statistics = statistics.StatisticsUI(self.page_4)
         self.statistics.setupUI(self.page_4)
+        self.statistics.bind(self.system)
 
         # Attach statistics observer to manager
         self.system.attach(self.statistics)
@@ -89,7 +92,6 @@ class MainUI(QWidget):
 
     def display_sch(self):
         self.schedule_ui.set_date(self.calendarWidget.get_selected_date())
-
         selected_date = DatetimeParser.dateToDatetime(
             self.calendarWidget.get_selected_date()
         )

@@ -3,14 +3,17 @@ import datetime
 from PySide2.QtCore import QRect, QSize
 from PySide2.QtGui import QFont, QIcon, QPixmap
 from PySide2.QtWidgets import (QWidget, QLabel, QPushButton, QComboBox, QTabWidget)
-
-from client.Code.controller.models.models import TaskList
+from client.Code.controller.observers.observers import ObserverWidget
 from client.Code.ui_to_py.chart import BarChart, LineChart
 
-class StatisticsUI(QWidget):
+class StatisticsUI(ObserverWidget):
     def __init__(self, parent=None):
         super(StatisticsUI, self).__init__(parent)
         self.task_list = None
+        self.system = None
+
+    def bind(self, system):
+        self.system = system
 
     def setupUI(self, parent=None):
         self.stat_label = QLabel(parent)
@@ -93,10 +96,10 @@ class StatisticsUI(QWidget):
             else:
                 self.line_graph.set_interval(7)
 
-    def update_data(self, task_list: TaskList):
-        self.task_list = task_list
-        self.stat_graph.update_chart(task_list, datetime.datetime.now())
-        self.line_graph.update_chart(task_list, datetime.datetime.now())
+    def update_data(self):
+        self.task_list = self.system.get_task_list()
+        self.stat_graph.update_chart(self.task_list, datetime.datetime.now())
+        self.line_graph.update_chart(self.task_list, datetime.datetime.now())
         self.update()
 
     def change_chart_backward(self):

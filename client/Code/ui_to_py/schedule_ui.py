@@ -3,15 +3,16 @@ from PySide2.QtCore import QSize, QDate, QTime
 from PySide2.QtGui import QIcon, QStandardItem
 import datetime
 
-from client.Code.controller.models.models import TaskList, Task
+from client.Code.controller.models.models import Task
 import client.Code.ui_to_py.dialog_ui as dialog
-from client.Code.controller.subjects.manager import TaskLedgerSystem
+from client.Code.controller.observers.observers import ObserverWidget
+from client.Code.controller.subjects.subjects import TaskLedgerSystem
 from client.Code.utility.parsers import DatetimeParser
 
 error_stylesheet = "border-color: red; color: red;"
 normal_stylesheet = "border-color: black; color: black;"
 
-class Schedule_ui(QtWidgets.QWidget):
+class Schedule_ui(ObserverWidget):
 
     def __init__(self, parent=None):
         super(Schedule_ui, self).__init__(parent)
@@ -26,7 +27,7 @@ class Schedule_ui(QtWidgets.QWidget):
         self.model = QtGui.QStandardItemModel(self.list_view)
         self.is_update_success = False
 
-    def bind_system(self, system):
+    def bind(self, system):
         self.system = system
 
     def setupUi(self, parent=None):
@@ -233,8 +234,8 @@ class Schedule_ui(QtWidgets.QWidget):
 
 
     # Subscribe to Observable
-    def update_data(self, task_list: TaskList):
-        task_list = task_list.get_task_list()
+    def update_data(self):
+        task_list = self.system.get_task_list().get_task_list()
         self.active_task_list = list(
             filter(
                 lambda task: not task.status,

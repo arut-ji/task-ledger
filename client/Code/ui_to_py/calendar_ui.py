@@ -1,6 +1,6 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 
-from client.Code.controller.subjects.manager import TaskLedgerSystem
+from client.Code.controller.subjects.subjects import TaskLedgerSystem
 
 class CalendarWidget(QtWidgets.QCalendarWidget):
     def __init__(self, parent=None):
@@ -18,7 +18,7 @@ class CalendarWidget(QtWidgets.QCalendarWidget):
             self.setWeekdayTextFormat(d, fmt)
         self.show()
 
-    def bind_system(self, system):
+    def bind(self, system):
         self.system = system
 
     def get_selected_date(self):

@@ -1,12 +1,9 @@
 from abc import ABCMeta, abstractmethod
-from typing import Dict, Set
+from typing import Dict
 
 from PySide2.QtCore import QDate
 
 from client.Code.controller.models.models import TaskList
-from client.Code.controller.models.models import Task
-from client.Code.controller.observers.observers import Observer
-
 from client.Code.controller.services.services import AuthService
 from client.Code.controller.services.services import TaskService
 from client.Code.utility.validators import TaskValidator
@@ -40,13 +37,16 @@ class TaskLedgerSystem(Observable):
 
     def _notify_observers(self):
         for observer in self._observers:
-            observer.update_data(self.task_list)
+            observer.update_data()
 
     def set_current_user(self, user: Dict):
         self.user = user
 
     def set_current_token(self, token: str):
         self.token = token
+
+    def get_task_list(self):
+        return self.task_list
 
     def set_task_list(self, task_list: TaskList):
         self.task_list = task_list
@@ -116,8 +116,4 @@ class TaskLedgerSystem(Observable):
     def is_busy(self, date: QDate) -> bool:
         return self.task_list.is_busy(date)
 
-class ConcreteObserver(Observer):
-    def update_data(self, task_list: TaskList):
-        for task in task_list.get_task_list():
-            print(task)
 

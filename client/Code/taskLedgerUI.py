@@ -10,7 +10,7 @@ import client.Code.ui_to_py.dialog_ui as dialog
 import client.Code.ui_to_py.dialog_reg as dialog_reg
 import client.Code.ui_to_py.dialog_logout as dialog_logout
 
-from client.Code.controller.subjects.manager import TaskLedgerSystem
+from client.Code.controller.subjects.subjects import TaskLedgerSystem
 from client.Code.utility.parsers import DatetimeParser
 
 DEBUG = False
@@ -124,7 +124,6 @@ class TaskLedgerUI(QWidget):
         # Goto main page
         if self.system.login(username, password):
             self.system.set_loading(False)
-            self.system.enable_notification()
             self.ui.goto_main()
         else:
             self.ui.login.error_msg.setText("Invalid username or password")

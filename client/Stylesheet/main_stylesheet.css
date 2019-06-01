@@ -106,7 +106,7 @@ QPushButton:hover#create_button{
 
 /*Tab*/
 QTabWidget{
-	font-size: 20px;
+	font-size: 16px;
 }
 
 QTabWidget::pane{
@@ -124,8 +124,8 @@ QTabBar::tab{
 }
 
 QTabBar::tab:selected {
-    background: white;
-	color: rgb(231, 119, 32);
+    background: rgb(251, 166, 0);
+	color: #361A17;
 }
 
 QTabBar::tab:!selected {

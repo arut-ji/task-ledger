@@ -2,16 +2,22 @@ from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtWidgets import QWidget
 
 
-class Ui_TaskLedger(QWidget):
-    def setupUi(self, TaskLedger):
+class LandingPageUI(QWidget):
+    def __init__(self, parent=None):
+        super(LandingPageUI, self).__init__(parent)
+        self.landing_graphic = QtWidgets.QLabel(parent)
+        self.bg = QtWidgets.QLabel(parent)
+        self.logo = QtWidgets.QLabel(parent)
+        self.textEdit = QtWidgets.QTextEdit(parent)
+        self.pushButton = QtWidgets.QPushButton(parent)
 
+    def setupUi(self, TaskLedger):
         TaskLedger.setObjectName("TaskLedger")
         TaskLedger.resize(1000, 600)
 
         css_file = open('../Stylesheet/landing-page.css').read()
         TaskLedger.setStyleSheet(css_file)
 
-        self.landing_graphic = QtWidgets.QLabel(TaskLedger)
         self.landing_graphic.setGeometry(QtCore.QRect(90, 170, 359, 264))
         self.landing_graphic.setMinimumSize(QtCore.QSize(359, 264))
         self.landing_graphic.setMaximumSize(QtCore.QSize(359, 264))
@@ -21,14 +27,14 @@ class Ui_TaskLedger(QWidget):
         self.landing_graphic.setScaledContents(True)
         self.landing_graphic.setWordWrap(False)
         self.landing_graphic.setObjectName("landing_graphic")
-        self.bg = QtWidgets.QLabel(TaskLedger)
+
         self.bg.setGeometry(QtCore.QRect(480, 90, 435, 421))
         self.bg.setMinimumSize(QtCore.QSize(435, 300))
         self.bg.setMaximumSize(QtCore.QSize(435, 500))
         self.bg.setAutoFillBackground(False)
         self.bg.setText("")
         self.bg.setObjectName("bg")
-        self.logo = QtWidgets.QLabel(TaskLedger)
+
         self.logo.setGeometry(QtCore.QRect(520, 150, 220, 50))
         self.logo.setMinimumSize(QtCore.QSize(220, 50))
         self.logo.setMaximumSize(QtCore.QSize(220, 50))
@@ -36,14 +42,14 @@ class Ui_TaskLedger(QWidget):
         self.logo.setPixmap(QtGui.QPixmap("../Assets/logo.png"))
         self.logo.setScaledContents(True)
         self.logo.setObjectName("logo")
-        self.textEdit = QtWidgets.QTextEdit(TaskLedger)
+
         self.textEdit.setGeometry(QtCore.QRect(520, 230, 351, 151))
         self.textEdit.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
         self.textEdit.setReadOnly(True)
         self.textEdit.setCursorWidth(0)
         self.textEdit.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.textEdit.setObjectName("textEdit")
-        self.pushButton = QtWidgets.QPushButton(TaskLedger)
+
         self.pushButton.setGeometry(QtCore.QRect(520, 400, 161, 41))
         font = QtGui.QFont()
         font.setFamily("Roboto")

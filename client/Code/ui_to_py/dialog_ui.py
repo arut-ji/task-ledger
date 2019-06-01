@@ -1,9 +1,5 @@
-import sys
-
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import QDate
-from PySide2.QtWidgets import QWidget, QApplication
-
 
 class Dialog_task(QtWidgets.QWidget):
     def __init__(self, parent=None):

@@ -1,4 +1,3 @@
-import PySide2
 from PySide2.QtWidgets import QWidget
 
 from client.Code.controller.subjects.manager import Observable
@@ -11,12 +10,14 @@ from PySide2 import QtCore, QtGui, QtWidgets
 
 from client.Code.utility.parsers import DatetimeParser
 
-
 class Ui_Form(QWidget):
-
     def __init__(self, parent):
         super().__init__(parent)
         self.system = None
+        self.navbar = nav.NavBarUI(parent)
+        self.stackedWidget = QtWidgets.QStackedWidget(parent)
+        self.stackedWidgetPage1 = QtWidgets.QWidget()
+        self.page = QtWidgets.QWidget()
 
     def set_system(self, system: Observable):
         self.system = system
@@ -31,21 +32,17 @@ class Ui_Form(QWidget):
         Form.setFont(font)
 
         # navbar
-        self.navbar = nav.NavBarUI(Form)
         self.navbar.setupUI(Form)
         self.navbar.schedule.clicked.connect(self.display_sch)
         self.navbar.calendar.clicked.connect(self.display_cal)
         self.navbar.history.clicked.connect(self.display_his)
         self.navbar.statistic.clicked.connect(self.display_stat)
-        self.navbar.notification.clicked.connect(self.display_noti)
 
         # stack area
-        self.stackedWidget = QtWidgets.QStackedWidget(Form)
         self.stackedWidget.setGeometry(QtCore.QRect(280, 0, 721, 601))
         self.stackedWidget.setObjectName("stackedWidget")
 
         # schedule
-        self.stackedWidgetPage1 = QtWidgets.QWidget()
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
         self.schedule_ui = schedule.Schedule_ui(self.stackedWidgetPage1)
         self.schedule_ui.setupUi(self.stackedWidgetPage1)
@@ -56,7 +53,6 @@ class Ui_Form(QWidget):
         self.stackedWidget.addWidget(self.stackedWidgetPage1)
 
         # calendar
-        self.page = QtWidgets.QWidget()
         self.page.setObjectName("page")
         self.calendarWidget = CalendarWidget(self.page)
         self.calendarWidget.setGeometry(QtCore.QRect(40, 80, 651, 391))
@@ -84,25 +80,12 @@ class Ui_Form(QWidget):
         self.system.attach(self.statistics)
         self.stackedWidget.addWidget(self.page_4)
 
-        # notification
-        self.page_3 = QtWidgets.QWidget()
-        self.page_3.setObjectName("page_3")
-        self.label_noti = QtWidgets.QLabel(self.page_3)
-        self.label_noti.setGeometry(QtCore.QRect(260, 40, 211, 51))
-        font = QtGui.QFont()
-        font.setFamily("Helvetica")
-        font.setPointSize(42)
-        self.label_noti.setFont(font)
-        self.label_noti.setObjectName("stat_label_2")
-        self.stackedWidget.addWidget(self.page_3)
-
         self.retranslateUi(Form)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtWidgets.QApplication.translate("Form", "Form", None, -1))
-        self.label_noti.setText(QtWidgets.QApplication.translate("Form", "Notification", None, -1))
 
     def display_sch(self):
         self.schedule_ui.set_date(self.calendarWidget.get_selected_date())
@@ -112,21 +95,13 @@ class Ui_Form(QWidget):
         )
 
         self.statistics.stat_graph.set_max_bound(selected_date)
-        # self.statistics.stat_graph.update()
         self.stackedWidget.setCurrentIndex(0)
 
     def display_cal(self):
         self.stackedWidget.setCurrentIndex(1)
-        self.stackedWidget.removeWidget(self)
 
     def display_his(self):
         self.stackedWidget.setCurrentIndex(2)
-        self.stackedWidget.removeWidget(self)
 
     def display_stat(self):
         self.stackedWidget.setCurrentIndex(3)
-        self.stackedWidget.removeWidget(self)
-
-    def display_noti(self):
-        self.stackedWidget.setCurrentIndex(4)
-        self.stackedWidget.removeWidget(self)

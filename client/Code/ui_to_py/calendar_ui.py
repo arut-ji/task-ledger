@@ -1,8 +1,6 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 
-#TODO:: today selection-hover
 from client.Code.controller.subjects.manager import TaskLedgerSystem
-
 
 class CalendarWidget(QtWidgets.QCalendarWidget):
     def __init__(self, parent=None):
@@ -44,7 +42,7 @@ class CalendarWidget(QtWidgets.QCalendarWidget):
             painter.setPen(QtCore.Qt.NoPen)
             color = (date.day() % 5)
 
-            #selection
+            # selection
             painter.setBrush(QtGui.QColor(self.get_color(color)))
             r = QtCore.QRect(QtCore.QPoint(), min(rect.width() - 5, rect.height() - 5)*QtCore.QSize(1, 1))
             r.moveCenter(rect.center())

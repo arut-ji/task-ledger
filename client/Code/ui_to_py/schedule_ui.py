@@ -7,7 +7,6 @@ from client.Code.controller.models.models import TaskList, Task
 import client.Code.ui_to_py.dialog_ui as dialog
 from client.Code.controller.subjects.manager import TaskLedgerSystem
 from client.Code.utility.parsers import DatetimeParser
-import client.Code.ui_to_py.dialog_reg as dialog_reg
 
 error_stylesheet = "border-color: red; color: red;"
 normal_stylesheet = "border-color: black; color: black;"
@@ -160,13 +159,6 @@ class Schedule_ui(QtWidgets.QWidget):
         else:
             self.dialog.close()
 
-        # if not is_update_success:
-        #     lst = []
-        #     self.dialog = dialog_reg.Reg_Dialog_Error(lst)
-        #     self.dialog.setupUi(self.dialog)
-        #     self.dialog.okay.clicked.connect(self.dialog.close)
-        #     self.dialog.show()
-
     def edit_dialog(self):
         self.dialog = dialog.Edit_dialog()
         self.dialog.setupUi(self.dialog)
@@ -208,7 +200,6 @@ class Schedule_ui(QtWidgets.QWidget):
                + date.strftime("%B") + ' ' + date.strftime("%Y")
 
     def update_task_list_view(self):
-        # self.is_busy(self.date_now)
         self.model.clear()
         current_date_tasks = list(
             filter(

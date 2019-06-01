@@ -60,12 +60,12 @@ class Task:
             "done_at": self.done_at
         }
 
-    def get_point(self):
-        if self.status:
-            return 5 if self.done_at.date() < self.end_at.date() else -1 * (self.done_at.date() - self.end_at.date()).days
-        else:
-            return -1 * (
-                        datetime.datetime.now().date() - self.end_at.date()).days if datetime.datetime.now().date() > self.end_at.date() else 0
+    def get_point(self, date):
+        if date == self.done_at.date():
+            if self.done_at <= self.end_at:
+                return 5
+            else:
+                return -1 * (self.done_at.date() - self.end_at.date()).days if self.done_at.date() != self.end_at.date() else -1
 
     def __str__(self):
         return str(self.__dict__)
@@ -73,9 +73,7 @@ class Task:
     def __eq__(self, other):
         return self.id == other.id
 
-
 class TaskList:
-
     def __init__(self, tasks: List[Dict] = None):
         self._validator = TaskValidator()
         if tasks is None:
@@ -137,41 +135,11 @@ class TaskList:
             )
         )
 
-
-mock_task_data = {
-    "id": 20,
-    "topic": "Project Deadline",
-    "description": "Send SEP project.",
-    "created_at": "2019-05-29T09:18:23.223777Z",
-    "start_at": "2019-05-02T06:00:00Z",
-    "end_at": "2019-05-02T09:00:00Z",
-    "status": True,
-    "location": "International College, KMITL",
-    "done_at": "2019-05-29T09:18:23.223777Z",
-    "user": 1
-}
-mock_task_data_2 = {
-    "id": 20,
-    "topic": "Project Deadline",
-    "description": "Send SEP project.",
-    "created_at": "2019-05-29T09:18:23.223777Z",
-    "start_at": "2019-05-02T06:00:00Z",
-    "end_at": "2019-05-02T09:00:00Z",
-    "status": True,
-    "location": "International College, KMITL",
-    "done_at": "2019-05-30T09:18:23.223777Z",
-    "user": 1
-}
-#
-task = Task(mock_task_data)
-
-print(task.get_point())
-tasks = TaskList()
-tasks.add_task(task)
-tasks.add_task(Task(mock_task_data_2))
-print(TaskAnalyser.countDoneTaskFromInteval(tasks, datetime.datetime.now(), 7))
-# print(task)
-#
-# # print(task.start_at.date())
-# # print(task.end_at.date())
-# print(tasks.is_busy(QDate(2019, 6, 2)))
+    def get_done_task_from_date(self, date: datetime.date):
+        return list(
+            filter(
+                lambda
+                    task: task.status and task.done_at.date() == date,
+                self.tasks
+            )
+        )

@@ -18,9 +18,14 @@ error_stylesheet = "border-color: red; color: red;"
 normal_stylesheet = "border-color: black; color: black;"
 
 class Task_ledger(QWidget):
-
     def __init__(self, system, parent=None):
         super(Task_ledger, self).__init__(parent)
+        self.stackedWidgetPage1 = QWidget()
+        self.stackedWidgetPage2 = QWidget()
+        self.stackedWidgetPage3 = QWidget()
+        self.stackedWidgetPage4 = QWidget()
+        self.dialog = dialog_logout.Logout_Dialog()
+
         self.system = system
 
     def setupUi(self, Form):
@@ -33,18 +38,16 @@ class Task_ledger(QWidget):
         self.stackedWidget.setObjectName("stackedWidget")
 
         # Landing Page
-        self.stackedWidgetPage1 = QWidget()
         self.stackedWidgetPage1.setObjectName("stackedWidgetPage1")
-        self.landing = landing.Ui_TaskLedger(self.stackedWidgetPage1)
+        self.landing = landing.LandingPageUI(self.stackedWidgetPage1)
         self.landing.setGeometry(0, 0, 1000, 60)
         self.landing.setupUi(self.stackedWidgetPage1)
         self.stackedWidget.addWidget(self.stackedWidgetPage1)
         self.landing.pushButton.clicked.connect(self.goto_login)
 
         # Login Page
-        self.stackedWidgetPage2 = QWidget()
         self.stackedWidgetPage2.setObjectName("stackedWidgetPage2")
-        self.login = login.Ui_Form(self.stackedWidgetPage2)
+        self.login = login.LoginUI(self.stackedWidgetPage2)
         self.login.setupUi(self.stackedWidgetPage2)
         self.login.setGeometry(0, 0, 1000, 60)
         self.login.reg_label.clicked.connect(self.goto_reg)
@@ -52,7 +55,6 @@ class Task_ledger(QWidget):
         self.stackedWidget.addWidget(self.stackedWidgetPage2)
 
         # register Page
-        self.stackedWidgetPage3 = QWidget()
         self.stackedWidgetPage3.setObjectName("stackedWidgetPage3")
         self.reg = reg.Ui_Form(self.stackedWidgetPage3)
         self.reg.setupUi(self.stackedWidgetPage3)
@@ -61,7 +63,6 @@ class Task_ledger(QWidget):
         self.stackedWidget.addWidget(self.stackedWidgetPage3)
 
         # main
-        self.stackedWidgetPage4 = QWidget()
         self.stackedWidgetPage4.setObjectName("stackedWidgetPage4")
         self.main = main.Ui_Form(self.stackedWidgetPage4)
         # Pass system object to the child Widget
@@ -69,13 +70,11 @@ class Task_ledger(QWidget):
         self.main.setupUi(self.stackedWidgetPage4)
         self.main.setGeometry(0, 0, 1000, 600)
         self.main.navbar.log_out.clicked.connect(self.logout)
-        # navbar.log_out.clicked.connect(self.goto_landing)
         self.stackedWidget.addWidget(self.stackedWidgetPage4)
 
         self.stackedWidget.setCurrentIndex(0)
 
     def logout(self):
-        self.dialog = dialog_logout.Logout_Dialog()
         self.dialog.setupUi(self.dialog)
         self.dialog.okay.clicked.connect(self.goto_landing)
         self.dialog.okay.clicked.connect(self.dialog.close)
@@ -94,17 +93,6 @@ class Task_ledger(QWidget):
     def goto_main(self):
         self.stackedWidget.setCurrentIndex(3)
 
-
-mock_user = {
-    "key": "6bdf6d2c610e585fd8584f2bc51127df87fcec71",
-    "user": {
-        "id": 1,
-        "username": "admin",
-        "email": "admin@admin.com"
-    }
-}
-
-
 class TaskLedgerUI(QWidget):
     def __init__(self, application, parent=None):
         QWidget.__init__(self, parent)
@@ -114,7 +102,6 @@ class TaskLedgerUI(QWidget):
 
         # Set up the UI and mapping the buttons
         self.ui = Task_ledger(self.system)
-        # self.ui.set_system(self.system)
         self.ui.setupUi(self)
 
         self.system.attach(self.ui.main.schedule_ui)
@@ -122,6 +109,8 @@ class TaskLedgerUI(QWidget):
         self.ui.login.button_login.clicked.connect(self.login_event)
         self.ui.reg.reg_button.clicked.connect(self.register_event)
         self.ui.main.navbar.create_button.clicked.connect(self.create_dialog)
+
+        self.dialog = dialog.Create_dialog()
 
         self.show()
 
@@ -177,7 +166,6 @@ class TaskLedgerUI(QWidget):
         self.system.set_loading(False)
 
     def create_dialog(self):
-        self.dialog = dialog.Create_dialog()
         self.dialog.setupUi(self.dialog)
         self.dialog.save_btn.clicked.connect(self.create_event)
         self.dialog.show()
@@ -207,11 +195,6 @@ class TaskLedgerUI(QWidget):
             "location": location,
         }
 
-        # if topic == '':
-        #     self.dialog.title.setStyleSheet(error_stylesheet)
-        # else:
-        #     self.dialog.title.setStyleSheet(normal_stylesheet)
-
         if self.system.create_task(details):
             self.dialog.close()
         else:
@@ -234,8 +217,6 @@ class TaskLedgerUI(QWidget):
             else:
                 self.dialog.timeEdit.setStyleSheet(normal_stylesheet)
                 self.dialog.to_timeEdit.setStyleSheet(normal_stylesheet)
-
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

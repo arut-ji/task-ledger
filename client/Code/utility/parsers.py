@@ -1,10 +1,7 @@
-from PySide2.QtCore import QTime, QDate
+from PySide2.QtCore import QTime, QDate, QDateTime
 from dateutil import parser
 from datetime import datetime, date, timedelta
 import time
-
-# from client.Code.controller.models.models import TaskList, Task
-
 
 class DatetimeParser:
     @staticmethod
@@ -29,10 +26,11 @@ class DatetimeParser:
     def fromQTimeToTime(qtime: QTime) -> time:
         return qtime.toPython()
 
-    # def fromQDateToDatetime(self, qdate: QDate) -> :
+    @staticmethod
+    def fromDateToQDate(date) -> QDate:
+        return QDateTime.fromString(date, 'yyyy-MM-dd')
 
 class TaskAnalyser:
-    # pass
     @staticmethod
     def getPointFromTasks(task_list, max_date: datetime, backward_offset: int):
 
@@ -40,10 +38,11 @@ class TaskAnalyser:
         max_date = max_date.date()
         date_counter = min_date
         point_list = []
+        point = 0
         while date_counter <= max_date:
-            point = sum(
+            point += sum(
                 [
-                    task.get_point() for task in task_list.get_task_from_date(date_counter)
+                    task.get_point(date_counter) for task in task_list.get_done_task_from_date(date_counter)
                 ]
             )
             point_list += [point]
@@ -52,8 +51,6 @@ class TaskAnalyser:
 
     @staticmethod
     def countDoneTaskFromInteval(task_list, max_date: datetime, backward_offset: int):
-        print(max_date)
-        print(type(max_date))
         min_date = (max_date - timedelta(days=backward_offset - 1)).date()
         max_date = max_date.date()
         date_counter = min_date
@@ -69,8 +66,6 @@ class TaskAnalyser:
             date_counter += timedelta(days=1)
         return task_count_list
 
-
-
 mock_task_data = {
     "id": 20,
     "topic": "Project Deadline",
@@ -82,11 +77,3 @@ mock_task_data = {
     "location": "International College, KMITL",
     "user": 1
 }
-
-# task = Task(mock_task_data)
-# tasks = TaskList()
-# tasks.add_task(task)
-# task.id = 21
-# tasks.add_task(task)
-# for item in tasks.get_task_list():
-#     print(item)

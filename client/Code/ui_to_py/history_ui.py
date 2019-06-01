@@ -2,6 +2,7 @@ import sys
 from typing import List
 
 from PySide2 import QtWidgets, QtCore, QtGui
+from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QWidget, QApplication
 
 from client.Code.controller.models.models import TaskList, Task
@@ -22,7 +23,7 @@ class History_ui(QtWidgets.QWidget):
         self.label_history.setObjectName("label_4")
 
         self.tableWidget = QtWidgets.QTableWidget(parent)
-        self.tableWidget.setGeometry(QtCore.QRect(20, 100, 661, 481))
+        self.tableWidget.setGeometry(QtCore.QRect(20, 100 , 661, 481))
         self.tableWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tableWidget.setFrameShadow(QtWidgets.QFrame.Plain)
         self.tableWidget.setShowGrid(False)
@@ -30,7 +31,7 @@ class History_ui(QtWidgets.QWidget):
         self.tableWidget.setWordWrap(True)
         self.tableWidget.setCornerButtonEnabled(True)
         self.tableWidget.setRowCount(10)
-        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setColumnCount(6)
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget.setObjectName("tableWidget")
         # self.tableWidget.setColumnCount(5)
@@ -41,12 +42,14 @@ class History_ui(QtWidgets.QWidget):
         self.tableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem("End Date")
         self.tableWidget.setHorizontalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem("Start Time")
+        item = QtWidgets.QTableWidgetItem("Done Date")
         self.tableWidget.setHorizontalHeaderItem(3, item)
-        item = QtWidgets.QTableWidgetItem("End Time")
+        item = QtWidgets.QTableWidgetItem("Start Time")
         self.tableWidget.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem("End Time")
+        self.tableWidget.setHorizontalHeaderItem(5, item)
         self.tableWidget.horizontalHeader().setVisible(True)
-        self.tableWidget.horizontalHeader().setDefaultSectionSize(130)
+        self.tableWidget.horizontalHeader().setDefaultSectionSize(108)
         self.tableWidget.horizontalHeader().setHighlightSections(True)
         self.tableWidget.horizontalHeader().setMinimumSectionSize(27)
         self.tableWidget.verticalHeader().setDefaultSectionSize(50)
@@ -55,8 +58,12 @@ class History_ui(QtWidgets.QWidget):
 
     def update_data(self, task_list: TaskList):
         task_list = task_list.get_task_list()
-        inactive_task_list = list(filter(lambda task: task.status, task_list))
-
+        inactive_task_list = list(
+            filter(
+                lambda task: task.status, task_list
+            )
+        )
+        inactive_task_list.sort(key=lambda item: item.done_at)
         self.update_table(inactive_task_list)
 
         super(History_ui, self).update()
@@ -64,7 +71,7 @@ class History_ui(QtWidgets.QWidget):
     def update_table(self, task_list: List[Task]):
 
         row_count = len(task_list)
-        column_count = 5
+        column_count = 6
 
         self.tableWidget.setRowCount(row_count)
         self.tableWidget.setColumnCount(column_count)
@@ -75,10 +82,11 @@ class History_ui(QtWidgets.QWidget):
                 task.topic,
                 str(task.start_at.date()),
                 str(task.end_at.date()),
+                str(task.done_at.date()),
                 str(task.start_at.time()),
-                str(task.end_at.time())
+                str(task.end_at.time()),
             ]
-            for k in range(5):
+            for k in range(6):
                 if i % 2 == 0:
                     self.brush = QtGui.QBrush(QtGui.QColor(247, 249, 251))
                 else:

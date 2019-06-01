@@ -34,10 +34,13 @@ class BarChart(QWidget):
         self.chart.setAnimationOptions(QtCharts.QChart.SeriesAnimations)
 
         self.axisX = QtCharts.QBarCategoryAxis()
+        self.axisY = QtCharts.QValueAxis()
+        # self.axisY.setRange()
         # self.update_chart(datetime.date.today())
         # print(self.date_now - datetime.timedelta(days=6))
 
-        self.chart.createDefaultAxes()
+        # self.chart.createDefaultAxes()
+        self.chart.setAxisY(self.axisY, self.series)
         self.chart.setAxisX(self.axisX, self.series)
         self.chart.legend().setVisible(True)
         self.chart.legend().setAlignment(Qt.AlignBottom)
@@ -83,7 +86,8 @@ class BarChart(QWidget):
             ]
         )
 
-        print(result)
+        self.axisY.setRange(min(result), max(result) + max(result) * 0.3)
+
         bar_set = QtCharts.QBarSet("Done tasks in each day.")
         bar_set.setColor(QColor(231, 119, 32))
         bar_set.append(result)

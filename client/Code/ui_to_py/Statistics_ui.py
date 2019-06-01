@@ -46,7 +46,6 @@ class StatisticsUI(QWidget):
         self.left_arrow.setFlat(True)
         self.left_arrow.setIconSize(QSize(21, 21))
         self.left_arrow.setObjectName("left_arrow")
-        self.left_arrow.clicked.connect(self.change_chart_backward)
 
         self.right_arrow = QPushButton(parent)
         self.right_arrow.setGeometry(QRect(100, 110, 41, 41))
@@ -55,7 +54,6 @@ class StatisticsUI(QWidget):
         self.right_arrow.setFlat(True)
         self.right_arrow.setIconSize(QSize(21, 21))
         self.right_arrow.setObjectName("right_arrow")
-        self.right_arrow.clicked.connect(self.change_chart_forward)
 
         self.combo_box = QComboBox(parent)
         self.combo_box.setGeometry(QRect(150, 110, 121, 36))
@@ -63,9 +61,20 @@ class StatisticsUI(QWidget):
         self.combo_box.addItem("Monthly")
         self.combo_box.setCurrentIndex(0)
 
-        if self.combo_box.currentData():
-    #         If monthly
+        self.btn_change = QPushButton(parent)
+        self.btn_change.setGeometry(QRect(300, 110, 121, 36))
+        self.btn_change.setText("Change GRAPH")
+        self.btn_change.clicked.connect(self.change_graph)
+        self.btn_change.setObjectName("save_btn")
+
+        self.left_arrow.clicked.connect(self.change_chart_backward)
+        self.right_arrow.clicked.connect(self.change_chart_forward)
+
+    def change_graph(self):
+        if self.combo_box.currentText() == 'Monthly':
             self.stat_graph.set_interval(31)
+        else:
+            self.stat_graph.set_interval(7)
 
     def update_data(self, task_list: TaskList):
         self.task_list = task_list
@@ -73,9 +82,13 @@ class StatisticsUI(QWidget):
         self.update()
 
     def change_chart_backward(self):
-        self.stat_graph.change_max_bound(-7)
-        # self.stat_graph.update()
+        if self.combo_box.currentText() == 'Monthly':
+            self.stat_graph.change_max_bound(-31)
+        else:
+            self.stat_graph.change_max_bound(-7)
 
     def change_chart_forward(self):
-        self.stat_graph.change_max_bound(7)
-        # self.stat_graph.update()
+        if self.combo_box.currentText() == 'Monthly':
+            self.stat_graph.change_max_bound(31)
+        else:
+            self.stat_graph.change_max_bound(7)

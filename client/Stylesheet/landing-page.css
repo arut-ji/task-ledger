@@ -25,4 +25,6 @@ QLabel{
 QTextEdit{
 	background-color: transparent;
 	color: rgb(40, 19, 18);
+	font-family: "Roboto Light";
+	font-size: 16pt;
 }

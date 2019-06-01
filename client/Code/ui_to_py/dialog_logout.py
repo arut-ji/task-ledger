@@ -20,7 +20,7 @@ class Logout_Dialog(QtWidgets.QDialog):
         self.label.setText("Logout ?")
         self.label.setGeometry(135, 120, 200, 21)
         font = QtGui.QFont()
-        font.setFamily("Helvetica")
+        font.setFamily("Roboto Light")
         font.setPointSize(20)
         self.label.setFont(font)
 

@@ -26,7 +26,7 @@ class LoginUI(QtWidgets.QWidget):
 
         self.login_label.setGeometry(QtCore.QRect(440, 150, 101, 51))
         font = QtGui.QFont()
-        font.setFamily("Roboto")
+        font.setFamily("Roboto Light")
         font.setPointSize(34)
         self.login_label.setFont(font)
         self.login_label.setAutoFillBackground(False)
@@ -34,8 +34,6 @@ class LoginUI(QtWidgets.QWidget):
         self.login_label.setObjectName("login_label")
 
         self.username_lineEdit.setGeometry(QtCore.QRect(360, 230, 261, 31))
-        font = QtGui.QFont()
-        font.setFamily("Roboto")
         font.setPointSize(21)
         self.username_lineEdit.setFont(font)
         self.username_lineEdit.setAutoFillBackground(False)
@@ -43,8 +41,6 @@ class LoginUI(QtWidgets.QWidget):
         self.username_lineEdit.setObjectName("username_lineEdit")
 
         self.pw_lineEdit.setGeometry(QtCore.QRect(360, 290, 261, 31))
-        font = QtGui.QFont()
-        font.setFamily("Roboto")
         font.setPointSize(21)
         self.pw_lineEdit.setFont(font)
         self.pw_lineEdit.setAutoFillBackground(False)
@@ -54,15 +50,11 @@ class LoginUI(QtWidgets.QWidget):
         self.pw_lineEdit.setObjectName("pw_lineEdit")
 
         self.button_login.setGeometry(QtCore.QRect(360, 370, 261, 41))
-        font = QtGui.QFont()
-        font.setFamily("Roboto")
         font.setPointSize(16)
         self.button_login.setFont(font)
         self.button_login.setObjectName("button_login")
 
         self.reg_label.setGeometry(QtCore.QRect(390, 420, 211, 16))
-        font = QtGui.QFont()
-        font.setFamily("Roboto")
         font.setPointSize(19)
         self.reg_label.setFont(font)
         self.reg_label.setObjectName("reg_label")

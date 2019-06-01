@@ -166,22 +166,24 @@ class TaskLedgerUI(QWidget):
         self.system.set_loading(False)
 
     def create_dialog(self):
-        self.dialog.setupUi(self.dialog)
-        self.dialog.save_btn.clicked.connect(self.create_event)
-        self.dialog.show()
+        create_fragment = dialog.Create_dialog()
+        create_fragment.setupUi(create_fragment)
+        create_fragment.title.setText('')
+        create_fragment.save_btn.clicked.connect(lambda: self.create_event(create_fragment))
+        create_fragment.show()
 
-    def create_event(self):
-        start_time = self.dialog.timeEdit.time()
-        start_date = self.dialog.from_dateEdit.date()
+    def create_event(self, fragment):
+        start_time = fragment.timeEdit.time()
+        start_date = fragment.from_dateEdit.date()
 
-        end_time = self.dialog.to_timeEdit.time()
-        end_date = self.dialog.to_dateEdit.date()
+        end_time = fragment.to_timeEdit.time()
+        end_date = fragment.to_dateEdit.date()
 
-        topic = self.dialog.title.text()
+        topic = fragment.title.text()
 
-        description = self.dialog.textEdit_desc.toPlainText()
+        description = fragment.textEdit_desc.toPlainText()
         status = False
-        location = self.dialog.location.text()
+        location = fragment.location.text()
 
         start_at = DatetimeParser.fromQDateAndQTime(start_date, start_time)
         end_at = DatetimeParser.fromQDateAndQTime(end_date, end_time)
@@ -196,27 +198,27 @@ class TaskLedgerUI(QWidget):
         }
 
         if self.system.create_task(details):
-            self.dialog.close()
+            fragment.close()
         else:
             if topic == '':
-                self.dialog.title.setStyleSheet(error_stylesheet)
+                fragment.title.setStyleSheet(error_stylesheet)
             else:
-                self.dialog.title.setStyleSheet(normal_stylesheet)
+                fragment.title.setStyleSheet(normal_stylesheet)
 
             if start_at.date() > end_at.date():
-                self.dialog.to_dateEdit.setStyleSheet(error_stylesheet)
-                self.dialog.from_dateEdit.setStyleSheet(error_stylesheet)
+                fragment.to_dateEdit.setStyleSheet(error_stylesheet)
+                fragment.from_dateEdit.setStyleSheet(error_stylesheet)
 
             else:
-                self.dialog.to_dateEdit.setStyleSheet(normal_stylesheet)
-                self.dialog.from_dateEdit.setStyleSheet(normal_stylesheet)
+                fragment.to_dateEdit.setStyleSheet(normal_stylesheet)
+                fragment.from_dateEdit.setStyleSheet(normal_stylesheet)
 
             if start_time >= end_time:
-                self.dialog.timeEdit.setStyleSheet(error_stylesheet)
-                self.dialog.to_timeEdit.setStyleSheet(error_stylesheet)
+                fragment.timeEdit.setStyleSheet(error_stylesheet)
+                fragment.to_timeEdit.setStyleSheet(error_stylesheet)
             else:
-                self.dialog.timeEdit.setStyleSheet(normal_stylesheet)
-                self.dialog.to_timeEdit.setStyleSheet(normal_stylesheet)
+                fragment.timeEdit.setStyleSheet(normal_stylesheet)
+                fragment.to_timeEdit.setStyleSheet(normal_stylesheet)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

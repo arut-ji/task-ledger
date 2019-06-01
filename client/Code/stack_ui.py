@@ -135,6 +135,7 @@ class TaskLedgerUI(QWidget):
         # Goto main page
         if self.system.login(username, password):
             self.system.set_loading(False)
+            self.system.enable_notification()
             self.ui.goto_main()
         else:
             self.ui.login.error_msg.setText("Invalid username or password")

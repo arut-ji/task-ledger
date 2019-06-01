@@ -163,13 +163,13 @@ mock_task_data_2 = {
     "user": 1
 }
 #
-task = Task(mock_task_data)
-
-print(task.get_point())
-tasks = TaskList()
-tasks.add_task(task)
-tasks.add_task(Task(mock_task_data_2))
-print(TaskAnalyser.countDoneTaskFromInteval(tasks, datetime.datetime.now(), 7))
+# task = Task(mock_task_data)
+#
+# print(task.get_point())
+# tasks = TaskList()
+# tasks.add_task(task)
+# tasks.add_task(Task(mock_task_data_2))
+# print(TaskAnalyser.countDoneTaskFromInteval(tasks, datetime.datetime.now(), 7))
 # print(task)
 #
 # # print(task.start_at.date())

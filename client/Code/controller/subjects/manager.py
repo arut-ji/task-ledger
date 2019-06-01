@@ -12,6 +12,7 @@ from client.Code.controller.services.services import TaskService
 from client.Code.utility.validators import TaskValidator
 
 
+
 class Observable(metaclass=ABCMeta):
     def __init__(self):
         self._observers = set()
@@ -39,6 +40,7 @@ class TaskLedgerSystem(Observable):
         self.token = None
         self.loading = False
 
+
     def _notify_observers(self):
         for observer in self._observers:
             observer.update_data(self.task_list)
@@ -64,6 +66,9 @@ class TaskLedgerSystem(Observable):
             self.set_task_list(task_list)
             return True
         return False
+
+    def enable_notification(self):
+        print("notification enabled.")
 
     def is_authenticated(self) -> bool:
         return self.token is not None

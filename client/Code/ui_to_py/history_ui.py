@@ -55,8 +55,13 @@ class History_ui(QtWidgets.QWidget):
 
     def update_data(self, task_list: TaskList):
         task_list = task_list.get_task_list()
-        inactive_task_list = list(filter(lambda task: task.status, task_list))
-
+        inactive_task_list = list(
+            filter(
+                lambda task: task.status,
+                task_list
+            )
+        )
+        print(inactive_task_list)
         self.update_table(inactive_task_list)
 
         super(History_ui, self).update()

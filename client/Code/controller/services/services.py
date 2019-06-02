@@ -1,3 +1,5 @@
+import datetime
+
 import requests
 from typing import Dict, List
 from client.Code.controller.models.models import Task, TaskList
@@ -95,6 +97,9 @@ class TaskService(BaseService):
     @staticmethod
     def update_task(task_id, payload):
         update_task_endpoint = TASKS_API + str(task_id) + '/'
+
+        if payload['status']:
+            payload['done_at'] = str(datetime.datetime.now())
 
         response = requests.put(
             url=update_task_endpoint,

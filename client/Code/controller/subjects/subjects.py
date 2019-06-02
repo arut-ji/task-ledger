@@ -59,10 +59,15 @@ class TaskLedgerSystem(Observable):
         if response:
             self.set_current_user(response['user'])
             self.set_current_token(response['key'])
-            task_list = TaskService.list_task(self.user["id"])
+            task_list = TaskService.list_task(self.user["id"], self.token)
             self.set_task_list(task_list)
             return True
         return False
+
+    def logout(self) -> bool:
+        self.set_current_token(None)
+        self.set_current_user(None)
+        return True
 
     def is_authenticated(self) -> bool:
         return self.token is not None
@@ -79,7 +84,7 @@ class TaskLedgerSystem(Observable):
         details.update({'user': self.user['id']})
         is_valid = self.task_validator.validate(details)
         if is_valid:
-            new_task = self.task_service.create_task(details)
+            new_task = self.task_service.create_task(self.token, details)
             self.task_list.add_task(new_task)
             self._notify_observers()
             return True
@@ -90,7 +95,7 @@ class TaskLedgerSystem(Observable):
         is_valid = self.task_validator.validate(details)
 
         if is_valid:
-            updated_task = TaskService.update_task(task_id, details)
+            updated_task = TaskService.update_task(task_id, details, self.token)
             self.task_list.update_task(task_id, updated_task)
             self._notify_observers()
             return True
@@ -102,7 +107,7 @@ class TaskLedgerSystem(Observable):
         is_delete_success = False
 
         if deleted_task is not None:
-            is_delete_success = TaskService.delete_task(task_id)
+            is_delete_success = TaskService.delete_task(task_id, self.token)
 
         if is_delete_success:
             self._notify_observers()

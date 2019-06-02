@@ -31,7 +31,8 @@ class TaskServiceTest(unittest.TestCase):
             "location": "KMITL",
             "user": 1
         }
-        result = TaskService.create_task(mock_data)
+        token = 'token 6bdf6d2c610e585fd8584f2bc51127df87fcec71'
+        result = TaskService.create_task(token, mock_data)
         self.assertEqual(result.topic, mock_data["topic"])
         self.assertEqual(result.description, mock_data["description"])
         self.assertEqual(result.start_at, mock_data["start_at"])

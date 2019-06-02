@@ -168,8 +168,14 @@ class ScheduleUI(ObserverWidget):
         self.dialog.timeEdit.setTime(self.start_time)
         self.dialog.to_timeEdit.setTime(self.end_time)
         self.dialog.save_btn.clicked.connect(self.update_task)
+        self.dialog.delete_btn.clicked.connect(self.handle_delete_task)
         # self.dialog.save_btn.clicked.connect(self.dialog.close)
         self.dialog.show()
+
+    def handle_delete_task(self):
+        task_id = self.selected_task.id
+        self.system.delete_task(task_id)
+        self.dialog.close()
 
     def next_date(self):
         self.date_now += datetime.timedelta(days=1)

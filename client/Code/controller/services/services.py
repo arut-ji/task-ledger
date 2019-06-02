@@ -83,10 +83,15 @@ class AuthService(BaseService):
 class TaskService(BaseService):
 
     @staticmethod
-    def create_task(payload: Dict):
+    def get_authorization_header(token):
+        return {'Authorization': 'token ' + token}
+
+    @staticmethod
+    def create_task(token: str, payload: Dict):
         response = requests.post(
             url=TASKS_API,
-            data=payload
+            data=payload,
+            headers=TaskService.get_authorization_header(token)
         )
 
         if response.status_code == 201:
@@ -95,7 +100,7 @@ class TaskService(BaseService):
             return None
 
     @staticmethod
-    def update_task(task_id, payload):
+    def update_task(task_id, payload, token):
         update_task_endpoint = TASKS_API + str(task_id) + '/'
 
         if payload['status']:
@@ -103,7 +108,8 @@ class TaskService(BaseService):
 
         response = requests.put(
             url=update_task_endpoint,
-            data=payload
+            data=payload,
+            headers=TaskService.get_authorization_header(token)
         )
 
         if response.status_code == 200:
@@ -122,10 +128,11 @@ class TaskService(BaseService):
         return None
 
     @staticmethod
-    def delete_task(task_id):
+    def delete_task(task_id, token):
         delete_task_endpoint = TASKS_API + str(task_id) + '/'
         response = requests.delete(
-            url=delete_task_endpoint
+            url=delete_task_endpoint,
+            headers=TaskService.get_authorization_header(token)
         )
 
         if response.status_code == 204:
@@ -134,10 +141,11 @@ class TaskService(BaseService):
             return False
 
     @staticmethod
-    def list_task(user_id):
+    def list_task(user_id, token):
         api_endpoint = USER_TASKS_API.format(str(user_id))
         response = requests.get(
-            url=api_endpoint
+            url=api_endpoint,
+            headers=TaskService.get_authorization_header(token)
         )
         if response.status_code == 200:
             return TaskList(response.json())
